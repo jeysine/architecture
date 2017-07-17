@@ -1,10 +1,8 @@
 package utils;
 
 import java.util.*;
-import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 import java.util.function.Function;
-import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
 /**
@@ -43,12 +41,46 @@ public class CollectionUtils {
 
         printCollection(map1);
 
-
     }
 
+
+    /**
+     * 将List转成Map<R,list<T>>的集合,比如将person按照class进行ConcurrentMap分组,在读取Excel表的时候有使用场景</>></>
+     * @param list
+     * @param f
+     * @param <T>
+     * @param <R>
+     * @return
+     */
+    public static <T,R> ConcurrentMap<R, List<T>> listToCMap(List<T> list, Function<? super T, ? extends R> f){
+        return list.stream().collect(Collectors.groupingByConcurrent(f));
+    }
+
+    /**
+     * 将List转成Map<R,list<T>>的集合,比如将person按照class进行map分组,在读取Excel表的时候有使用场景</>></>
+     * @param list
+     * @param f
+     * @param <T>
+     * @param <R>
+     * @return
+     */
+    public static <T,R> Map<R, List<T>> listToMap(List<T> list, Function<? super T, ? extends R> f){
+        return list.stream().collect(Collectors.groupingBy(f));
+    }
+
+    /**
+     * 将List转成Map<R,list<T>>的集合,比如将person按照class进行map分组</>></>
+     * @param list
+     * @param f
+     * @param <T>
+     * @param <R>
+     * @return
+     */
     public static <T,R> ConcurrentMap<R, List<T>> translateList(List<T> list, Function<? super T, ? extends R> f){
         return list.stream().collect(Collectors.groupingByConcurrent(f));
     }
+
+
 
 
     public static void printCollection(Map map){

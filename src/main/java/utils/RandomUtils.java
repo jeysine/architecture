@@ -29,6 +29,9 @@ public class RandomUtils {
     }
 
     public static void main(String args[]) {
+
+
+
         System.out.println(nextInt(3, 20));
     }
 
