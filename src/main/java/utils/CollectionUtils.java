@@ -33,13 +33,20 @@ public class CollectionUtils {
 
         ConcurrentMap map1 = monsters.stream().collect(Collectors.groupingByConcurrent(Monster::getId));
 
-        CollectionUtils utils = new CollectionUtils();
+        ConcurrentMap map = listToCMaps(monsters,Monster::getId);
 
-        ConcurrentMap map = translateList(monsters,Monster::getId);
+        //Map<Integer,Monster> map2 = monsters.stream().collect(Collectors.toMap(Monster::getId,t->t));
+
+        Map map3 = listToMap(monsters,Monster::getId);
+
 
         printCollection(map);
 
         printCollection(map1);
+
+        //printCollection(map2);
+
+        printCollection(map3);
 
     }
 
@@ -52,7 +59,7 @@ public class CollectionUtils {
      * @param <R>
      * @return
      */
-    public static <T,R> ConcurrentMap<R, List<T>> listToCMap(List<T> list, Function<? super T, ? extends R> f){
+    public static <T,R> ConcurrentMap<R, List<T>> listToCMaps(List<T> list, Function<? super T, ? extends R> f){
         return list.stream().collect(Collectors.groupingByConcurrent(f));
     }
 
@@ -64,7 +71,7 @@ public class CollectionUtils {
      * @param <R>
      * @return
      */
-    public static <T,R> Map<R, List<T>> listToMap(List<T> list, Function<? super T, ? extends R> f){
+    public static <T,R> Map<R, List<T>> listToMaps(List<T> list, Function<? super T, ? extends R> f){
         return list.stream().collect(Collectors.groupingBy(f));
     }
 
@@ -76,12 +83,21 @@ public class CollectionUtils {
      * @param <R>
      * @return
      */
-    public static <T,R> ConcurrentMap<R, List<T>> translateList(List<T> list, Function<? super T, ? extends R> f){
-        return list.stream().collect(Collectors.groupingByConcurrent(f));
+    public static <T,R> Map<R, T> listToMap(List<T> list, Function<? super T, ? extends R> f){
+        return list.stream().collect(Collectors.toMap(f,t->t));
     }
 
-
-
+    /**
+     * 将List转成Map<R,list<T>>的集合,比如将person按照class进行map分组</>></>
+     * @param list
+     * @param f
+     * @param <T>
+     * @param <R>
+     * @return
+     */
+    public static <T,R> ConcurrentMap<R, T> listToCMap(List<T> list, Function<? super T, ? extends R> f){
+        return list.stream().collect(Collectors.toConcurrentMap(f,t->t));
+    }
 
     public static void printCollection(Map map){
         map.forEach((k,v)->{
