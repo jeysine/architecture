@@ -20,33 +20,47 @@ public class CollectionUtils {
 
         Monster m = new Monster(1,"a");
         Monster m1 = new Monster(2,"b");
-        Monster m2 = new Monster(1,"c");
-        Monster m3 = new Monster(2,"d");
-        Monster m4 = new Monster(1,"e");
+//        Monster m2 = new Monster(1,"c");
+//        Monster m3 = new Monster(2,"d");
+//        Monster m4 = new Monster(1,"e");
 
         monsters.add(m);
         monsters.add(m1);
-        monsters.add(m2);
-        monsters.add(m3);
-        monsters.add(m4);
+//        monsters.add(m2);
+//        monsters.add(m3);
+//        monsters.add(m4);
 
 
-        ConcurrentMap map1 = monsters.stream().collect(Collectors.groupingByConcurrent(Monster::getId));
-
-        ConcurrentMap map = listToCMaps(monsters,Monster::getId);
+//        ConcurrentMap map1 = monsters.stream().collect(Collectors.groupingByConcurrent(Monster::getId));
+//
+//        ConcurrentMap map = listToCMaps(monsters,Monster::getId);
 
         //Map<Integer,Monster> map2 = monsters.stream().collect(Collectors.toMap(Monster::getId,t->t));
 
-        Map map3 = listToMap(monsters,Monster::getId);
+        Map<Integer,Monster> map3 =
+                monsters.stream().collect(Collectors.toMap(Monster::getId,Function.identity()));
+
+        Map<Integer,Monster> map4 =
+                monsters.stream().collect(Collectors.toMap(Monster::getId,t->t));
+
+        //Map map3 = listToMap(monsters,Monster::getId);
 
 
-        printCollection(map);
-
-        printCollection(map1);
+//        printCollection(map);
+//
+//        printCollection(map1);
 
         //printCollection(map2);
 
         printCollection(map3);
+
+        printCollection(map4);
+
+        Monster m2 = new Monster(1,"c");
+        monsters.add(m2);
+//        Map<Integer,Monster> map5 =
+//                monsters.stream().collect(Collectors.toMap(Monster::getId,t->t));
+//        printCollection(map5);
 
     }
 
@@ -76,7 +90,7 @@ public class CollectionUtils {
     }
 
     /**
-     * 将List转成Map<R,list<T>>的集合,比如将person按照class进行map分组</>></>
+     * 将List转成Map<R,list<T>>的集合,比如将person按照class进行map分组,如果list出现相同的key会抛错Duplicate key,见map5</>></>
      * @param list
      * @param f
      * @param <T>
@@ -84,11 +98,11 @@ public class CollectionUtils {
      * @return
      */
     public static <T,R> Map<R, T> listToMap(List<T> list, Function<? super T, ? extends R> f){
-        return list.stream().collect(Collectors.toMap(f,t->t));
+        return list.stream().collect(Collectors.toMap(f,Function.identity()));
     }
 
     /**
-     * 将List转成Map<R,list<T>>的集合,比如将person按照class进行map分组</>></>
+     * 将List转成Map<R,list<T>>的集合,比如将person按照class进行map分组,如果list出现相同的key会抛错Duplicate key,见map5</>></>
      * @param list
      * @param f
      * @param <T>
@@ -96,25 +110,59 @@ public class CollectionUtils {
      * @return
      */
     public static <T,R> ConcurrentMap<R, T> listToCMap(List<T> list, Function<? super T, ? extends R> f){
-        return list.stream().collect(Collectors.toConcurrentMap(f,t->t));
+        return list.stream().collect(Collectors.toConcurrentMap(f,Function.identity()));
     }
 
+    /**
+     * map值转list
+     * @param map
+     * @param <K>
+     * @param <V>
+     * @return
+     */
+    public static <K,V> List<V> mapValueToList (Map<K,V> map){
+        return new ArrayList<>(map.values());
+    }
+
+    /**
+     * map键转list
+     * @param map
+     * @param <K>
+     * @param <V>
+     * @return
+     */
+    public static <K,V> List<K> mapKeyToList (Map<K,V> map){
+        return new ArrayList<>(map.keySet());
+    }
+
+    /**
+     * 打印集合
+     * @param map
+     */
     public static void printCollection(Map map){
-        map.forEach((k,v)->{
-             System.out.println(k+":"+v);
-        });
+            map.forEach((k,v)->{
+                System.out.println(k+":"+v);
+            });
     }
 
-    public static void printCollection(List list){
-        list.forEach(v->{
+    /**
+     * 打印集合
+     * @param collection
+     */
+    public static void printCollection (Collection collection){
+        collection.forEach(v->{
             System.out.println(v);
         });
     }
 
+    public static <T> void printCollection(T[] arr){
+        System.out.println(Arrays.toString(arr));
+    }
 
     static class Monster{
 
         int id;
+
         String name;
 
         public void setId(int id) {
