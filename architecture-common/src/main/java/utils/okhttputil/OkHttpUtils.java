@@ -2,7 +2,6 @@ package utils.okhttputil;
 
 import utils.okhttputil.builder.*;
 import utils.okhttputil.callback.Callback;
-import utils.okhttputil.callback.MyStringCallback;
 import utils.okhttputil.callback.StringCallback;
 import utils.okhttputil.cookie.CookieJarImpl;
 import utils.okhttputil.cookie.store.MemoryCookieStore;
