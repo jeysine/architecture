@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns="http://xmlns.jcp.org/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd"
+         version="3.1">
+
+  <display-name>Archetype Created Web Application</display-name>
+
+  <welcome-file-list>
+    <welcome-file>index.jsp</welcome-file>
+  </welcome-file-list>
+
+  <!-- 容器中Session过期时间,单位分钟 -->
+  <session-config>
+    <session-timeout>120</session-timeout>
+  </session-config>
+
+  <!-- spring读取的配置文件 -->
+  <context-param>
+    <param-name>contextConfigLocation</param-name>
+    <param-value>classpath*:spring/application-context.xml
+    </param-value>
+  </context-param>
+
+  <!-- spring默认的profile -->
+  <context-param>
+    <param-name>spring.profiles.default</param-name>
+    <param-value>dev</param-value>
+  </context-param>
+  <!-- ************************** ServletContext 配置区域End ************************** -->
+
+
+
+  <!-- ************************** listener 配置区域Begin ************************** -->
+  <!-- 使用spring所需要配置的Listener -->
+  <listener>
+    <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+  </listener>
+  <!-- ************************** listener 配置区域End ************************** -->
+
+
+
+  <!-- ************************** filter 配置区域Begin ************************** -->
+  <!-- 解决中文乱码问题 -->
+  <filter>
+    <filter-name>CharacterEncodingFilter</filter-name>
+    <filter-class>org.springframework.web.filter.CharacterEncodingFilter</filter-class>
+    <init-param>
+      <param-name>encoding</param-name>
+      <param-value>utf-8</param-value>
+    </init-param>
+  </filter>
+  <filter-mapping>
+    <filter-name>CharacterEncodingFilter</filter-name>
+    <url-pattern>/*</url-pattern>
+  </filter-mapping>
+  <!-- Spring Session配置 指定哪些请求需要共享session -->
+ <!-- <filter>
+    <filter-name>springSessionRepositoryFilter</filter-name>
+    <filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class>
+  </filter>
+  <filter-mapping>
+    <filter-name>springSessionRepositoryFilter</filter-name>
+    <url-pattern>/*</url-pattern>
+  </filter-mapping>-->
+
+  <!-- Log process filter -->
+  <!--<filter>
+    <filter-name>logProcessFilter</filter-name>
+    <filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class>
+    <init-param>
+      <description>必须过滤的url,优先级高于excludeUrlPattern,用于显示指定被excludeUrlPattern排除掉的url</description>
+      <param-name>includeUrlPattern</param-name>
+      <param-value>/**/*.htm</param-value>
+    </init-param>
+    <init-param>
+      <description>不过滤的url,使用的表达式是Ant Pattern</description>
+      <param-name>excludeUrlPattern</param-name>
+      <param-value>/**/*.*</param-value>
+    </init-param>
+    <init-param>
+      <description>指定Spring管理Filter生命周期</description>
+      <param-name>targetFilterLifecycle</param-name>
+      <param-value>true</param-value>
+    </init-param>
+  </filter>
+  <filter-mapping>
+    <filter-name>logProcessFilter</filter-name>
+    <url-pattern>/*</url-pattern>
+  </filter-mapping>-->
+
+  <!-- Servlet Filter that binds a JPA EntityManager to the thread for the
+      entire processing of the request -->
+  <filter>
+    <filter-name>openEntityManagerFilter</filter-name>
+    <filter-class>org.springframework.orm.jpa.support.OpenEntityManagerInViewFilter</filter-class>
+  </filter>
+  <filter-mapping>
+    <filter-name>openEntityManagerFilter</filter-name>
+    <url-pattern>/architecture/*</url-pattern>
+  </filter-mapping>
+
+  <!-- Proxy for a standard Servlet Filter, delegating to a Spring-managed
+      bean that implements the Filter interface（把普通的servlet filter让spring管理起来 ） -->
+  <!-- SpringSecurity的权限拦截过滤器,这个必须放在所有身份认证的filter之前!!! -->
+  <!--<filter>
+    <filter-name>springSecurityFilterChain</filter-name>
+    <filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class>
+  </filter>
+  <filter-mapping>
+    <filter-name>springSecurityFilterChain</filter-name>
+    <url-pattern>/*</url-pattern>
+  </filter-mapping>-->
+  <!-- 基于token获取用户身份的过滤器 -->
+ <!-- <filter>
+    <filter-name>tokenBasedAuthEndpointFilter</filter-name>
+    <filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class>
+  </filter>
+  <filter-mapping>
+    <filter-name>tokenBasedAuthEndpointFilter</filter-name>
+    <url-pattern>/architecture/private/*</url-pattern>
+  </filter-mapping>-->
+  <!-- 基于session获取用户身份的过滤器 -->
+ <!-- <filter>
+    <filter-name>sessionBasedAuthEndpointFilter</filter-name>
+    <filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class>
+  </filter>
+  <filter-mapping>
+    <filter-name>sessionBasedAuthEndpointFilter</filter-name>
+    <url-pattern>/architecture/private/*</url-pattern>
+  </filter-mapping>-->
+  <!-- ************************** filter 配置区域End ************************** -->
+
+  <!-- SpringMVC处理的请求 -->
+  <servlet>
+    <servlet-name>spring-mvc</servlet-name>
+    <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+    <init-param>
+      <param-name>contextConfigLocation</param-name>
+      <param-value>/WEB-INF/spring/webmvc-config.xml</param-value>
+    </init-param>
+    <load-on-startup>1</load-on-startup>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>spring-mvc</servlet-name>
+    <url-pattern>/</url-pattern>
+  </servlet-mapping>
+  <!-- ************************** servlet 配置区域End ************************** -->
+</web-app>
