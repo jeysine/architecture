@@ -14,6 +14,7 @@ import javax.servlet.http.HttpServletRequest;
 public class PublicBgUserController {
     @RequestMapping(value = "/", method = RequestMethod.GET)
     public ResponseEntity<ApiResult> login(HttpServletRequest request) {
+
         return new ResponseEntity<>(ApiResult.success(request), HttpStatus.OK);
     }
 }

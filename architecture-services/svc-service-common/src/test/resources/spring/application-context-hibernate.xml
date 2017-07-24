@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:repository="http://www.springframework.org/schema/data/jpa"
+	xsi:schemaLocation="
+	http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
+	http://www.springframework.org/schema/data/jpa http://www.springframework.org/schema/data/jpa/spring-jpa.xsd">
+
+	<bean id="hibernateJpaVendorAdapter"
+		class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter" />
+
+	<bean id="entityManagerFactory"
+		class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
+		<property name="dataSource" ref="dataSource" />
+		<property name="jpaVendorAdapter" ref="hibernateJpaVendorAdapter" />
+		<property name="packagesToScan" value="cn.com.architecture.entity" />
+		<property name="jpaProperties">
+			<props>
+				<!-- Configures the used database dialect. This allows Hibernate to create 
+					SQL that is optimized for the used database. -->
+				<prop key="hibernate.dialect">${hibernate.dialect}</prop>
+
+				<!-- Specifies the action that is invoked to the database when the Hibernate 
+					SessionFactory is created or closed. -->
+				<prop key="hibernate.hbm2ddl.auto">${hibernate.hbm2ddl.auto}</prop>
+
+				<!-- Configures the naming strategy that is used when Hibernate creates 
+					new database objects and schema elements -->
+				<prop key="hibernate.ejb.naming_strategy">org.hibernate.cfg.ImprovedNamingStrategy</prop>
+
+				<!-- If the value of this property is true, Hibernate writes all SQL 
+					statements to the console. -->
+				<prop key="hibernate.show_sql">${hibernate.show_sql}</prop>
+
+				<!-- If the value of this property is true, Hibernate will use prettyprint 
+					when it writes SQL to the console. -->
+				<prop key="hibernate.format_sql">true</prop>
+				<prop key="hibernate.cache.use_query_cache">true</prop>
+				<prop key="hibernate.cache.use_second_level_cache">true</prop>
+				<prop key="hibernate.cache.region.factory_class">
+					org.hibernate.cache.ehcache.EhCacheRegionFactory
+				</prop>
+			</props>
+		</property>
+	</bean>
+	<repository:repositories base-package="cn.com.architecture.repo" />
+
+</beans>
