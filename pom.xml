@@ -34,6 +34,7 @@
         <module>architecture-base</module>
         <module>architecture-services</module>
         <module>architecture-jeysine</module>
+        <module>architecture-event</module>
     </modules>
     <dependencyManagement>
         <dependencies>
@@ -333,18 +334,6 @@
             </dependency>
 
             <dependency>
-                <groupId>cn.architecture</groupId>
-                <artifactId>architecture-base</artifactId>
-                <version>${project.version}</version>
-            </dependency>
-
-            <dependency>
-                <groupId>cn.com.architecture.services</groupId>
-                <artifactId>svc-service-common</artifactId>
-                <version>${project.version}</version>
-            </dependency>
-
-            <dependency>
                 <groupId>javax.servlet</groupId>
                 <artifactId>javax.servlet-api</artifactId>
                 <version>3.1.0</version>
@@ -365,6 +354,34 @@
                 <groupId>org.freemarker</groupId>
                 <artifactId>freemarker</artifactId>
                 <version>2.3.26-incubating</version>
+            </dependency>
+
+
+            <!-- architecture -->
+            <dependency>
+                <groupId>cn.architecture</groupId>
+                <artifactId>architecture-base</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>cn.architecture</groupId>
+                <artifactId>architecture-common</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>cn.architecture</groupId>
+                <artifactId>architecture-jeysine</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>cn.architecture</groupId>
+                <artifactId>architecture-event</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>cn.com.architecture.services</groupId>
+                <artifactId>svc-service-common</artifactId>
+                <version>${project.version}</version>
             </dependency>
 
         </dependencies>

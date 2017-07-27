@@ -14,12 +14,18 @@
     <packaging>pom</packaging>
     <modules>
         <module>svc-service-common</module>
+        <module>svc-service-user</module>
     </modules>
 
     <dependencies>
         <dependency>
             <groupId>cn.architecture</groupId>
             <artifactId>architecture-base</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>cn.architecture</groupId>
+            <artifactId>architecture-event</artifactId>
         </dependency>
     </dependencies>
 </project>

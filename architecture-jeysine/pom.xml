@@ -24,6 +24,11 @@
             <artifactId>architecture-base</artifactId>
         </dependency>
         <dependency>
+            <groupId>cn.architecture</groupId>
+            <artifactId>architecture-event</artifactId>
+        </dependency>
+
+        <dependency>
             <groupId>cn.com.architecture.services</groupId>
             <artifactId>svc-service-common</artifactId>
         </dependency>
@@ -118,6 +123,7 @@
             <groupId>javax.transaction</groupId>
             <artifactId>jta</artifactId>
         </dependency>
+
     </dependencies>
     <build>
         <finalName>architecture-jeysine</finalName>
