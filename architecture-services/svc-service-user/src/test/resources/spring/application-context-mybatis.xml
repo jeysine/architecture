@@ -7,14 +7,14 @@
 		<!-- myBatis文件 -->
 		<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
 			<property name="dataSource" ref="dataSource" />
-			<property name="mapperLocations" value="classpath*:mybatis/*Mapper.xml" />
+			<property name="mapperLocations" value="classpath*:mybatis/UserMapper.xml" />
 			<property name="configLocation" value="classpath:spring/mybatis-config.xml" />
 		</bean>
 	</beans>
 
 	<beans>
 		<bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
-			<property name="basePackage" value="cn.com.architecture.cn.com.architecture.dao" />
+			<property name="basePackage" value="cn.com.architecture.dao" />
 			<property name="sqlSessionFactoryBeanName" value="sqlSessionFactory" />
 			<property name="annotationClass" value="org.springframework.stereotype.Component"/>
 		</bean>
