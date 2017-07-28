@@ -37,9 +37,16 @@ public class CodeGenerateUtils {
         return connection;
     }
 
+    private static class Inner{
+        public static CodeGenerateUtils codeGenerateUtils = new CodeGenerateUtils();
+    }
+
+    public static CodeGenerateUtils getInstance(){
+        return Inner.codeGenerateUtils;
+    }
+
     public static void main(String[] args) throws Exception{
-        CodeGenerateUtils codeGenerateUtils = new CodeGenerateUtils();
-        codeGenerateUtils.generate();
+        getInstance().generate();
     }
 
     public void generate() throws Exception{
@@ -70,7 +77,7 @@ public class CodeGenerateUtils {
         }
     }
 
-    private void generateModelFile(ResultSet resultSet) throws Exception{
+    public void generateModelFile(ResultSet resultSet) throws Exception{
 
         final String suffix = ".java";
         final String path = diskPath + changeTableName + suffix;
@@ -98,7 +105,7 @@ public class CodeGenerateUtils {
 
     }
 
-    private void generateDTOFile(ResultSet resultSet) throws Exception{
+    public void generateDTOFile(ResultSet resultSet) throws Exception{
         final String suffix = "DTO.java";
         final String path = "D://" + changeTableName + suffix;
         final String templateName = "DTO.ftl";
@@ -107,7 +114,7 @@ public class CodeGenerateUtils {
         generateFileByTemplate(templateName,mapperFile,dataMap);
     }
 
-    private void generateControllerFile(ResultSet resultSet) throws Exception{
+    public void generateControllerFile(ResultSet resultSet) throws Exception{
         final String suffix = "Controller.java";
         final String path = diskPath + changeTableName + suffix;
         final String templateName = "Controller.ftl";
@@ -116,7 +123,7 @@ public class CodeGenerateUtils {
         generateFileByTemplate(templateName,mapperFile,dataMap);
     }
 
-    private void generateServiceImplFile(ResultSet resultSet) throws Exception{
+    public void generateServiceImplFile(ResultSet resultSet) throws Exception{
         final String suffix = "ServiceImpl.java";
         final String path = diskPath + changeTableName + suffix;
         final String templateName = "ServiceImpl.ftl";
@@ -125,7 +132,7 @@ public class CodeGenerateUtils {
         generateFileByTemplate(templateName,mapperFile,dataMap);
     }
 
-    private void generateServiceInterfaceFile(ResultSet resultSet) throws Exception{
+    public void generateServiceInterfaceFile(ResultSet resultSet) throws Exception{
         final String prefix = "I";
         final String suffix = "Service.java";
         final String path = diskPath + prefix + changeTableName + suffix;
@@ -135,7 +142,7 @@ public class CodeGenerateUtils {
         generateFileByTemplate(templateName,mapperFile,dataMap);
     }
 
-    private void generateRepositoryFile(ResultSet resultSet) throws Exception{
+    public void generateRepositoryFile(ResultSet resultSet) throws Exception{
         final String suffix = "Repository.java";
         final String path = diskPath + changeTableName + suffix;
         final String templateName = "Repository.ftl";
@@ -144,7 +151,7 @@ public class CodeGenerateUtils {
         generateFileByTemplate(templateName,mapperFile,dataMap);
     }
 
-    private void generateDaoFile(ResultSet resultSet) throws Exception{
+    public void generateDaoFile(ResultSet resultSet) throws Exception{
         final String suffix = "DAO.java";
         final String path = diskPath + changeTableName + suffix;
         final String templateName = "DAO.ftl";
@@ -154,7 +161,7 @@ public class CodeGenerateUtils {
 
     }
 
-    private void generateMapperFile(ResultSet resultSet) throws Exception{
+    public void generateMapperFile(ResultSet resultSet) throws Exception{
         final String suffix = "Mapper.xml";
         final String path = diskPath + changeTableName + suffix;
         final String templateName = "Mapper.ftl";
@@ -164,7 +171,7 @@ public class CodeGenerateUtils {
 
     }
 
-    private void generateFileByTemplate(final String templateName,File file,Map<String,Object> dataMap) throws Exception{
+    public void generateFileByTemplate(final String templateName,File file,Map<String,Object> dataMap) throws Exception{
         Template template = FreeMarkerTemplateUtils.getTemplate(templateName);
         FileOutputStream fos = new FileOutputStream(file);
         dataMap.put("table_name_small",tableName);

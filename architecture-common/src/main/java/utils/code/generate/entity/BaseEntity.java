@@ -5,5 +5,8 @@ package utils.code.generate.entity;
  * 克隆工具类
  */
 
-public class BaseEntity {
+public abstract class BaseEntity<T> {
+
+    abstract T getEntity();
+
 }
