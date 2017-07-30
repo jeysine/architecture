@@ -4,6 +4,7 @@ import freemarker.template.Template;
 import utils.StringUtils;
 import utils.code.generate.entity.DataBaseEntity;
 import utils.code.generate.entity.ExtraData;
+import utils.code.generate.gentype.database.DataBaseDaoGen;
 import utils.code.generate.gentype.database.DataBaseModelGen;
 
 import java.io.*;
@@ -54,6 +55,7 @@ public class CodeGenerateUtils {
     public static void main(String[] args) throws Exception{
 
         getInstance().generateModel();
+        getInstance().generateDao();
 
         //getInstance().generate();
     }
@@ -76,7 +78,7 @@ public class CodeGenerateUtils {
             ResultSet rs = databaseMetaData.getColumns(null, null, tbName, null);
 
             ExtraData extraData = new ExtraData();
-            extraData.setPackageName("package cn.com.architecture.entity")
+            extraData.setPackageName("cn.com.architecture.entity")
                     .setSuffix(".java")
                     .setTemplateName("Model.ftl")
                     .setFilePath("C:\\ideaProject1\\tools\\architecture-services\\svc-service-user\\src\\main\\java\\cn\\com\\architecture\\entity\\")
@@ -86,12 +88,48 @@ public class CodeGenerateUtils {
             DataBaseEntity dataBaseEntity = new DataBaseEntity(rs);
 
             DataBaseModelGen dataBaseModelGen = new DataBaseModelGen(dataBaseEntity);
-
             dataBaseModelGen.generate(extraData);
 
         }
     }
 
+    public void generateDao() throws Exception{
+
+        Connection connection = getConnection1();
+        DatabaseMetaData databaseMetaData = connection.getMetaData();
+
+        ResultSet tbRs = databaseMetaData.getTables(null, null, null, null);
+
+        List<String> tbNames = new LinkedList<>();
+
+        while(tbRs.next()) {
+            tbNames.add(tbRs.getString("TABLE_NAME"));
+        }
+
+        for (String tbName : tbNames) {
+
+            ResultSet rs = databaseMetaData.getColumns(null, null, tbName, null);
+
+            ExtraData extraData = new ExtraData();
+            extraData.setPackageName("cn.com.architecture.dao")
+                    .setSuffix(".java")
+                    .setTemplateName("DAO.ftl")
+                    .setFilePath("C:\\ideaProject1\\tools\\architecture-services\\svc-service-user\\src\\main\\java\\cn\\com\\architecture\\dao\\")
+                    .setFileName(StringUtils.upFirst1(tbName)+"Dao")
+                    .setTableName(tbName);
+
+            extraData.putDataMap("listType", "User");
+
+            DataBaseEntity dataBaseEntity = new DataBaseEntity(rs);
+
+            DataBaseDaoGen dataBaseDaoGen = new DataBaseDaoGen(dataBaseEntity);
+
+            dataBaseDaoGen.generate(extraData);
+
+        }
+    }
+
+    @Deprecated
     public void generate() throws Exception{
         try {
             Connection connection = getConnection();
@@ -120,6 +158,7 @@ public class CodeGenerateUtils {
         }
     }
 
+    @Deprecated
     public void generateModelFile(ResultSet resultSet) throws Exception{
 
         final String suffix = ".java";
@@ -148,15 +187,17 @@ public class CodeGenerateUtils {
 
     }
 
+    @Deprecated
     public void generateDTOFile(ResultSet resultSet) throws Exception{
         final String suffix = "DTO.java";
         final String path = "D://" + changeTableName + suffix;
-        final String templateName = "DTO.ftl";
+        final String templateName = "DAO.ftl";
         File mapperFile = new File(path);
         Map<String,Object> dataMap = new HashMap<>();
         generateFileByTemplate(templateName,mapperFile,dataMap);
     }
 
+    @Deprecated
     public void generateControllerFile(ResultSet resultSet) throws Exception{
         final String suffix = "Controller.java";
         final String path = diskPath + changeTableName + suffix;
@@ -166,6 +207,7 @@ public class CodeGenerateUtils {
         generateFileByTemplate(templateName,mapperFile,dataMap);
     }
 
+    @Deprecated
     public void generateServiceImplFile(ResultSet resultSet) throws Exception{
         final String suffix = "ServiceImpl.java";
         final String path = diskPath + changeTableName + suffix;
@@ -175,6 +217,7 @@ public class CodeGenerateUtils {
         generateFileByTemplate(templateName,mapperFile,dataMap);
     }
 
+    @Deprecated
     public void generateServiceInterfaceFile(ResultSet resultSet) throws Exception{
         final String prefix = "I";
         final String suffix = "Service.java";
@@ -185,6 +228,7 @@ public class CodeGenerateUtils {
         generateFileByTemplate(templateName,mapperFile,dataMap);
     }
 
+    @Deprecated
     public void generateRepositoryFile(ResultSet resultSet) throws Exception{
         final String suffix = "Repository.java";
         final String path = diskPath + changeTableName + suffix;
@@ -194,6 +238,7 @@ public class CodeGenerateUtils {
         generateFileByTemplate(templateName,mapperFile,dataMap);
     }
 
+    @Deprecated
     public void generateDaoFile(ResultSet resultSet) throws Exception{
         final String suffix = "DAO.java";
         final String path = diskPath + changeTableName + suffix;
@@ -204,6 +249,7 @@ public class CodeGenerateUtils {
 
     }
 
+    @Deprecated
     public void generateMapperFile(ResultSet resultSet) throws Exception{
         final String suffix = "Mapper.xml";
         final String path = diskPath + changeTableName + suffix;
@@ -214,6 +260,7 @@ public class CodeGenerateUtils {
 
     }
 
+    @Deprecated
     public void generateFileByTemplate(final String templateName,File file,Map<String,Object> dataMap) throws Exception{
         Template template = FreeMarkerTemplateUtils.getTemplate(templateName);
         FileOutputStream fos = new FileOutputStream(file);

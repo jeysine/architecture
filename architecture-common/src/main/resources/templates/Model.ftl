@@ -1,4 +1,4 @@
-package cn.com.architecture.entity;
+package ${obj.packageName};
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;

@@ -1,7 +1,6 @@
 package utils.code.generate.gentype.database;
 
 import freemarker.template.Template;
-import utils.code.generate.CodeGenerateUtils;
 import utils.code.generate.ColumnClass;
 import utils.code.generate.FreeMarkerTemplateUtils;
 import utils.code.generate.entity.DataBaseEntity;
@@ -16,12 +15,12 @@ import java.util.Map;
 
 /**
  * Created by yarus li on 2017/7/30.
- * 数据库对象生成Model类型
+ * 数据库对象生成Dao类型
  */
-public class DataBaseModelGen extends AbsGenType<DataBaseEntity> {
+public class DataBaseDaoGen extends AbsGenType<DataBaseEntity> {
 
 
-    public DataBaseModelGen(DataBaseEntity entity) {
+    public DataBaseDaoGen(DataBaseEntity entity) {
         super(entity);
     }
 
@@ -50,6 +49,10 @@ public class DataBaseModelGen extends AbsGenType<DataBaseEntity> {
         Map<String,Object> dataMap = new HashMap<>();
         dataMap.put("obj",javaObj);
         dataMap.put("extra",extraData);
+
+        //String listType = (String) extraData.getDataMap("listType");
+
+        //dataMap.put("model_column",columnClassList);
         generateFileByTemplate(templateName,mapperFile,dataMap);
 
     }
