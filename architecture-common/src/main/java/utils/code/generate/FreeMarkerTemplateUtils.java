@@ -1,7 +1,5 @@
 package utils.code.generate;
 
-
-import com.evada.inno.core.exception.BusinessException;
 import freemarker.cache.ClassTemplateLoader;
 import freemarker.cache.NullCacheStorage;
 import freemarker.template.Configuration;
@@ -11,7 +9,7 @@ import freemarker.template.TemplateExceptionHandler;
 import java.io.IOException;
 
 /**
- * Created by Ay on 2016/7/27.
+ * Created by yarus li on 2017/7/30.
  */
 public class FreeMarkerTemplateUtils {
 

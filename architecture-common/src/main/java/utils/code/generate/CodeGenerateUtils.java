@@ -1,17 +1,17 @@
 package utils.code.generate;
 
 import freemarker.template.Template;
-import org.apache.commons.lang3.StringUtils;
+import utils.StringUtils;
+import utils.code.generate.entity.DataBaseEntity;
+import utils.code.generate.entity.ExtraData;
+import utils.code.generate.gentype.database.DataBaseModelGen;
 
 import java.io.*;
 import java.sql.Connection;
 import java.sql.DatabaseMetaData;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * 描述：代码生成器
@@ -29,11 +29,17 @@ public class CodeGenerateUtils {
     private final String PASSWORD = "888888";
     private final String DRIVER = "org.postgresql.Driver";
     private final String diskPath = "D://";
-    private final String changeTableName = replaceUnderLineAndUpperCase(tableName);
+    private final String changeTableName = StringUtils.replaceUnderLineAndUpperCase(tableName);
 
     public Connection getConnection() throws Exception{
         Class.forName(DRIVER);
         Connection connection= DriverManager.getConnection(URL, USER, PASSWORD);
+        return connection;
+    }
+
+    public Connection getConnection1() throws Exception{
+        Class.forName("com.mysql.jdbc.Driver");
+        Connection connection= DriverManager.getConnection("jdbc:mysql://localhost:3306/test1", "root", "1234");
         return connection;
     }
 
@@ -46,7 +52,44 @@ public class CodeGenerateUtils {
     }
 
     public static void main(String[] args) throws Exception{
-        getInstance().generate();
+
+        getInstance().generateModel();
+
+        //getInstance().generate();
+    }
+
+    public void generateModel() throws Exception{
+
+        Connection connection = getConnection1();
+        DatabaseMetaData databaseMetaData = connection.getMetaData();
+
+        ResultSet tbRs = databaseMetaData.getTables(null, null, null, null);
+
+        List<String> tbNames = new LinkedList<>();
+
+        while(tbRs.next()) {
+            tbNames.add(tbRs.getString("TABLE_NAME"));
+        }
+
+        for (String tbName : tbNames) {
+
+            ResultSet rs = databaseMetaData.getColumns(null, null, tbName, null);
+
+            ExtraData extraData = new ExtraData();
+            extraData.setPackageName("package cn.com.architecture.entity")
+                    .setSuffix(".java")
+                    .setTemplateName("Model.ftl")
+                    .setFilePath("C:\\ideaProject1\\tools\\architecture-services\\svc-service-user\\src\\main\\java\\cn\\com\\architecture\\entity\\")
+                    .setFileName(StringUtils.upFirst1(tbName))
+                    .setTableName(tbName);
+
+            DataBaseEntity dataBaseEntity = new DataBaseEntity(rs);
+
+            DataBaseModelGen dataBaseModelGen = new DataBaseModelGen(dataBaseEntity);
+
+            dataBaseModelGen.generate(extraData);
+
+        }
     }
 
     public void generate() throws Exception{
@@ -94,7 +137,7 @@ public class CodeGenerateUtils {
             //获取字段类型
             columnClass.setColumnType(resultSet.getString("TYPE_NAME"));
             //转换字段名称，如 sys_name 变成 SysName
-            columnClass.setChangeColumnName(replaceUnderLineAndUpperCase(resultSet.getString("COLUMN_NAME")));
+            columnClass.setChangeColumnName(StringUtils.replaceUnderLineAndUpperCase(resultSet.getString("COLUMN_NAME")));
             //字段在数据库的注释
             columnClass.setColumnComment(resultSet.getString("REMARKS"));
             columnClassList.add(columnClass);
@@ -182,23 +225,6 @@ public class CodeGenerateUtils {
         dataMap.put("table_annotation",tableAnnotation);
         Writer out = new BufferedWriter(new OutputStreamWriter(fos, "utf-8"),10240);
         template.process(dataMap,out);
-    }
-
-    public String replaceUnderLineAndUpperCase(String str){
-        StringBuffer sb = new StringBuffer();
-        sb.append(str);
-        int count = sb.indexOf("_");
-        while(count!=0){
-            int num = sb.indexOf("_",count);
-            count = num + 1;
-            if(num != -1){
-                char ss = sb.charAt(count);
-                char ia = (char) (ss - 32);
-                sb.replace(count , count + 1,ia + "");
-            }
-        }
-        String result = sb.toString().replaceAll("_","");
-        return StringUtils.capitalize(result);
     }
 
 }

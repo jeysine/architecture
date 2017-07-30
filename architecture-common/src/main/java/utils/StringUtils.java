@@ -139,19 +139,19 @@ public class StringUtils extends org.apache.commons.lang3.StringUtils {
         return null;
     }
 
-    public static byte[] enBASE64(byte[] bytes) {
-        return Base64Code.encode(bytes);
-    }
-
-    /**
-     * BASE64反编码
-     *
-     * @param bytes
-     * @return byte[]
-     */
-    public static byte[] deBASE64(byte[] bytes) {
-        return Base64Code.decode(bytes);
-    }
+//    public static byte[] enBASE64(byte[] bytes) {
+//        return Base64Code.encode(bytes);
+//    }
+//
+//    /**
+//     * BASE64反编码
+//     *
+//     * @param bytes
+//     * @return byte[]
+//     */
+//    public static byte[] deBASE64(byte[] bytes) {
+//        return Base64Code.decode(bytes);
+//    }
 
     /**
      * BASE64编码
@@ -160,13 +160,14 @@ public class StringUtils extends org.apache.commons.lang3.StringUtils {
      * @return String
      */
     public static String enBASE64(String s) {
-        if (s != null) {
-            byte abyte0[] = s.getBytes();
-            abyte0 = Base64Code.encode(abyte0);
-            s = new String(abyte0);
-            return s;
-        }
+//        if (s != null) {
+//            byte abyte0[] = s.getBytes();
+//            abyte0 = Base64Code.encode(abyte0);
+//            s = new String(abyte0);
+//            return s;
+//        }
         return null;
+        //TODO enBASE64
     }
 
     /**
@@ -176,14 +177,15 @@ public class StringUtils extends org.apache.commons.lang3.StringUtils {
      * @return String
      */
     public static String deBASE64(String s) {
-        if (s != null) {
-            byte abyte0[] = s.getBytes();
-            abyte0 = Base64Code.decode(abyte0);
-            s = new String(abyte0);
-            abyte0 = null;
-            return s;
-        }
+//        if (s != null) {
+//            byte abyte0[] = s.getBytes();
+//            abyte0 = Base64Code.decode(abyte0);
+//            s = new String(abyte0);
+//            abyte0 = null;
+//            return s;
+//        }
         return null;
+        //TODO deBASE64
     }
 
     /**
@@ -1090,206 +1092,90 @@ public class StringUtils extends org.apache.commons.lang3.StringUtils {
     }
 
 
-
-}
-
-/**
- * BASE64编码解码实现类
- *
- * @author liusoft created on 2002-12-19
- */
-class Base64Code {
-
-    protected static byte[] _encode_map = { (byte) 'A', (byte) 'B', (byte) 'C',
-            (byte) 'D', (byte) 'E', (byte) 'F', (byte) 'G', (byte) 'H',
-            (byte) 'I', (byte) 'J', (byte) 'K', (byte) 'L', (byte) 'M',
-            (byte) 'N', (byte) 'O', (byte) 'P', (byte) 'Q', (byte) 'R',
-            (byte) 'S', (byte) 'T', (byte) 'U', (byte) 'V', (byte) 'W',
-            (byte) 'X', (byte) 'Y', (byte) 'Z',
-
-            (byte) 'a', (byte) 'b', (byte) 'c', (byte) 'd', (byte) 'e',
-            (byte) 'f', (byte) 'g', (byte) 'h', (byte) 'i', (byte) 'j',
-            (byte) 'k', (byte) 'l', (byte) 'm', (byte) 'n', (byte) 'o',
-            (byte) 'p', (byte) 'q', (byte) 'r', (byte) 's', (byte) 't',
-            (byte) 'u', (byte) 'v', (byte) 'w', (byte) 'x', (byte) 'y',
-            (byte) 'z',
-
-            (byte) '0', (byte) '1', (byte) '2', (byte) '3', (byte) '4',
-            (byte) '5', (byte) '6', (byte) '7', (byte) '8', (byte) '9',
-
-            (byte) '+', (byte) '/' };
-
-    protected static byte _decode_map[] = new byte[128];
-    static {
-		/*
-		 * Fill in the decode map
-		 */
-        for (int i = 0; i < _encode_map.length; i++) {
-            _decode_map[_encode_map[i]] = (byte) i;
-        }
-    }
-
     /**
-     * This class isn't meant to be instantiated.
-     */
-    private Base64Code() {
-
-    }
-
-    /**
-     * This method encodes the given byte[] using the Base64 encoding
-     *
-     *
-     * @param data
-     *            the data to encode.
-     * @return the Base64 encoded <var>data</var>
-     */
-    public final static byte[] encode(byte[] data) {
-
-        if (data == null) {
-            return (null);
-        }
-
-		/*
-		 * Craete a buffer to hold the results
-		 */
-        byte dest[] = new byte[((data.length + 2) / 3) * 4];
-
-		/*
-		 * 3-byte to 4-byte conversion and 0-63 to ascii printable conversion
-		 */
-        int i, j;
-        int data_len = data.length - 2;
-        for (i = 0, j = 0; i < data_len; i += 3) {
-
-            dest[j++] = _encode_map[(data[i] >>> 2) & 077];
-            dest[j++] = _encode_map[(data[i + 1] >>> 4) & 017 | (data[i] << 4)
-                    & 077];
-            dest[j++] = _encode_map[(data[i + 2] >>> 6) & 003
-                    | (data[i + 1] << 2) & 077];
-            dest[j++] = _encode_map[data[i + 2] & 077];
-        }
-
-        if (i < data.length) {
-            dest[j++] = _encode_map[(data[i] >>> 2) & 077];
-
-            if (i < data.length - 1) {
-                dest[j++] = _encode_map[(data[i + 1] >>> 4) & 017
-                        | (data[i] << 4) & 077];
-                dest[j++] = _encode_map[(data[i + 1] << 2) & 077];
-            } else {
-                dest[j++] = _encode_map[(data[i] << 4) & 077];
-            }
-        }
-
-		/*
-		 * Pad with "=" characters
-		 */
-        for (; j < dest.length; j++) {
-            dest[j] = (byte) '=';
-        }
-
-        return (dest);
-    }
-
-
-
-    /**
-     * This method decodes the given byte[] using the Base64 encoding
-     *
-     *
-     * @param data
-     *            the Base64 encoded data to decode.
-     * @return the decoded <var>data</var>.
-     */
-    public final static byte[] decode(byte[] data) {
-
-        if (data == null)
-            return (null);
-
-		/*
-		 * Remove the padding on the end
-		 */
-        int ending = data.length;
-        if (ending < 1) {
-            return (null);
-        }
-        while (data[ending - 1] == '=')
-            ending--;
-
-		/*
-		 * Create a buffer to hold the results
-		 */
-        byte dest[] = new byte[ending - data.length / 4];
-
-		/*
-		 * ASCII printable to 0-63 conversion
-		 */
-        for (int i = 0; i < data.length; i++) {
-            data[i] = _decode_map[data[i]];
-        }
-
-		/*
-		 * 4-byte to 3-byte conversion
-		 */
-        int i, j;
-        int dest_len = dest.length - 2;
-        for (i = 0, j = 0; j < dest_len; i += 4, j += 3) {
-            dest[j] = (byte) (((data[i] << 2) & 255) | ((data[i + 1] >>> 4) & 003));
-            dest[j + 1] = (byte) (((data[i + 1] << 4) & 255) | ((data[i + 2] >>> 2) & 017));
-            dest[j + 2] = (byte) (((data[i + 2] << 6) & 255) | (data[i + 3] & 077));
-        }
-
-        if (j < dest.length) {
-            dest[j] = (byte) (((data[i] << 2) & 255) | ((data[i + 1] >>> 4) & 003));
-        }
-
-        j++;
-        if (j < dest.length) {
-            dest[j] = (byte) (((data[i + 1] << 4) & 255) | ((data[i + 2] >>> 2) & 017));
-        }
-
-        return (dest);
-    }
-
-    public long[] stringToLong(String str,String c){
-        String[] strs = str.split(c);
-        long[] longArr = {};
-        for(int i = 0;i<strs.length;i++ ){
-            longArr[i] = Long.parseLong(strs[i]);
-        }
-        return longArr;
-
-    }
-
-    /**
-     * 计算字符串的字符长度，中文算2个字符
-     *
+     * 转换字段名称，如 sys_name 变成 SysName
      * @param str
      * @return
      */
-    public static int charLength(String str) {
-        if (StringUtils.isBlank(str)) {
-            return 0;
-        }
-        int valueLength = 0;
-        String chinese = "[\u0391-\uFFE5]";
-        for (int i = 0; i < str.length(); i++) {
-            String temp = str.substring(i, i + 1);
-            if (temp.matches(chinese)) {
-                // 中文
-                valueLength += 2;
-            } else {
-                valueLength += 1;
+    public static String replaceUnderLineAndUpperCase(String str){
+        StringBuffer sb = new StringBuffer();
+        sb.append(str);
+        int count = sb.indexOf("_");
+        while(count!=0){
+            int num = sb.indexOf("_",count);
+            count = num + 1;
+            if(num != -1){
+                char ss = sb.charAt(count);
+                char ia = (char) (ss - 32);
+                sb.replace(count , count + 1,ia + "");
             }
         }
-        return valueLength;
+        String result = sb.toString().replaceAll("_","");
+        return org.apache.commons.lang3.StringUtils.capitalize(result);
     }
 
+    /**
+     * 下划线风格转大写驼峰
+     */
+    public static String underlineToUpperCamal(String s){
+        String[] ss = s.split("_");
+        for (int i = 0; i < ss.length; i++) {
+            ss[i] = upFirst1(ss[i]);
+        }
+        return join("", ss);
+    }
 
+    /**
+     * 大写首字母
+     */
+    public static String upFirst(String str) {
+        return str.substring(0, 1).toUpperCase().concat(str.substring(1));
+    }
 
-    public static void main(String[] args) {
-        // sSystem.out.println(":password:"+encrypt("58852C6B20DFA2C0","sKy_PAsSKey"));
+    /**
+     * 首字母大写
+     * @author Craig
+     * @param str
+     */
+    public static String upFirst1(String str) {
+        char[] strs = str.toCharArray();
+        if((strs[0] >= 'a' && strs[0] <= 'z')) {
+            strs[0] -= 32;
+            return String.valueOf(strs);
+        }else {
+            return upFirst(str);
+        }
+    }
+
+    public static String sqlTypeToJavaType(String type){
+
+        if(type.equals("BIGINT")){
+            return "java.lang.Long";
+        }
+        if(type.equals("SMALLINT")){
+            return "java.lang.Short";
+        }
+        if(type.contains("INT")){
+            return "java.lang.Integer";
+        }
+        if(type.equals("FLOAT")){
+            return "java.lang.Float";
+        }
+        if(type.equals("DOUBLE")){
+            return "java.lang.Float";
+        }
+        if(type.contains("CHAR") || type.contains("TEXT")){
+            return "java.lang.String";
+        }
+        if(type.contains("BINARY") || type.contains("BLOB")){
+            return "byte[]";
+        }
+        if(type.contains("DATE") || type.contains("TIME")){
+            return "java.util.Date";
+        }
+
+        // 其他类型拜托不要用了
+        throw new RuntimeException("unsupported type = " + type);
     }
 
 }
