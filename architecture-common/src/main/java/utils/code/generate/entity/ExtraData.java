@@ -45,6 +45,11 @@ public class ExtraData {
      */
     public String tableName;
 
+    /**
+     * 其他的泛型
+     */
+    public String otherType;
+
     public ExtraData setFileName(String fileName) {
         this.fileName = fileName;
         return this;
@@ -129,6 +134,14 @@ public class ExtraData {
         return templateName;
     }
 
+    public void setOtherType(String otherType) {
+        this.otherType = otherType;
+    }
+
+    public String getOtherType() {
+        return otherType;
+    }
+
     public void clear(){
         templateName = null;
         mapperFile = null;
@@ -137,5 +150,6 @@ public class ExtraData {
         packageName = null;
         dataMap = null;
         fileName = null;
+        otherType = null;
     }
 }

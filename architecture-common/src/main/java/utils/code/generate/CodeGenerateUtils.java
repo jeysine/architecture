@@ -90,6 +90,8 @@ public class CodeGenerateUtils {
             DataBaseModelGen dataBaseModelGen = new DataBaseModelGen(dataBaseEntity);
             dataBaseModelGen.generate(extraData);
 
+            extraData.clear();
+
         }
     }
 
@@ -126,6 +128,7 @@ public class CodeGenerateUtils {
 
             dataBaseDaoGen.generate(extraData);
 
+            extraData.clear();
         }
     }
 
