@@ -68,7 +68,9 @@ public class User extends Base implements Serializable {
 				"name='" + name + '\'' +
 				", gender=" + gender +
 				", phoneNumber='" + phoneNumber + '\'' +
-				", age=" + age +
-				'}';
+				", age=" + age + '}';
 	}
+
+
+
 }

@@ -2,7 +2,7 @@ package utils.code.generate;
 
 /**
  * 数据库字段封装类
- * Created by Ay on 2017/5/3.
+ * Created by yarus li on 2017/7/30.
  */
 public class ColumnClass {
 
@@ -14,6 +14,8 @@ public class ColumnClass {
     private String changeColumnName;
     /** 数据库字段注释 **/
     private String columnComment;
+    /** 数据库默认值 **/
+    private String defValue;
 
     public String getColumnComment() {
         return columnComment;
@@ -45,5 +47,13 @@ public class ColumnClass {
 
     public void setChangeColumnName(String changeColumnName) {
         this.changeColumnName = changeColumnName;
+    }
+
+    public void setDefValue(String defValue) {
+        this.defValue = defValue;
+    }
+
+    public String getDefValue() {
+        return defValue;
     }
 }
