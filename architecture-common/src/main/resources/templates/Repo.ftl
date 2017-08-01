@@ -1,6 +1,7 @@
 package ${obj.packageName};
 
 import cn.com.architecture.entity.${extra.tableName?cap_first};
+import org.springframework.data.jpa.repository.JpaRepository;
 
 /**
 * 描述：${obj.desc}

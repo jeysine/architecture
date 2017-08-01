@@ -17,53 +17,53 @@ import java.util.Map;
  * Created by yarus li on 2017/7/30.
  * 数据库对象生成Dao类型
  */
-public class DataBaseDaoGen extends AbsGenType<DataBaseEntity> {
+public class DataBaseDaoGen extends DataBaseGen {
 
 
     public DataBaseDaoGen(DataBaseEntity entity) {
         super(entity);
     }
 
-    @Override
-    public void generate(ExtraData extraData) throws Exception {
-
-        String suffix = extraData.suffix;
-
-        String packageName = extraData.packageName;
-        String name = extraData.fileName;
-
-        String path = extraData.filePath+name+suffix;
-
-//        final String templateName = "Model.ftl";
+//    @Override
+//    public void generate(ExtraData extraData) throws Exception {
+//
+//        String suffix = extraData.suffix;
+//
+//        String packageName = extraData.packageName;
+//        String name = extraData.fileName;
+//
+//        String path = extraData.filePath+name+suffix;
+//
+////        final String templateName = "Model.ftl";
+////        File mapperFile = new File(path);
+//
+//        String templateName = extraData.templateName;
 //        File mapperFile = new File(path);
-
-        String templateName = extraData.templateName;
-        File mapperFile = new File(path);
-        List<ColumnClass> columnClassList = entity.createColumnClass(entity.getEntity());
-
-        JavaObj javaObj = JavaObj.defaultObj();
-        javaObj.setColumnClassList(columnClassList);
-        javaObj.setPackageName(packageName);
-        javaObj.setName(name);
-
-        Map<String,Object> dataMap = new HashMap<>();
-        dataMap.put("obj",javaObj);
-        dataMap.put("extra",extraData);
-
-        //String listType = (String) extraData.getDataMap("listType");
-
-        //dataMap.put("model_column",columnClassList);
-        generateFileByTemplate(templateName,mapperFile,dataMap);
-
-    }
+//        List<ColumnClass> columnClassList = entity.createColumnClass(entity.getEntity());
+//
+//        JavaObj javaObj = JavaObj.defaultObj();
+//        javaObj.setColumnClassList(columnClassList);
+//        javaObj.setPackageName(packageName);
+//        javaObj.setName(name);
+//
+//        Map<String,Object> dataMap = new HashMap<>();
+//        dataMap.put("obj",javaObj);
+//        dataMap.put("extra",extraData);
+//
+//        //String listType = (String) extraData.getDataMap("listType");
+//
+//        //dataMap.put("model_column",columnClassList);
+//        generateFileByTemplate(templateName,mapperFile,dataMap);
+//
+//    }
 
 
-    public void generateFileByTemplate(final String templateName,File file,Map<String,Object> dataMap) throws Exception{
-        Template template = FreeMarkerTemplateUtils.getTemplate(templateName);
-        FileOutputStream fos = new FileOutputStream(file);
-        Writer out = new BufferedWriter(new OutputStreamWriter(fos, "utf-8"),10240);
-        template.process(dataMap,out);
-    }
+//    public void generateFileByTemplate(final String templateName,File file,Map<String,Object> dataMap) throws Exception{
+//        Template template = FreeMarkerTemplateUtils.getTemplate(templateName);
+//        FileOutputStream fos = new FileOutputStream(file);
+//        Writer out = new BufferedWriter(new OutputStreamWriter(fos, "utf-8"),10240);
+//        template.process(dataMap,out);
+//    }
 
 //    public void generateFileByTemplate(final String templateName,File file,Map<String,Object> dataMap) throws Exception{
 //        Template template = FreeMarkerTemplateUtils.getTemplate(templateName);

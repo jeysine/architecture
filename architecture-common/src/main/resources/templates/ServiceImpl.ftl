@@ -1,7 +1,9 @@
 package ${obj.packageName};
 
-import cn.com.architecture.service.Service;
+<#assign repo="${extra.tableName}Repository"/>
+
 import cn.com.architecture.entity.${extra.tableName?cap_first};
+import cn.com.architecture.repo.${repo?cap_first};
 import cn.com.architecture.service.${extra.tableName?cap_first}Service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -16,36 +18,37 @@ import org.springframework.stereotype.Service;
 @Service
 public class ${extra.fileName} implements ${extra.tableName?cap_first}Service{
 
+
     @Autowired
-    private ${extra.fileName} ${extra.fileName?uncap_first};
+    private ${repo?cap_first} ${repo};
 
     @Override
-    public ${extra.tableName} save(${extra.tableName} entity) {
-        return ${extra.fileName?uncap_first}.save(entity);
+    public ${extra.tableName?cap_first} save(${extra.tableName?cap_first} entity) {
+        return ${repo}.save(entity);
     }
 
     @Override
-    public User findById(String id) {
-        return ${extra.fileName?uncap_first}.findOne(id);
+    public ${extra.tableName?cap_first} findById(String id) {
+        return ${repo}.findOne(id);
     }
 
     @Override
     public void delete(String s) {
-        ${extra.fileName?uncap_first}.delete(s);
+        ${repo}.delete(s);
     }
 
     @Override
     public Iterable<${extra.tableName?cap_first}> findAll() {
-        return ${extra.fileName?uncap_first}.findAll();
+        return ${repo}.findAll();
     }
 
     @Override
     public long count() {
-        return ${extra.fileName?uncap_first}.count();
+        return ${repo}.count();
     }
 
     @Override
     public boolean exists(String s) {
-        return ${extra.fileName?uncap_first}.exists(s);
+        return ${repo}.exists(s);
     }
 }

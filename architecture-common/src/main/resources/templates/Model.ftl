@@ -22,9 +22,9 @@ import java.util.Date;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class ${obj.name} extends Base implements Serializable {
 
-private static final long serialVersionUID = -1L;
+    private static final long serialVersionUID = -1L;
 
-@Id
+    @Id
 <#if obj.columnClassList?exists>
     <#list obj.columnClassList as model>
     /** ${model.columnComment!} */

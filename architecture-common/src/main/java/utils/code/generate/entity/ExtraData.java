@@ -134,8 +134,9 @@ public class ExtraData {
         return templateName;
     }
 
-    public void setOtherType(String otherType) {
+    public ExtraData setOtherType(String otherType) {
         this.otherType = otherType;
+        return this;
     }
 
     public String getOtherType() {

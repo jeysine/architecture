@@ -1,7 +1,7 @@
 package utils.code.generate.entity;
 
 import utils.code.generate.ColumnClass;
-import utils.code.generate.constants.GenerateConstants;
+import utils.code.generate.constants.GenCons;
 
 import java.text.SimpleDateFormat;
 import java.util.*;
@@ -121,10 +121,10 @@ public class JavaObj {
     public static JavaObj defaultObj(){
 
         JavaObj obj = new JavaObj();
-        obj.setAuthor(GenerateConstants.AUTHOR);
+        obj.setAuthor(GenCons.AUTHOR);
         obj.setCreateDate(new Date());
-        obj.setEmail(GenerateConstants.EMAIL);
-        obj.setDesc(GenerateConstants.DESCRIPTION);
+        obj.setEmail(GenCons.EMAIL);
+        obj.setDesc(GenCons.DESCRIPTION);
 
 
         return obj;
