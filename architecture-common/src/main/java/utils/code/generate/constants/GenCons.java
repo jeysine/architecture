@@ -14,6 +14,8 @@ public class GenerateConstants {
 
     public static final String DESCRIPTION = "code generate by util";
 
+    public static final String BASE_PACKAGE = "cn.com.architecture";
+
 //    public static final String AUTHOR = "yarus li";
 //
 //    public static final String EMAIL = "lloo0331oo@126.com";
