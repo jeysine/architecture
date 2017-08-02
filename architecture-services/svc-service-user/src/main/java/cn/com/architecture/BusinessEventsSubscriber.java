@@ -29,6 +29,7 @@ public class BusinessEventsSubscriber {
 	public void init() {
 		try {
 			eventService.subscribe(EventConstant.TEST.getValue(), testListener);
+			logger.info("订阅业务事件成功！！ ");
 		} catch (EventServiceException e) {
 			logger.error("订阅业务事件失败！！ ", e);
 			throw new IllegalStateException();

@@ -17,7 +17,6 @@ public class TestListener implements EventListener {
 
 	@Override
 	public void handleEvent(Event event) {
-		logger.debug("test listener");
-		System.out.println("test listener");
+		logger.info("处理监听器逻辑");
 	}
 }

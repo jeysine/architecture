@@ -8,6 +8,7 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import utils.UuidUtils;
 
 import java.util.UUID;
 
@@ -22,8 +23,9 @@ public class UserServiceImplTest {
 
 	@org.junit.Test
 	public void save() throws Exception {
+		UuidUtils uuidUtils = new UuidUtils();
 		User user = new User();
-		user.setId(UUID.randomUUID().toString());
+		user.setId(uuidUtils.nextValue());
 		user.setName("jeysine");
 		user.setAge(23);
 		user.setGender(0);

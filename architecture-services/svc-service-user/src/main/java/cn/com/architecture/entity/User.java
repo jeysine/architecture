@@ -15,18 +15,18 @@ import java.io.Serializable;
 public class User extends Base implements Serializable {
 	private static final long serialVersionUID = 6669554082209059078L;
 	@Id
-	private String id;
+	private Long id;
 
 	private String name;
     private Integer gender;
     private String phoneNumber;
     private Integer age;
 
-	public String getId() {
+	public Long getId() {
 		return id;
 	}
 
-	public void setId(String id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 
