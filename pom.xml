@@ -376,6 +376,12 @@
                 <artifactId>mysql-connector-java</artifactId>
                 <version>5.1.43</version>
             </dependency>
+            <dependency>
+                <groupId>net.sf.json-lib</groupId>
+                <artifactId>json-lib</artifactId>
+                <classifier>jdk15</classifier>
+                <version>2.4</version>
+            </dependency>
 
             <!-- architecture -->
             <dependency>
@@ -401,6 +407,11 @@
             <dependency>
                 <groupId>cn.com.architecture.services</groupId>
                 <artifactId>svc-service-common</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>cn.com.architecture.services</groupId>
+                <artifactId>svc-service-user</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>
