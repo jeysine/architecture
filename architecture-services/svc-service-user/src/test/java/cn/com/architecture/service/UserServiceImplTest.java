@@ -36,5 +36,4 @@ public class UserServiceImplTest {
 		event.setType(EventConstant.TEST.getValue());
 		eventService.publish(event);
 	}
-
 }

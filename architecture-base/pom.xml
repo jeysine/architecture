@@ -64,6 +64,15 @@
             <groupId>redis.clients</groupId>
             <artifactId>jedis</artifactId>
         </dependency>
+        <dependency>
+            <groupId>org.aspectj</groupId>
+            <artifactId>aspectjrt</artifactId>
+            <version>1.8.8</version>
+        </dependency>
+        <dependency>
+            <groupId>cn.architecture</groupId>
+            <artifactId>architecture-common</artifactId>
+        </dependency>
     </dependencies>
 
 </project>
