@@ -18,7 +18,8 @@
 
 
 	<task:annotation-driven/>
-	<context:property-placeholder location="classpath:spring/application-dev.properties"/>
+	<!--<context:property-placeholder location="classpath:spring/application-dev.properties"/>-->
+	<context:property-placeholder location="classpath:spring/application-dev-mysql.properties"/>
 	<context:component-scan base-package="cn.com.architecture">
 		<context:exclude-filter type="annotation"
 								expression="org.springframework.stereotype.Controller"/>
@@ -33,7 +34,8 @@
 			  class="cn.com.architecture.config.AddConfigurationPropertiesToEnvironmentPlaceHolderConfiguer">
 			<property name="locations">
 				<list>
-					<value>classpath*:spring/application-dev.properties</value>
+					<!--<value>classpath*:spring/application-dev.properties</value>-->
+					<value>classpath*:spring/application-dev-mysql.properties</value>
 				</list>
 			</property>
 			<property name="ignoreResourceNotFound" value="false"/>

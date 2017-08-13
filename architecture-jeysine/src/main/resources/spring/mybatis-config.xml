@@ -11,10 +11,10 @@
 		<setting name="mapUnderscoreToCamelCase" value="true" />
 	</settings>
 
-	<plugins>
-		<plugin interceptor="cn.com.architecture.pageutil.PagePlugin">
-			<property name="dialect" value="PostgreSQL" />
-			<property name="pageSqlId" value=".*Page.*" />
-		</plugin>
-	</plugins>
+	<!--<plugins>-->
+		<!--<plugin interceptor="cn.com.architecture.pageutil.PagePlugin">-->
+			<!--<property name="dialect" value="PostgreSQL" />-->
+			<!--<property name="pageSqlId" value=".*Page.*" />-->
+		<!--</plugin>-->
+	<!--</plugins>-->
 </configuration>

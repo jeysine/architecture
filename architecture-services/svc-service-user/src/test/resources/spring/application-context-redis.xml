@@ -25,7 +25,7 @@
 		<constructor-arg index="2" value="${redis.port}" type="int" />
 		<constructor-arg index="3" value="${redis.timeout}"
 			type="int" />
-		<constructor-arg index="4" value="${redis.password}" />
+		<!--<constructor-arg index="4" value="${redis.password}" />-->
 	</bean>
 
 	<bean id="jedisTemplate" class="cn.com.architecture.jedis.JedisTemplate">
