@@ -145,4 +145,64 @@
     <url-pattern>/</url-pattern>
   </servlet-mapping>
   <!-- ************************** servlet 配置区域End ************************** -->
+
+  <!-- druid监控 -->
+  <servlet>
+    <servlet-name>DruidStatView</servlet-name>
+    <servlet-class>com.alibaba.druid.support.http.StatViewServlet</servlet-class>
+    <init-param>
+      <!-- 用户名 -->
+      <param-name>loginUsername</param-name>
+      <param-value>druid</param-value>
+    </init-param>
+    <init-param>
+      <!-- 密码 -->
+      <param-name>loginPassword</param-name>
+      <param-value>bounter</param-value>
+    </init-param>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>DruidStatView</servlet-name>
+    <url-pattern>/druid/*</url-pattern>
+  </servlet-mapping>
+
+  <filter>
+    <filter-name>DruidWebStatFilter</filter-name>
+    <filter-class>com.alibaba.druid.support.http.WebStatFilter</filter-class>
+    <!-- 经常需要排除一些不必要的url，比如*.js,/jslib/*等等。配置在init-param中。比如：-->
+    <init-param>
+      <param-name>exclusions</param-name>
+      <param-value>*.js,*.gif,*.jpg,*.png,*.css,*.ico,/druid/*</param-value>
+    </init-param>
+    <!--缺省sessionStatMaxCount是1000个-->
+    <init-param>
+      <param-name>sessionStatMaxCount</param-name>
+      <param-value>1000</param-value>
+    </init-param>
+    <!--关闭session统计功能-->
+    <!--<init-param>-->
+      <!--<param-name>sessionStatEnable</param-name>-->
+      <!--<param-value>false</param-value>-->
+    <!--</init-param>-->
+    <!--配置principalSessionName，使得druid能够知道当前的session的用户是谁-->
+    <!--<init-param>-->
+      <!--<param-name>principalSessionName</param-name>-->
+      <!--<param-value>xxx.user</param-value>-->
+    <!--</init-param>-->
+    <!--如果你的user信息保存在cookie中，你可以配置principalCookieName，使得druid知道当前的user是谁-->
+    <!--<init-param>-->
+      <!--<param-name>principalCookieName</param-name>-->
+      <!--<param-value>xxx.user</param-value>-->
+    <!--</init-param>-->
+    <!--druid 0.2.7版本开始支持profile，配置profileEnable能够监控单个url调用的sql列表。-->
+    <init-param>
+      <param-name>profileEnable</param-name>
+      <param-value>true</param-value>
+    </init-param>
+  </filter>
+  <filter-mapping>
+    <filter-name>DruidWebStatFilter</filter-name>
+    <url-pattern>/*</url-pattern>
+  </filter-mapping>
+
 </web-app>
