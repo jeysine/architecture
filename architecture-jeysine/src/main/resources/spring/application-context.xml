@@ -14,12 +14,17 @@
        http://www.springframework.org/schema/data/mongo/spring-mongo.xsd
      ">
 	<import resource="application-context-database.xml"/>
-	<import resource="application-context-redis.xml" />
+	<!--<import resource="application-context-redis.xml" />-->
 
 
 	<task:annotation-driven/>
 	<!--<context:property-placeholder location="classpath:spring/application-dev.properties"/>-->
-	<context:property-placeholder location="classpath:spring/application-dev-mysql.properties"/>
+	<context:property-placeholder  ignore-resource-not-found="true"
+								   location="classpath:properties/*.properties" />
+
+	<!--<context:property-placeholder location="classpath:propertmongodb.propertiesties"/>-->
+
+
 	<context:component-scan base-package="cn.com.architecture">
 		<context:exclude-filter type="annotation"
 								expression="org.springframework.stereotype.Controller"/>
@@ -35,7 +40,8 @@
 			<property name="locations">
 				<list>
 					<!--<value>classpath*:spring/application-dev.properties</value>-->
-					<value>classpath*:spring/application-dev-mysql.properties</value>
+					<!--<value>classpath*:spring/application-dev-mysql-back.properties</value>-->
+					<value>classpath:properties/*.properties</value>
 				</list>
 			</property>
 			<property name="ignoreResourceNotFound" value="false"/>

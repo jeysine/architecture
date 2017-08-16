@@ -38,6 +38,7 @@
         <module>architecture-jeysine</module>
         <module>architecture-event</module>
         <module>architecture-login</module>
+        <module>architecture-config</module>
     </modules>
     <dependencyManagement>
         <dependencies>
@@ -449,7 +450,11 @@
                 <artifactId>svc-service-user</artifactId>
                 <version>${project.version}</version>
             </dependency>
-
+            <dependency>
+                <groupId>cn.architecture</groupId>
+                <artifactId>architecture-config</artifactId>
+                <version>${project.version}</version>
+            </dependency>
 
         </dependencies>
     </dependencyManagement>
