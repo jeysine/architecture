@@ -9,15 +9,6 @@
 	<import resource="application-context-mybatis.xml" />
 	<import resource="application-context-redis.xml" />
 
-	<!--<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource">-->
-		<!--<property name="driverClassName" value="${database.driverClassName}" />-->
-		<!--<property name="url" value="${database.url}" />-->
-		<!--<property name="username" value="${database.username}" />-->
-		<!--<property name="password" value="${database.password}" />-->
-		<!--<property name="maxActive" value="${database.maxActiveConnection}" />-->
-		<!--<property name="minIdle" value="${database.minIdleConnection}" />-->
-	<!--</bean>-->
-
 	<!--  数据源 -->
 	<!--<bean id="dataSource" class="org.apache.commons.dbcp2.BasicDataSource" destroy-method="close">-->
 	<bean id="dataSource" class="com.alibaba.druid.pool.DruidDataSource" init-method="init" destroy-method="close">

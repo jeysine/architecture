@@ -57,6 +57,11 @@
             <artifactId>poi</artifactId>
             <version>3.13</version>
         </dependency>
+
+        <dependency>
+            <groupId>cn.architecture</groupId>
+            <artifactId>architecture-config</artifactId>
+        </dependency>
     </dependencies>
 
 

@@ -13,8 +13,8 @@ import javax.servlet.http.HttpServletRequest;
 
 @RestController
 @RequestMapping(value = { "/architecture/public/user" }, produces = "application/json")
-public class PublicBgUserController {
-    private Logger logger = LoggerFactory.getLogger(PublicBgUserController.class);
+public class PublicUserController {
+    private Logger logger = LoggerFactory.getLogger(PublicUserController.class);
 
     @RequestMapping(value = "/", method = RequestMethod.GET)
     public ResponseEntity<ApiResult> login(HttpServletRequest request) {

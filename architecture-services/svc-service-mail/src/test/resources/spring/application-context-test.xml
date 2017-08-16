@@ -22,8 +22,6 @@
 			  class="cn.com.architecture.config.AddConfigurationPropertiesToEnvironmentPlaceHolderConfiguer">
 			<property name="locations">
 				<list>
-					<!--<value>classpath*:spring/application-dev.properties</value>-->
-					<!--<value>classpath*:spring/application-dev-mysql.properties</value>-->
 					<value>classpath*:spring/common-dev.properties</value>
 				</list>
 			</property>
