@@ -13,29 +13,17 @@
        http://www.springframework.org/schema/data/mongo
        http://www.springframework.org/schema/data/mongo/spring-mongo.xsd
      ">
-	<import resource="application-context-database.xml"/>
-	<import resource="application-context-redis.xml" />
-
 
 	<task:annotation-driven/>
-	<!--<context:property-placeholder location="classpath:spring/application-dev.properties"/>-->
-	<context:property-placeholder location="classpath:spring/application-dev-mysql.properties"/>
-	<context:component-scan base-package="cn.com.architecture">
-		<context:exclude-filter type="annotation"
-								expression="org.springframework.stereotype.Controller"/>
-	</context:component-scan>
 
-	<beans profile="dev,ci">
-		<mongo:mongo host="${mongodb.host}" port="${mongodb.port}"/>
-	</beans>
 
-	<beans profile="dev">
+	<beans>
 		<bean id="placeholderProperties"
 			  class="cn.com.architecture.config.AddConfigurationPropertiesToEnvironmentPlaceHolderConfiguer">
 			<property name="locations">
 				<list>
 					<!--<value>classpath*:spring/application-dev.properties</value>-->
-					<value>classpath*:spring/application-dev-mysql.properties</value>
+					<!--<value>classpath*:spring/application-dev-mysql.properties</value>-->
 					<value>classpath*:spring/common-dev.properties</value>
 				</list>
 			</property>
@@ -43,6 +31,8 @@
 			<property name="ignoreUnresolvablePlaceholders" value="false"/>
 			<property name="order" value="1"/>
 		</bean>
+
+		<bean id="mailService" class="cn.com.architecture.service.impl.MailServiceImpl"/>
 	</beans>
 
 </beans>
