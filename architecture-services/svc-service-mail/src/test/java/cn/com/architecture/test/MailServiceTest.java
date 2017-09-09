@@ -18,7 +18,7 @@ public class MailServiceTest {
 	@org.junit.Test
 	public void sendMail() throws Exception {
 		try {
-			mailService.sendTextMail(Arrays.asList("yaojiaxin@chengyisheng.com.cn"), null,
+			mailService.sendTextMail(Arrays.asList("test@jeysine.cn"), null,
 					"No-Attachment Mail", "A mail without attachment");
 		} catch (MailServiceException e) {
 			e.printStackTrace();
