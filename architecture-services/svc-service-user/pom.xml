@@ -162,6 +162,12 @@
             <artifactId>architecture-common</artifactId>
             <scope>test</scope>
         </dependency>
+
+        <dependency>
+            <groupId>cn.architecture</groupId>
+            <artifactId>architecture-base</artifactId>
+        </dependency>
+
     </dependencies>
 
 </project>

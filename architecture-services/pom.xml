@@ -29,17 +29,19 @@
         <module>svc-service-common</module>
         <module>svc-service-user</module>
         <module>svc-service-mail</module>
+        <module>svc-service-test</module>
+        <module>svc-service-dubbo</module>
     </modules>
 
     <dependencies>
-        <dependency>
-            <groupId>cn.architecture</groupId>
-            <artifactId>architecture-base</artifactId>
-        </dependency>
+        <!--<dependency>-->
+            <!--<groupId>cn.architecture</groupId>-->
+            <!--<artifactId>architecture-base</artifactId>-->
+        <!--</dependency>-->
 
-        <dependency>
-            <groupId>cn.architecture</groupId>
-            <artifactId>architecture-event</artifactId>
-        </dependency>
+        <!--<dependency>-->
+            <!--<groupId>cn.architecture</groupId>-->
+            <!--<artifactId>architecture-event</artifactId>-->
+        <!--</dependency>-->
     </dependencies>
 </project>

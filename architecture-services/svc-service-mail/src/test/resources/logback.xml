@@ -38,7 +38,7 @@
     <logger name="org.mybatis.spring.SqlSessionUtils" level="INFO" />
     <logger name="org.hibernate" level="ERROR" />
     <logger name="org.mybatis" level="ERROR" />
-    <logger name="cn.com.architecture.service.EventServiceImpl" level="ERROR" />
+    <logger name="cn.com.architecture.test.service.EventServiceImpl" level="ERROR" />
     
     <logger name="virtual.pkg.logger.mybatis" level="DEBUG"/>
     <!--<logger name="org.hibernate" level="TRACE" />-->

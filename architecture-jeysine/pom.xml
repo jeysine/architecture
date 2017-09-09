@@ -105,6 +105,10 @@
             <groupId>javax.transaction</groupId>
             <artifactId>jta</artifactId>
         </dependency>
+        <dependency>
+            <groupId>com.alibaba</groupId>
+            <artifactId>dubbo</artifactId>
+        </dependency>
 
         <!--architecture dependency-->
         <dependency>
@@ -126,6 +130,10 @@
         <dependency>
             <groupId>cn.com.architecture.services</groupId>
             <artifactId>svc-service-user</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>cn.com.architecture.services</groupId>
+            <artifactId>svc-service-test</artifactId>
         </dependency>
     </dependencies>
     <build>

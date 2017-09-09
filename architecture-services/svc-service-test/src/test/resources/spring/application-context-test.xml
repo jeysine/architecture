@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	   xmlns:context="http://www.springframework.org/schema/context"
+	   xmlns:task="http://www.springframework.org/schema/task" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	   xsi:schemaLocation="
+       http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
+       http://www.springframework.org/schema/context
+       http://www.springframework.org/schema/context/spring-context-4.0.xsd
+       http://www.springframework.org/schema/task
+       http://www.springframework.org/schema/task/spring-task-4.0.xsd
+     ">
+	<!--<import resource="application-context-database.xml"/>-->
+
+	<import resource="test-svc-dubbo.xml"/>
+
+	<task:annotation-driven/>
+	<context:property-placeholder  ignore-resource-not-found="true"
+								   location="classpath:properties/*.properties" />
+
+	<context:component-scan base-package="cn.com.architecture">
+		<context:exclude-filter type="annotation" expression="org.springframework.stereotype.Controller"/>
+		<context:exclude-filter type="regex" expression="cn.com.architecture.jedis.*"/>
+		<context:exclude-filter type="regex" expression="cn.com.architecture.job.*"/>
+		<context:exclude-filter type="regex" expression="cn.com.architecture.pageutil.*"/>
+		<context:exclude-filter type="regex" expression="cn.com.architecture.pageutil.*"/>
+	</context:component-scan>
+
+	<beans profile="dev,ci">
+		<!--<mongo:mongo host="${mongodb.host}" port="${mongodb.port}"/>-->
+	</beans>
+
+	<!--<beans profile="dev">-->
+		<!--<bean id="placeholderProperties"-->
+			  <!--class="cn.com.architecture.service.test.EnvironmentPlaceHolderConfiguer">-->
+			<!--<property name="locations">-->
+				<!--<list>-->
+					<!--<value>classpath:properties/*.properties</value>-->
+				<!--</list>-->
+			<!--</property>-->
+			<!--<property name="ignoreResourceNotFound" value="false"/>-->
+			<!--<property name="ignoreUnresolvablePlaceholders" value="false"/>-->
+			<!--<property name="order" value="1"/>-->
+		<!--</bean>-->
+	<!--</beans>-->
+
+</beans>

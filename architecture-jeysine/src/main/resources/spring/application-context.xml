@@ -14,6 +14,7 @@
        http://www.springframework.org/schema/data/mongo/spring-mongo.xsd
      ">
 	<import resource="application-context-database.xml"/>
+	<import resource="application-context-dubbo.xml"/>
 
 	<task:annotation-driven/>
 	<context:property-placeholder  ignore-resource-not-found="true"
