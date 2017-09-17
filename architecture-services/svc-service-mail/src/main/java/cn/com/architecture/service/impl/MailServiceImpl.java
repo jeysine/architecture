@@ -58,7 +58,8 @@ public class MailServiceImpl implements MailService {
 	 *
 	 * send attached mail whose attachment is produced from an Inputstream
 	 */
-	private void sendMail(List<String> recipients, List<String> ccList, String subject, String content,
+	@Override
+	public void sendMail(List<String> recipients, List<String> ccList, String subject, String content,
 						  List<String> filePathList) throws MailServiceException {
 
 		JavaMailSenderImpl senderImpl = new JavaMailSenderImpl();

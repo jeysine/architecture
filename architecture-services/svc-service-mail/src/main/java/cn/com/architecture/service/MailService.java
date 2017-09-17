@@ -10,4 +10,7 @@ public interface MailService {
 
 	void sendMailAttachedWithLocalFile(final List<String> recipients, final List<String> ccList,
 									   final String subject, final String content, final List<String> filePathList) throws MailServiceException;
+
+	void sendMail(List<String> recipients, List<String> ccList, String subject, String content,
+				  List<String> filePathList) throws MailServiceException;
 }

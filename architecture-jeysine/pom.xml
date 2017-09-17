@@ -135,6 +135,10 @@
             <groupId>cn.com.architecture.services</groupId>
             <artifactId>svc-service-test</artifactId>
         </dependency>
+        <dependency>
+            <groupId>cn.com.architecture.services</groupId>
+            <artifactId>svc-service-notification</artifactId>
+        </dependency>
     </dependencies>
     <build>
         <finalName>architecture-jeysine</finalName>

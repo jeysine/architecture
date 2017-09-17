@@ -31,6 +31,7 @@
         <module>svc-service-mail</module>
         <module>svc-service-test</module>
         <module>svc-service-dubbo</module>
+        <module>svc-service-notification</module>
     </modules>
 
     <dependencies>

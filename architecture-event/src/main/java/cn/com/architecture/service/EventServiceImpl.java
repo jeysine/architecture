@@ -200,7 +200,7 @@ public class EventServiceImpl implements EventService {
 	 */
 	@Override
 	public void publish(final Event event) throws EventServiceException {
-		logger.trace("Publishing event {}", event);
+		logger.debug("Publishing event {}", event);
 		final String eventType = event.getType();
 		if (StringUtils.isEmpty(eventType)) {
 			throw new IllegalArgumentException("Can not pulish event with empty type!");
@@ -276,7 +276,6 @@ public class EventServiceImpl implements EventService {
 	/**
 	 * Timestamp the event in order to clean up the queue
 	 * 
-	 * @author leon
 	 *
 	 */
 	public static class TimeStampedEvent {
