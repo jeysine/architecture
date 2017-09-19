@@ -1,15 +1,8 @@
-package cn.com.architecture.service.impl;
+package cn.com.architecture.service.notification.impl;
 
-import cn.com.architecture.service.MailService;
-import cn.com.architecture.service.NotificationSenderService;
-
-import java.util.List;
-import java.util.concurrent.BlockingQueue;
-import java.util.concurrent.LinkedBlockingQueue;
-import java.util.concurrent.ThreadPoolExecutor;
-import java.util.concurrent.TimeUnit;
-
-import cn.com.architecture.service.exception.MailServiceException;
+import cn.com.architecture.service.mail.MailService;
+import cn.com.architecture.service.mail.exception.MailServiceException;
+import cn.com.architecture.service.notification.NotificationSenderService;
 import cn.com.architecture.threadpool.MdcThreadPoolExecutor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -18,8 +11,13 @@ import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
+import java.util.List;
+import java.util.concurrent.BlockingQueue;
+import java.util.concurrent.LinkedBlockingQueue;
+import java.util.concurrent.ThreadPoolExecutor;
+import java.util.concurrent.TimeUnit;
 
-@Service
+@Service("notificationSenderService")
 public class NotificationSenderServiceImpl implements NotificationSenderService {
 	private BlockingQueue<Runnable> mailNotificationQueue;
 	private ThreadPoolExecutor mailExecutor;

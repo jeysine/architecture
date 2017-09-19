@@ -1,7 +1,7 @@
 package cn.com.architecture.test;
 
-import cn.com.architecture.service.MailService;
-import cn.com.architecture.service.exception.MailServiceException;
+import cn.com.architecture.service.mail.MailService;
+import cn.com.architecture.service.mail.exception.MailServiceException;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;

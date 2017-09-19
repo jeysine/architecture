@@ -16,7 +16,6 @@
 
 	<task:annotation-driven/>
 
-
 	<beans>
 		<bean id="placeholderProperties"
 			  class="cn.com.architecture.config.AddConfigurationPropertiesToEnvironmentPlaceHolderConfiguer">
@@ -30,7 +29,7 @@
 			<property name="order" value="1"/>
 		</bean>
 
-		<bean id="mailService" class="cn.com.architecture.service.impl.MailServiceImpl"/>
+		<bean id="mailService" class="cn.com.architecture.service.mail.impl.MailServiceImpl"/>
 	</beans>
 
 </beans>

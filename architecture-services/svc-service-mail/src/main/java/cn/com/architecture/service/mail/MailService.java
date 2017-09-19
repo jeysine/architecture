@@ -1,6 +1,6 @@
-package cn.com.architecture.service;
+package cn.com.architecture.service.mail;
 
-import cn.com.architecture.service.exception.MailServiceException;
+import cn.com.architecture.service.mail.exception.MailServiceException;
 
 import java.util.List;
 

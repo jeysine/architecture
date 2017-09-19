@@ -1,4 +1,4 @@
-package cn.com.architecture.service;
+package cn.com.architecture.service.notification;
 
 import java.util.List;
 

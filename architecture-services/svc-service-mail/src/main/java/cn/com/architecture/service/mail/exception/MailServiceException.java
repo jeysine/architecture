@@ -1,4 +1,4 @@
-package cn.com.architecture.service.exception;
+package cn.com.architecture.service.mail.exception;
 
 import cn.com.architecture.exception.ServiceException;
 

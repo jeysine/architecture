@@ -35,5 +35,5 @@
 
 
 	<dubbo:reference id="testService" interface="cn.com.architecture.service.TestService"/>
-	<dubbo:reference id="notificationSenderService" interface="cn.com.architecture.service.impl.NotificationSenderServiceImpl"/>
+	<dubbo:reference id="notificationSenderService" interface="cn.com.architecture.service.notification.NotificationSenderService"/>
 </beans>

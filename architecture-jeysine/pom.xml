@@ -138,6 +138,12 @@
         <dependency>
             <groupId>cn.com.architecture.services</groupId>
             <artifactId>svc-service-notification</artifactId>
+            <exclusions>
+                <exclusion>
+                    <artifactId>architecture-base</artifactId>
+                    <groupId>cn.architecture</groupId>
+                </exclusion>
+            </exclusions>
         </dependency>
     </dependencies>
     <build>

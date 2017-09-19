@@ -1,7 +1,7 @@
-package cn.com.architecture.service.impl;
+package cn.com.architecture.service.mail.impl;
 
-import cn.com.architecture.service.MailService;
-import cn.com.architecture.service.exception.MailServiceException;
+import cn.com.architecture.service.mail.MailService;
+import cn.com.architecture.service.mail.exception.MailServiceException;
 import org.apache.poi.util.IOUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

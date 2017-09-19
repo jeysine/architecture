@@ -481,7 +481,11 @@
                 <artifactId>architecture-config</artifactId>
                 <version>${project.version}</version>
             </dependency>
-
+            <dependency>
+                <groupId>com.101tec</groupId>
+                <artifactId>zkclient</artifactId>
+                <version>0.10</version>
+            </dependency>
         </dependencies>
     </dependencyManagement>
 </project>

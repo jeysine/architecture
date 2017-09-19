@@ -1,4 +1,4 @@
-package cn.com.architecture;
+package cn.com.architecture.notification;
 
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.config.ConfigurableListableBeanFactory;
