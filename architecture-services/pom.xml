@@ -32,6 +32,7 @@
         <module>svc-service-test</module>
         <module>svc-service-dubbo</module>
         <module>svc-service-notification</module>
+        <module>svc-service-wechat</module>
     </modules>
 
     <dependencies>
@@ -39,6 +40,11 @@
             <!--<groupId>cn.architecture</groupId>-->
             <!--<artifactId>architecture-base</artifactId>-->
         <!--</dependency>-->
+
+        <dependency>
+            <groupId>cn.architecture</groupId>
+            <artifactId>architecture-common</artifactId>
+        </dependency>
 
         <!--<dependency>-->
             <!--<groupId>cn.architecture</groupId>-->

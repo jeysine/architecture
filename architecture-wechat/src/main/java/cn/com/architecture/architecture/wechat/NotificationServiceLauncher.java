@@ -1,4 +1,4 @@
-package cn.com.architecture.notification;
+package cn.com.architecture.architecture.wechat;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -17,7 +17,7 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.concurrent.CountDownLatch;
 
-@ComponentScan(basePackages={"cn.com.architecture.wechat"})
+@ComponentScan(basePackages={"cn.com.architecture.service.mail","cn.com.architecture.service.notification"})
 @ImportResource({"classpath:spring/application-context.xml"})
 //@EnableAspectJAutoProxy
 public class NotificationServiceLauncher {
