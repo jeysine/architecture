@@ -1,22 +1,46 @@
 package cn.com.architecture.wechat.entity;
 
-public class WechatAccessToken {
-	private String access_token;
-	private Long expires_in;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
-	public String getAccess_token() {
-		return access_token;
+import java.io.Serializable;
+
+public class WechatAccessToken implements Serializable{
+
+	@JsonProperty("access_token")
+	private String accessToken;
+
+	@JsonProperty("expires_in")
+	private Long expiresIn;
+
+	public WechatAccessToken() {
 	}
 
-	public void setAccess_token(String access_token) {
-		this.access_token = access_token;
+	public WechatAccessToken(String accessToken, Long expiresIn) {
+		this.accessToken = accessToken;
+		this.expiresIn = expiresIn;
 	}
 
-	public Long getExpires_in() {
-		return expires_in;
+	public String getAccessToken() {
+		return accessToken;
 	}
 
-	public void setExpires_in(Long expires_in) {
-		this.expires_in = expires_in;
+	public void setAccessToken(String accessToken) {
+		this.accessToken = accessToken;
+	}
+
+	public Long getExpiresIn() {
+		return expiresIn;
+	}
+
+	public void setExpiresIn(Long expiresIn) {
+		this.expiresIn = expiresIn;
+	}
+
+	@Override
+	public String toString() {
+		return "WechatAccessToken{" +
+				"accessToken='" + accessToken + '\'' +
+				", expiresIn=" + expiresIn +
+				'}';
 	}
 }
