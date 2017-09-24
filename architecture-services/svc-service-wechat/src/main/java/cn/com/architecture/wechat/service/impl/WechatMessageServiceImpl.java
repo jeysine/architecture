@@ -4,7 +4,9 @@ import cn.com.architecture.wechat.contants.WechatParams;
 import cn.com.architecture.wechat.contants.WechatReponseCodeEmnu;
 import cn.com.architecture.wechat.contants.WechatTemplatesEnum;
 import cn.com.architecture.wechat.entity.WechatCommonResult;
+import cn.com.architecture.wechat.entity.message.WechatNewsMessageArticle;
 import cn.com.architecture.wechat.service.WechatMessageService;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import freemarker.template.TemplateException;
 import okhttp3.Response;
@@ -16,6 +18,9 @@ import utils.code.generate.FreeMarkerTemplateUtils;
 import utils.okhttputil.OkHttpUtils;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @Service("wechatMessageService")
@@ -25,8 +30,13 @@ public class WechatMessageServiceImpl implements WechatMessageService{
 
 	private Logger logger = LoggerFactory.getLogger(WechatMessageServiceImpl.class);
 	@Override
-	public void pushTextMessage(Map<String, Object> propertities) {
+	public void pushTextMessage(String openid,String content) {
 		String data = null;
+
+		Map propertities = new HashMap();
+		propertities.put("openid", openid);
+		propertities.put("content", content);
+
 		try {
 			data = FreeMarkerTemplateUtils.generate(
 					getTemplateName(WechatTemplatesEnum.NOTIF_USER_TEXT_MESSAGE.name()), propertities);
@@ -44,11 +54,17 @@ public class WechatMessageServiceImpl implements WechatMessageService{
 	}
 
 	@Override
-	public void pushNewsMessage(Map<String, Object> propertities) {
+	public void pushNewsMessage(String openid, List<WechatNewsMessageArticle> articles) {
 		String data = null;
+		ObjectMapper mapper = new ObjectMapper();
+
 		try {
+			String articlesJson = mapper.writeValueAsString(articles);
+			Map propertities = new HashMap();
+			propertities.put("openid", openid);
+			propertities.put("articles", articlesJson);
 			data = FreeMarkerTemplateUtils.generate(
-					getTemplateName(WechatTemplatesEnum.NOTIF_USER_TEXT_MESSAGE.name()), propertities);
+					getTemplateName(WechatTemplatesEnum.NOTIF_USER_NEWS_MESSAGE.name()), propertities);
 			logger.debug("data :{}",data);
 			WechatCommonResult result = pushMessgge(data);
 			if (WechatReponseCodeEmnu.OK.getCode().equals(result.getErrcode())) {
@@ -83,5 +99,19 @@ public class WechatMessageServiceImpl implements WechatMessageService{
 		map.put("openid", "111");
 		map.put("content", "test");
 		wechatMessageService.pushTextMessage(map);*/
+		WechatNewsMessageArticle test = new WechatNewsMessageArticle();
+		test.setPicurl("sdsadsad");
+		test.setDescription("dasds");
+		List<WechatNewsMessageArticle> articles = new ArrayList<>();
+		ObjectMapper mapper = new ObjectMapper();
+
+		articles.add(test);
+		try {
+			String json = mapper.writeValueAsString(articles);
+			System.out.println(json);
+		} catch (JsonProcessingException e) {
+			e.printStackTrace();
+		}
+
 	}
 }

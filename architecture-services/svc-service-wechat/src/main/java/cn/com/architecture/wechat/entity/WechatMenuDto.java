@@ -1,7 +1,12 @@
 package cn.com.architecture.wechat.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonInclude;
+
 import java.io.Serializable;
 
+@JsonIgnoreProperties(ignoreUnknown = true)
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class WechatMenuDto implements Serializable{
 	private static final long serialVersionUID = -2672453090337574100L;
 	/** 菜单名称 **/
