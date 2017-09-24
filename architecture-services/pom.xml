@@ -46,6 +46,11 @@
             <artifactId>architecture-common</artifactId>
         </dependency>
 
+        <dependency>
+            <groupId>cn.architecture</groupId>
+            <artifactId>architecture-templates</artifactId>
+        </dependency>
+
         <!--<dependency>-->
             <!--<groupId>cn.architecture</groupId>-->
             <!--<artifactId>architecture-event</artifactId>-->

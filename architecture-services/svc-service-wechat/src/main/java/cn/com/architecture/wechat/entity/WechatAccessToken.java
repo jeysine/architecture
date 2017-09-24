@@ -4,8 +4,9 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.io.Serializable;
 
-public class WechatAccessToken implements Serializable{
+public class WechatAccessToken extends WechatCommonResult implements Serializable{
 
+	private static final long serialVersionUID = 926808053073105294L;
 	@JsonProperty("access_token")
 	private String accessToken;
 

@@ -2,7 +2,7 @@ package cn.com.architecture.wechat.service.impl;
 
 import cn.com.architecture.wechat.contants.WechatParams;
 import cn.com.architecture.wechat.entity.WechatAccessToken;
-import cn.com.architecture.wechat.service.WechatService;
+import cn.com.architecture.wechat.service.WechatAccessTokenService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import okhttp3.Response;
 import org.slf4j.Logger;
@@ -17,26 +17,27 @@ import utils.okhttputil.OkHttpUtils;
 
 import java.io.IOException;
 
-@Service("wechatService")
-public class WechatServiceImpl implements WechatService{
+@Service("wechatAccessTokenService")
+public class WechatAccessTokenServiceImpl implements WechatAccessTokenService {
 
 	@Value("${wechat.test.appid}")
 	private String appid;
 	@Value("${wechat.test.appsecret}")
 	private String appsecret;
-
+	@Value("${wechat.get.accesstoken.url}")
+	private String getAccessTokenUrl;
 	@Autowired
 	private JedisPool jedisPool;
 
-	private static Logger logger = LoggerFactory.getLogger(WechatServiceImpl.class);
+	private static Logger logger = LoggerFactory.getLogger(WechatAccessTokenServiceImpl.class);
 
 
 	@Override
-	public WechatAccessToken getAccessToken() throws Exception {
+	public WechatAccessToken getAccessToken() {
 		WechatAccessToken wechatAccessToken = null;
 		Jedis jedis = jedisPool.getResource();
 		if (jedis == null) {
-			throw new Exception("Redis is not rechable");
+			logger.error("Redis is not rechable");
 		}
 
 		try {
@@ -83,21 +84,34 @@ public class WechatServiceImpl implements WechatService{
 		return false;
 	}
 
-	private WechatAccessToken getAccessTokenFromWechat() throws IOException {
-		String url = "https://api.weixin.qq.com/cgi-bin/token";
-		Response response = OkHttpUtils.get().url(url)
-				.addParams("grant_type","client_credential")
-				.addParams("appid",appid)
-				.addParams("secret",appsecret)
-				.build().execute();
-		logger.debug("get wechat access token suucess:{}", response.body().string());
-		ObjectMapper mapper = new ObjectMapper();
-		WechatAccessToken wechatAccessToken = mapper.readValue(response.body().string(), WechatAccessToken.class);
-		wechatAccessToken.setExpiresIn(
-				wechatAccessToken.getExpiresIn()  + (System.currentTimeMillis() / 1000) - 5L);
+	private WechatAccessToken getAccessTokenFromWechat()  {
+		String url = getAccessTokenUrl.replace("APPID", appid)
+				.replace("APPSECRET", appsecret);
+
+		Response response = null;
+		WechatAccessToken wechatAccessToken = null;
+		try {
+			response = OkHttpUtils.get().url(url)
+					.build().execute();
+			logger.debug("get wechat access token suucess:{}", response.body().string());
+
+			ObjectMapper mapper = new ObjectMapper();
+			wechatAccessToken = mapper.readValue(response.body().string(), WechatAccessToken.class);
+			if (wechatAccessToken.getAccessToken() == null) {
+				logger.error("get wechat access token error, errcode:{},errmsg:{}", wechatAccessToken.getErrcode(),wechatAccessToken.getErrmsg());
+				return null;
+			}
+
+			wechatAccessToken.setExpiresIn(
+					wechatAccessToken.getExpiresIn()  + (System.currentTimeMillis() / 1000) - 5L);
 //		WechatAccessToken wechatAccessToken =  new WechatAccessToken("asdasdasd", 100L + (System.currentTimeMillis() / 1000));
-		logger.debug("get wechat access token suucess:{}", wechatAccessToken.getAccessToken());
-		setAccessTokenToRedis(wechatAccessToken);
+			logger.debug("get wechat access token suucess:{}", wechatAccessToken.getAccessToken());
+			setAccessTokenToRedis(wechatAccessToken);
+		} catch (IOException e) {
+			logger.error("visit wechat get access token faild:{}", e);
+		}
+
+
 		return wechatAccessToken;
 	}
 

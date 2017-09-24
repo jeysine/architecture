@@ -45,6 +45,7 @@
         <module>architecture-event</module>
         <module>architecture-login</module>
         <module>architecture-config</module>
+        <module>architecture-templates</module>
     </modules>
     <dependencyManagement>
         <dependencies>
@@ -452,6 +453,27 @@
                 <version>${project.version}</version>
             </dependency>
             <dependency>
+                <groupId>cn.architecture</groupId>
+                <artifactId>architecture-config</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>cn.architecture</groupId>
+                <artifactId>architecture-notification</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>cn.architecture</groupId>
+                <artifactId>architecture-templates</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>cn.architecture</groupId>
+                <artifactId>architecture-wechat</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+
+            <dependency>
                 <groupId>cn.com.architecture.services</groupId>
                 <artifactId>svc-service-common</artifactId>
                 <version>${project.version}</version>
@@ -477,10 +499,16 @@
                 <version>${project.version}</version>
             </dependency>
             <dependency>
-                <groupId>cn.architecture</groupId>
-                <artifactId>architecture-config</artifactId>
+                <groupId>cn.com.architecture.services</groupId>
+                <artifactId>svc-service-notification</artifactId>
                 <version>${project.version}</version>
             </dependency>
+            <dependency>
+                <groupId>cn.com.architecture.services</groupId>
+                <artifactId>svc-service-wechat</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+
             <dependency>
                 <groupId>com.101tec</groupId>
                 <artifactId>zkclient</artifactId>

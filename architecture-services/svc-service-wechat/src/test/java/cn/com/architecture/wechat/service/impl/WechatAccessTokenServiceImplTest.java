@@ -1,7 +1,7 @@
 package cn.com.architecture.wechat.service.impl;
 
 import cn.com.architecture.wechat.contants.WechatParams;
-import cn.com.architecture.wechat.service.WechatService;
+import cn.com.architecture.wechat.service.WechatAccessTokenService;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
@@ -13,10 +13,10 @@ import java.util.concurrent.CountDownLatch;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = {"classpath*:application-context.xml"})
-public class WechatServiceImplTest {
+public class WechatAccessTokenServiceImplTest {
 
 	@Autowired
-	private WechatService wechatService;
+	private WechatAccessTokenService wechatAccessTokenService;
 
 	@Autowired
 	private JedisPool jedisPool;
@@ -36,7 +36,7 @@ public class WechatServiceImplTest {
 				public void run() {
 					try {
 						beginCount.await();
-						wechatService.getAccessToken();
+						wechatAccessTokenService.getAccessToken();
 					} catch (Exception e) {
 						e.printStackTrace();
 					}
