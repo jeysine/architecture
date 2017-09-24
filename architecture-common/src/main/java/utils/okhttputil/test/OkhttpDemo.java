@@ -28,6 +28,9 @@ public class OkhttpDemo {
                 .execute();
         System.out.println(response.body().string());
 
+        //传递字符串
+        OkHttpUtils.postString().url(url).content("123").build().execute();
+
     }
 
 }
