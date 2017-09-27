@@ -9,8 +9,8 @@ import okhttp3.MediaType;
  */
 public class PostStringBuilder extends OkHttpRequestBuilder<PostStringBuilder>
 {
-    private String content;
-    private MediaType mediaType;
+    protected String content;
+    protected MediaType mediaType;
 
 
     public PostStringBuilder content(String content)

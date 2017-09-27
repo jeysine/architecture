@@ -78,6 +78,10 @@ public class OkHttpUtils
         return new PostStringBuilder();
     }
 
+    public static PostJsonBuilder postJson(){
+        return new PostJsonBuilder();
+    }
+
     public static PostFileBuilder postFile()
     {
         return new PostFileBuilder();
