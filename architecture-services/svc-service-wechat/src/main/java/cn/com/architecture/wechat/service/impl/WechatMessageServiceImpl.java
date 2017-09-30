@@ -3,8 +3,10 @@ package cn.com.architecture.wechat.service.impl;
 import cn.com.architecture.wechat.contants.WechatParams;
 import cn.com.architecture.wechat.contants.WechatReponseCodeEmnu;
 import cn.com.architecture.wechat.contants.WechatTemplatesEnum;
+import cn.com.architecture.wechat.entity.WechatAccessToken;
 import cn.com.architecture.wechat.entity.WechatCommonResult;
 import cn.com.architecture.wechat.entity.message.WechatNewsMessageArticle;
+import cn.com.architecture.wechat.service.WechatAccessTokenService;
 import cn.com.architecture.wechat.service.WechatMessageService;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -12,6 +14,7 @@ import freemarker.template.TemplateException;
 import okhttp3.Response;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import utils.code.generate.FreeMarkerTemplateUtils;
@@ -27,6 +30,10 @@ import java.util.Map;
 public class WechatMessageServiceImpl implements WechatMessageService{
 	@Value("${wechat.push.kf.message.url}")
 	private String wechatMessageUrl;
+
+	@Autowired
+	private WechatAccessTokenService wechatAccessTokenService;
+	private static final ObjectMapper mapper = new ObjectMapper();
 
 	private Logger logger = LoggerFactory.getLogger(WechatMessageServiceImpl.class);
 	@Override
@@ -85,8 +92,10 @@ public class WechatMessageServiceImpl implements WechatMessageService{
 
 	@Override
 	public WechatCommonResult pushMessgge(String wxMessage) throws IOException {
-		Response response = OkHttpUtils.postString().url(wechatMessageUrl).content(wxMessage).build().execute();
-		ObjectMapper mapper = new ObjectMapper();
+		WechatAccessToken accessToken = wechatAccessTokenService.getAccessToken();
+
+		String url = wechatMessageUrl.replace("ACCESS_TOKEN", accessToken.getAccessToken());
+		Response response = OkHttpUtils.postString().url(url).content(wxMessage).build().execute();
 		return mapper.readValue(response.body().toString(),WechatCommonResult.class);
 	}
 
@@ -103,7 +112,6 @@ public class WechatMessageServiceImpl implements WechatMessageService{
 		test.setPicurl("sdsadsad");
 		test.setDescription("dasds");
 		List<WechatNewsMessageArticle> articles = new ArrayList<>();
-		ObjectMapper mapper = new ObjectMapper();
 
 		articles.add(test);
 		try {

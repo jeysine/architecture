@@ -20,75 +20,57 @@ import java.io.IOException;
 
 @Service("wechatMenuService")
 public class WechatMenuServiceImpl implements WechatMenuService {
-	@Value("${wechat.create.menu}")
-	private String wechat_create_menu ;
-	@Value("${wechat.get.menu}")
-	private String wechat_get_menu;
-	@Value("${wechat.delete.menu}")
-	private String wechat_delete_menu;
+	@Value("${wechat.create.menu.url}")
+	private String wechatCreateMenuUrl;
+	@Value("${wechat.get.menu.url}")
+	private String wechatGetMenuUrl;
+	@Value("${wechat.delete.menu.url}")
+	private String wechatDeleteMenuUrl;
 	private static Logger logger = LoggerFactory.getLogger(WechatMenuServiceImpl.class);
-
+	private static final ObjectMapper mapper = new ObjectMapper();
 	@Autowired
 	private WechatAccessTokenService wechatAccessTokenService;
 	@Override
-	public Boolean createWechatMenu(WechatMenu wechatMenu) {
+	public Boolean createWechatMenu(WechatMenu wechatMenu) throws IOException {
 		WechatAccessToken accessToken = wechatAccessTokenService.getAccessToken();
 
-		String wechatCreateMenuUrl = wechat_create_menu.replace("ACCESS_TOKEN", accessToken.getAccessToken());
-		ObjectMapper mapper = new ObjectMapper();
+		String url = wechatCreateMenuUrl.replace("ACCESS_TOKEN", accessToken.getAccessToken());
 
-		try {
-			String wechatMenuJson = mapper.writeValueAsString(wechatMenu);
-			logger.debug("wechatMenuJson:{}",wechatMenuJson);
-			Response response = OkHttpUtils.post().url(wechatCreateMenuUrl).addParams("button", wechatMenuJson).build().execute();
-			WechatCommonResult result = mapper.readValue(response.body().toString(),WechatCommonResult.class);
-			if (WechatReponseCodeEmnu.OK.getCode().equals(result.getErrcode())) {
-				logger.debug("create wechat menu success,code:{},msg:{}", result.getErrcode(), result.getErrmsg());
-				return true;
-			} else {
-				logger.error("create wechat menu falid,errorcode:{},errormsg:{}", result.getErrcode(), result.getErrmsg());
-			}
-		} catch (JsonProcessingException e) {
-			logger.error("wechat menu entity serialize error:{}", e);
-		} catch (IOException e) {
-			logger.error("visit wechat create menu faild:{}", e);
+		String wechatMenuJson = mapper.writeValueAsString(wechatMenu);
+		logger.debug("wechatMenuJson:{}",wechatMenuJson);
+		Response response = OkHttpUtils.post().url(url).addParams("button", wechatMenuJson).build().execute();
+		WechatCommonResult result = mapper.readValue(response.body().toString(),WechatCommonResult.class);
+		if (WechatReponseCodeEmnu.OK.getCode().equals(result.getErrcode())) {
+			logger.debug("create wechat menu success,code:{},msg:{}", result.getErrcode(), result.getErrmsg());
+			return true;
+		} else {
+			logger.error("create wechat menu falid,errorcode:{},errormsg:{}", result.getErrcode(), result.getErrmsg());
 		}
 		return false;
 	}
 
 	@Override
-	public String getWechatMenu() {
+	public String getWechatMenu() throws IOException {
 		WechatAccessToken accessToken = wechatAccessTokenService.getAccessToken();
-		String getWechatMenuUrl = wechat_get_menu.replace("ACCESS_TOKEN", accessToken.getAccessToken());
-		ObjectMapper mapper = new ObjectMapper();
-		try {
-			Response response = OkHttpUtils.get().url(getWechatMenuUrl).build().execute();
-			String result = response.body().string();
-			logger.debug("get wechat menu result:{}",result);
-			return result;
-		} catch (IOException e) {
-			logger.error("visit wechat get menu faild:{}", e);
-		}
-		return null;
+		String url = wechatGetMenuUrl.replace("ACCESS_TOKEN", accessToken.getAccessToken());
+		Response response = OkHttpUtils.get().url(url).build().execute();
+		String result = response.body().string();
+		logger.debug("get wechat menu result:{}",result);
+		return result;
 	}
 
 	@Override
-	public WechatCommonResult deleteWechatMenu() {
+	public WechatCommonResult deleteWechatMenu() throws IOException {
 		WechatAccessToken accessToken = wechatAccessTokenService.getAccessToken();
-		String deleteWechatMenuUrl = wechat_delete_menu.replace("ACCESS_TOKEN", accessToken.getAccessToken());
-		ObjectMapper mapper = new ObjectMapper();
-		try {
-			Response response = OkHttpUtils.get().url(deleteWechatMenuUrl).build().execute();
-			WechatCommonResult result = mapper.readValue(response.body().toString(),WechatCommonResult.class);
-			if (WechatReponseCodeEmnu.OK.getCode().equals(result.getErrcode())) {
-				logger.debug("delete wechat menu success:{}",result);
-			} else {
-				logger.error("delete wechat menu faild,errcode:{},errmsg:{}",result.getErrcode(),result.getErrmsg());
-			}
-			return result;
-		} catch (IOException e) {
-			logger.error("visit wechat delete menu faild:{}", e);
+		String url = wechatDeleteMenuUrl.replace("ACCESS_TOKEN", accessToken.getAccessToken());
+		Response response = OkHttpUtils.get().url(url).build().execute();
+		WechatCommonResult result = mapper.readValue(response.body().toString(),WechatCommonResult.class);
+		if (WechatReponseCodeEmnu.OK.getCode().equals(result.getErrcode())) {
+			logger.debug("delete wechat menu success:{}",result);
+		} else {
+			logger.error("delete wechat menu faild,errcode:{},errmsg:{}",result.getErrcode(),result.getErrmsg());
 		}
-		return null;
+		return result;
 	}
+
 }
