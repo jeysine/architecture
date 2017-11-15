@@ -182,7 +182,7 @@ public class ExcelUtil {
                                     value = "";
                             }
                         }
-                        if (columnIndex == 0 && value.trim().equals("")) {
+                        if (columnIndex == 0 && "".equals(value.trim())) {
                             break;
                         }
                         values[columnIndex] = value;

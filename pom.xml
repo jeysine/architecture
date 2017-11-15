@@ -327,6 +327,13 @@
                 <version>1.0.0-beta2</version>
             </dependency>
 
+            <!-- https://mvnrepository.com/artifact/com.jcraft/jsch -->
+            <dependency>
+                <groupId>com.jcraft</groupId>
+                <artifactId>jsch</artifactId>
+                <version>0.1.54</version>
+            </dependency>
+
             <!-- spring sesion dependencies start-->
             <!-- 这里因为受到spring-boot-dependencies的影响 导致 spring-session、spring-data-redis等依赖
             都无法依照spring-session-data-redis的需要获得正确版本,所以显式指定版本-->
