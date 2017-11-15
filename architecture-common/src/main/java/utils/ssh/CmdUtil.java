@@ -2,7 +2,7 @@ package utils.ssh;
 
 /**
  * cmd拼接工具类
- * @author Administrator
+ * @author list
  *
  */
 public class CmdUtil {

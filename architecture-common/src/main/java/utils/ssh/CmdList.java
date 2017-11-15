@@ -5,7 +5,7 @@ import java.util.List;
 
 /**
  * cmd链
- * @author Administrator
+ * @author list
  *
  */
 public class CmdList {

@@ -10,6 +10,9 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.util.Vector;
 
+/**
+ * @author li
+ */
 public class SFTPUtil {  
 	
     /** 
