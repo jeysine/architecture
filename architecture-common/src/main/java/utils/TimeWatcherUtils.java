@@ -8,6 +8,14 @@ public class TimeWatcherUtils {
 
     private static TimeWatcherUtils instance = new TimeWatcherUtils();
 
+    public static final int MILL = 0;//毫秒
+
+    public static final int SEC = 1;//秒
+
+    public static final int MINUTE = 2;//分
+
+    private int  timeType= SEC;
+
     public static TimeWatcherUtils getInstance() {
         return instance;
     }
@@ -16,6 +24,14 @@ public class TimeWatcherUtils {
 
     /**日志名称*/
     private String logName;
+
+    public void setTimeType(int timeType) {
+        this.timeType = timeType;
+    }
+
+    public int getTimeType() {
+        return timeType;
+    }
 
     public void setLogName(String logName) {
         this.logName = logName;
@@ -29,20 +45,6 @@ public class TimeWatcherUtils {
         this.logName = logName;
     }
 
-//    public <T> void execute(Supplier<T> t){
-//        execute(t,this.logName);
-//    }
-//
-//    public <T> T execute(Supplier<T> t,String logName){
-//        long starTime = System.currentTimeMillis();
-//        T result = t.get();
-//        long endTime = System.currentTimeMillis();
-//        if(flag){
-//            System.out.println(logName+":executeTime:"+(endTime-starTime));
-//        }
-//        return result;
-//    }
-
     public  void func(VoidTest v) throws Exception{
         func(v, logName);
     }
@@ -52,30 +54,41 @@ public class TimeWatcherUtils {
         v.execFunc();
         long endTime = System.currentTimeMillis();
         if(flag){
-            System.out.println(logName+":executeTime:"+(endTime-starTime));
+            defaultString(logName, starTime, endTime);
         }
+    }
+
+    public void defaultString(String logName, long starTime, long endTime) {
+        System.out.println("---------------------------------------------------------------------------------");
+        long millTime = endTime-starTime;
+        System.out.println(logName+":"+getTime(millTime));
+        System.out.println("---------------------------------------------------------------------------------");
     }
 
     public static void main(String args[]) throws Exception{
 
 
         TimeWatcherUtils t = new TimeWatcherUtils();
-
-//        t.execute(()->{
-//            try{
-//                int sum  = 0;
-//                for(int i = 0;i<1000000;i++){
-//                    sum+=i;
-//                }
-//                System.out.println(sum);
-//            }catch (Exception e){
-//                e.printStackTrace();
-//            }
-//            return 0;
-//        },"testSum");
-
         t.func(()->{sum();},"testSum");
 
+    }
+
+    /**
+     * 获得时间
+     * @param time
+     * @return
+     */
+    public String getTime(long time){
+        switch (timeType) {
+            case MILL:
+                return time+"milliseconds";
+            case SEC:
+                return (time/1000)+"seconds";
+            case MINUTE:
+                return (time/1000/60)+"minutes";
+            default:
+                return time+"milliseconds";
+        }
     }
 
     public static void sum(){
