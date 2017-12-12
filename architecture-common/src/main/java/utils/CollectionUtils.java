@@ -1,8 +1,11 @@
 package utils;
 
 import java.util.*;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 import java.util.function.Function;
+import java.util.function.Predicate;
+import java.util.function.Supplier;
 import java.util.stream.Collectors;
 
 /**
@@ -67,96 +70,125 @@ public class CollectionUtils {
 
     /**
      * 将List转成Map<R,list<T>>的集合,比如将person按照class进行ConcurrentMap分组,在读取Excel表的时候有使用场景</>></>
-     * @param list
-     * @param f
-     * @param <T>
-     * @param <R>
-     * @return
      */
     public static <T,R> ConcurrentMap<R, List<T>> listToCMaps(List<T> list, Function<? super T, ? extends R> f){
+        if(list==null){
+            return new ConcurrentHashMap<R, List<T>>();
+        }
         return list.stream().collect(Collectors.groupingByConcurrent(f));
     }
 
     /**
      * 将List转成Map<R,list<T>>的集合,比如将person按照class进行map分组,在读取Excel表的时候有使用场景</>></>
-     * @param list
-     * @param f
-     * @param <T>
-     * @param <R>
-     * @return
      */
     public static <T,R> Map<R, List<T>> listToMaps(List<T> list, Function<? super T, ? extends R> f){
+        if(list==null){
+            return new HashMap<>();
+        }
         return list.stream().collect(Collectors.groupingBy(f));
     }
 
     /**
-     * 将List转成Map<R,list<T>>的集合,比如将person按照class进行map分组,如果list出现相同的key会抛错Duplicate key,见map5</>></>
-     * @param list
-     * @param f
-     * @param <T>
-     * @param <R>
-     * @return
+     * 将List转成Map<R,T>的集合,比如将person按照class进行map分组,出现相同的key后面的会覆盖前面的
      */
-    public static <T,R> Map<R, T> listToMap(List<T> list, Function<? super T, ? extends R> f){
-        return list.stream().collect(Collectors.toMap(f,Function.identity()));
+    public static <T,R> Map<R, T> listToKVMap(List<T> list, Function<? super T, ? extends R> f){
+        return listToKVMap(list, f,true);
     }
 
     /**
-     * 将List转成Map<R,list<T>>的集合,比如将person按照class进行map分组,如果list出现相同的key会抛错Duplicate key,见map5</>></>
-     * @param list
-     * @param f
-     * @param <T>
-     * @param <R>
-     * @return
+     * 将List转成Map<R,T>的集合,比如将person按照class进行map分组,,如果fixDuplicate为true,
+     * list出现相同的key会进行覆盖,否则抛错.
      */
-    public static <T,R> ConcurrentMap<R, T> listToCMap(List<T> list, Function<? super T, ? extends R> f){
-        return list.stream().collect(Collectors.toConcurrentMap(f,Function.identity()));
+    public static <T,R> Map<R, T> listToKVMap(List<T> list, Function<? super T, ? extends R> f,boolean fixDuplicate){
+        if(list==null){
+            return new HashMap<R, T>();
+        }
+        if(fixDuplicate){
+            return list.stream().collect(Collectors.toMap(f,Function.identity(),(key1, key2) -> key2));
+        }else{
+            return list.stream().collect(Collectors.toMap(f,Function.identity()));
+        }
+    }
+
+    /**
+     * 将List转成Map<R,T>的集合,比如将person按照class进行map分组,出现相同的key后面的会覆盖前面的
+     */
+    public static <T,R> ConcurrentMap<R, T> listToKVCMap(List<T> list, Function<? super T, ? extends R> f){
+        return listToKVCMap(list, f, true);
+    }
+
+    /**
+     * 将List转成Map<R,T>的集合,比如将person按照class进行map分组,如果fixDuplicate为true,
+     * list出现相同的key会进行覆盖,否则抛错.
+     */
+    public static <T,R> ConcurrentMap<R, T> listToKVCMap(List<T> list, Function<? super T, ? extends R> f,boolean fixDuplicate){
+        if(list==null){
+            return new ConcurrentHashMap<R, T>();
+        }
+        if(fixDuplicate){
+            return list.stream().collect(Collectors.toConcurrentMap(f,Function.identity(),(key1, key2) -> key2));
+        }else{
+            return list.stream().collect(Collectors.toConcurrentMap(f,Function.identity()));
+        }
+    }
+
+    /**
+     * 将List转成Map<R,T>的集合,支持选定的Map返回类型
+     */
+    public static <T,R extends Map<T,R>> Map<? extends R, T> listToKVCMap(List<T> list, Function<? super T, ? extends R> f,Supplier<Map<R,T>> supplier){
+        if(list==null){
+            return supplier.get();
+        }
+        return list.stream().collect(Collectors.toMap(f,Function.identity(),(key1, key2) -> key2,supplier));
+    }
+
+
+    /**
+     * 取集合符合要求的某个值
+     */
+    public static <T> T filterOne(List<T> list,Predicate<T> predicate){
+        return list.stream().filter(predicate).findFirst().get();
+    }
+
+    /**
+     * 取集合符合要求的值
+     */
+    public static <T> List<T> filterAll(List<T> list,Predicate<T> predicate){
+        return list.stream().filter(predicate).collect(Collectors.toList());
     }
 
     /**
      * map值转list
-     * @param map
-     * @param <K>
-     * @param <V>
-     * @return
      */
     public static <K,V> List<V> mapValueToList (Map<K,V> map){
-        return new ArrayList<>(map.values());
+        return new ArrayList<V>(map.values());
     }
 
     /**
      * map键转list
-     * @param map
-     * @param <K>
-     * @param <V>
-     * @return
      */
     public static <K,V> List<K> mapKeyToList (Map<K,V> map){
-        return new ArrayList<>(map.keySet());
+        return new ArrayList<K>(map.keySet());
     }
 
     /**
      * 打印集合
      * @param map
      */
-    public static void printCollection(Map map){
-            map.forEach((k,v)->{
-                System.out.println(k+":"+v);
-            });
+    public static <K,V> void printCollection(Map<K,V> map){
+        map.forEach((k,v)->{System.out.println(k+":"+v);});
+    }
+
+    public static  Function<Object, Object> self(){
+        return Function.identity();
     }
 
     /**
      * 打印集合
      * @param collection
      */
-    public static void printCollection (Collection collection){
-        collection.forEach(v->{
-            System.out.println(v);
-        });
-    }
-
-    public static <T> void printCollection(T[] arr){
-        System.out.println(Arrays.toString(arr));
+    public static <T> void printCollection (Collection<T> collection){
+        collection.forEach(System.out::println);
     }
 
     static class Monster{
