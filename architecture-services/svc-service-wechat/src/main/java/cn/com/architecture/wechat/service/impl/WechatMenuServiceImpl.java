@@ -1,18 +1,17 @@
 package cn.com.architecture.wechat.service.impl;
 
+import cn.com.architecture.wechat.contants.WechatParams;
 import cn.com.architecture.wechat.contants.WechatReponseCodeEmnu;
 import cn.com.architecture.wechat.entity.WechatAccessToken;
 import cn.com.architecture.wechat.entity.WechatCommonResult;
 import cn.com.architecture.wechat.entity.menu.WechatMenu;
 import cn.com.architecture.wechat.service.WechatAccessTokenService;
 import cn.com.architecture.wechat.service.WechatMenuService;
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import okhttp3.Response;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import utils.okhttputil.OkHttpUtils;
 
@@ -20,12 +19,6 @@ import java.io.IOException;
 
 @Service("wechatMenuService")
 public class WechatMenuServiceImpl implements WechatMenuService {
-	@Value("${wechat.create.menu.url}")
-	private String wechatCreateMenuUrl;
-	@Value("${wechat.get.menu.url}")
-	private String wechatGetMenuUrl;
-	@Value("${wechat.delete.menu.url}")
-	private String wechatDeleteMenuUrl;
 	private static Logger logger = LoggerFactory.getLogger(WechatMenuServiceImpl.class);
 	private static final ObjectMapper mapper = new ObjectMapper();
 	@Autowired
@@ -34,12 +27,12 @@ public class WechatMenuServiceImpl implements WechatMenuService {
 	public Boolean createWechatMenu(WechatMenu wechatMenu) throws IOException {
 		WechatAccessToken accessToken = wechatAccessTokenService.getAccessToken();
 
-		String url = wechatCreateMenuUrl.replace("ACCESS_TOKEN", accessToken.getAccessToken());
+		String url = WechatParams.WECHAT_CREATE_MENU_URL.replace("ACCESS_TOKEN", accessToken.getAccessToken());
 
 		String wechatMenuJson = mapper.writeValueAsString(wechatMenu);
 		logger.debug("wechatMenuJson:{}",wechatMenuJson);
 		Response response = OkHttpUtils.post().url(url).addParams("button", wechatMenuJson).build().execute();
-		WechatCommonResult result = mapper.readValue(response.body().toString(),WechatCommonResult.class);
+		WechatCommonResult result = mapper.readValue(response.body().string(),WechatCommonResult.class);
 		if (WechatReponseCodeEmnu.OK.getCode().equals(result.getErrcode())) {
 			logger.debug("create wechat menu success,code:{},msg:{}", result.getErrcode(), result.getErrmsg());
 			return true;
@@ -52,7 +45,7 @@ public class WechatMenuServiceImpl implements WechatMenuService {
 	@Override
 	public String getWechatMenu() throws IOException {
 		WechatAccessToken accessToken = wechatAccessTokenService.getAccessToken();
-		String url = wechatGetMenuUrl.replace("ACCESS_TOKEN", accessToken.getAccessToken());
+		String url = WechatParams.WECHAT_GET_MENU_URL.replace("ACCESS_TOKEN", accessToken.getAccessToken());
 		Response response = OkHttpUtils.get().url(url).build().execute();
 		String result = response.body().string();
 		logger.debug("get wechat menu result:{}",result);
@@ -62,9 +55,9 @@ public class WechatMenuServiceImpl implements WechatMenuService {
 	@Override
 	public WechatCommonResult deleteWechatMenu() throws IOException {
 		WechatAccessToken accessToken = wechatAccessTokenService.getAccessToken();
-		String url = wechatDeleteMenuUrl.replace("ACCESS_TOKEN", accessToken.getAccessToken());
+		String url = WechatParams.WECHAT_DELETE_MENU_URL.replace("ACCESS_TOKEN", accessToken.getAccessToken());
 		Response response = OkHttpUtils.get().url(url).build().execute();
-		WechatCommonResult result = mapper.readValue(response.body().toString(),WechatCommonResult.class);
+		WechatCommonResult result = mapper.readValue(response.body().string(),WechatCommonResult.class);
 		if (WechatReponseCodeEmnu.OK.getCode().equals(result.getErrcode())) {
 			logger.debug("delete wechat menu success:{}",result);
 		} else {

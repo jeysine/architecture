@@ -8,7 +8,6 @@ import okhttp3.Response;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisPool;
@@ -20,12 +19,7 @@ import java.io.IOException;
 @Service("wechatAccessTokenService")
 public class WechatAccessTokenServiceImpl implements WechatAccessTokenService {
 
-	@Value("${wechat.test.appid}")
-	private String appid;
-	@Value("${wechat.test.appsecret}")
-	private String appsecret;
-	@Value("${wechat.get.accesstoken.url}")
-	private String getAccessTokenUrl;
+
 	@Autowired
 	private JedisPool jedisPool;
 
@@ -85,8 +79,8 @@ public class WechatAccessTokenServiceImpl implements WechatAccessTokenService {
 	}
 
 	private WechatAccessToken getAccessTokenFromWechat()  {
-		String url = getAccessTokenUrl.replace("APPID", appid)
-				.replace("APPSECRET", appsecret);
+		String url = WechatParams.WECHAT_GET_ACCESSTOKEN_URL.replace("APPID", WechatParams.WECHAT_TEST_APPID)
+				.replace("APPSECRET", WechatParams.WECHAT_TEST_APPSECRET);
 
 		Response response = null;
 		WechatAccessToken wechatAccessToken = null;

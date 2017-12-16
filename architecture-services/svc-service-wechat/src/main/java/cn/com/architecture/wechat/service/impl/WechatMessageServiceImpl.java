@@ -5,6 +5,7 @@ import cn.com.architecture.wechat.contants.WechatReponseCodeEmnu;
 import cn.com.architecture.wechat.contants.WechatTemplatesEnum;
 import cn.com.architecture.wechat.entity.WechatAccessToken;
 import cn.com.architecture.wechat.entity.WechatCommonResult;
+import cn.com.architecture.wechat.entity.message.WechatMessage;
 import cn.com.architecture.wechat.entity.message.WechatNewsMessageArticle;
 import cn.com.architecture.wechat.service.WechatAccessTokenService;
 import cn.com.architecture.wechat.service.WechatMessageService;
@@ -15,7 +16,6 @@ import okhttp3.Response;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import utils.code.generate.FreeMarkerTemplateUtils;
 import utils.okhttputil.OkHttpUtils;
@@ -28,8 +28,6 @@ import java.util.Map;
 
 @Service("wechatMessageService")
 public class WechatMessageServiceImpl implements WechatMessageService{
-	@Value("${wechat.push.kf.message.url}")
-	private String wechatMessageUrl;
 
 	@Autowired
 	private WechatAccessTokenService wechatAccessTokenService;
@@ -94,9 +92,9 @@ public class WechatMessageServiceImpl implements WechatMessageService{
 	public WechatCommonResult pushMessgge(String wxMessage) throws IOException {
 		WechatAccessToken accessToken = wechatAccessTokenService.getAccessToken();
 
-		String url = wechatMessageUrl.replace("ACCESS_TOKEN", accessToken.getAccessToken());
+		String url = WechatParams.WECHAT_CUSTOM_MESSAGE.replace("ACCESS_TOKEN", accessToken.getAccessToken());
 		Response response = OkHttpUtils.postString().url(url).content(wxMessage).build().execute();
-		return mapper.readValue(response.body().toString(),WechatCommonResult.class);
+		return mapper.readValue(response.body().string(),WechatCommonResult.class);
 	}
 
 	private String getTemplateName(String name) {
@@ -108,14 +106,34 @@ public class WechatMessageServiceImpl implements WechatMessageService{
 		map.put("openid", "111");
 		map.put("content", "test");
 		wechatMessageService.pushTextMessage(map);*/
-		WechatNewsMessageArticle test = new WechatNewsMessageArticle();
-		test.setPicurl("sdsadsad");
-		test.setDescription("dasds");
-		List<WechatNewsMessageArticle> articles = new ArrayList<>();
+		WechatMessage message = new WechatMessage();
+		message.setMsgtype("news");
+		message.setTouser("OPENID");
 
-		articles.add(test);
+		WechatMessage.News news = message.new News();
+		message.setNews(news);
+
+		WechatMessage.News.Articl article1 = news.new Articl();
+		article1.setTitle("Happy Day");
+		article1.setDescription("Is Really A Happy Day");
+		article1.setUrl("URL");
+		article1.setPicurl("PIC_URL");
+
+		WechatMessage.News.Articl article2 = news.new Articl();
+		article2.setTitle("Happy Day");
+		article2.setDescription("Is Really A Happy Day");
+		article2.setUrl("URL");
+		article2.setPicurl("PIC_URL");
+
+		List<WechatMessage.News.Articl> articls = new ArrayList<>();
+		articls.add(article1);
+		articls.add(article2);
+
+		news.setArticles(articls);
+
+
 		try {
-			String json = mapper.writeValueAsString(articles);
+			String json = mapper.writeValueAsString(message);
 			System.out.println(json);
 		} catch (JsonProcessingException e) {
 			e.printStackTrace();
