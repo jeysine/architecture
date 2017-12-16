@@ -29,13 +29,16 @@ public class TestMain {
             exe.submit(() ->{
 
                 for(int i = 0;i<time;i++){
-                    inter.test1();
+                    inter.test();
+                    //inter.test1(); //异步调用,要得到正确的值,在countDownLatch.await();后面需要增加线程休眠时间
                 }
                 countDownLatch.countDown();
             });
         }
 
         countDownLatch.await();
+
+        //Thread.sleep(1000);增加线程休眠时间
 
         System.out.println("是否线程安全?"+(threadCount*time==count));
 
