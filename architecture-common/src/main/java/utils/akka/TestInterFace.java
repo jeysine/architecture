@@ -5,8 +5,8 @@ package utils.akka;
  */
 public interface TestInterFace {
 
-    int test();
+    int test();//同步调用
 
-    void test1();
+    void test1();//异步调用,无返回值
 
 }
