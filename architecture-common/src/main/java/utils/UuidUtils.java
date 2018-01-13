@@ -90,6 +90,9 @@ public class UuidUtils {
 		return System.currentTimeMillis();
 	}
 
+	public static Long getUUID() {
+		return new UuidUtils().nextValue();
+	}
 	public static void main(String[] args) {
 		UuidUtils uuidUtils = new UuidUtils();
 		System.out.println(uuidUtils.nextValue());
