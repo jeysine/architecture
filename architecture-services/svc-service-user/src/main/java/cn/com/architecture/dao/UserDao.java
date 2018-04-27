@@ -1,6 +1,8 @@
 package cn.com.architecture.dao;
 
 import cn.com.architecture.entity.User;
+import org.springframework.stereotype.Component;
 
-public interface UserDao extends BaseDAO<User, User>{
+@Component
+public interface UserDao extends BaseDAO<User, User> {
 }
