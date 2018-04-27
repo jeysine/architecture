@@ -12,11 +12,11 @@
     <artifactId>svc-service-user</artifactId>
     <packaging>jar</packaging>
     <dependencies>
-        <dependency>
+       <!-- <dependency>
             <groupId>org.springframework.data</groupId>
             <artifactId>spring-data-jpa</artifactId>
-        </dependency>
-        <dependency>
+        </dependency>-->
+       <!-- <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-jdbc</artifactId>
         </dependency>
@@ -40,13 +40,13 @@
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-tx</artifactId>
-        </dependency>
-        <dependency>
+        </dependency>-->
+        <!--<dependency>
             <groupId>org.springframework.data</groupId>
             <artifactId>spring-data-jpa</artifactId>
-        </dependency>
+        </dependency>-->
 
-        <dependency>
+   <!--     <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
         </dependency>
@@ -58,8 +58,9 @@
         <dependency>
             <groupId>org.mybatis</groupId>
             <artifactId>mybatis-spring</artifactId>
-        </dependency>
-        <dependency>
+        </dependency>-->
+
+       <!-- <dependency>
             <groupId>org.hibernate.javax.persistence</groupId>
             <artifactId>hibernate-jpa-2.1-api</artifactId>
         </dependency>
@@ -84,9 +85,11 @@
         <dependency>
             <groupId>javax.transaction</groupId>
             <artifactId>jta</artifactId>
-        </dependency>
+        </dependency>-->
+
+
         <!--common-->
-        <dependency>
+       <!-- <dependency>
             <groupId>commons-io</groupId>
             <artifactId>commons-io</artifactId>
         </dependency>
@@ -143,7 +146,7 @@
         <dependency>
             <groupId>ch.qos.logback</groupId>
             <artifactId>logback-classic</artifactId>
-        </dependency>
+        </dependency>-->
 
         <dependency>
             <groupId>cn.architecture</groupId>

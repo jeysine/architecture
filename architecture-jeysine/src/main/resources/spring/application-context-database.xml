@@ -5,7 +5,7 @@
 	   xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
 		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.0.xsd http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd">
 		
-	<import resource="application-context-hibernate.xml" />
+	<!--<import resource="application-context-hibernate.xml" />-->
 	<import resource="application-context-mybatis.xml" />
 	<import resource="application-context-redis.xml" />
 
@@ -42,9 +42,9 @@
 
 	<!-- 事务注解驱动，标注@Transactional的类和方法将具有事务性 -->
 	
-	<bean id="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager">
+	<!--<bean id="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager">
 		<property name="entityManagerFactory" ref="entityManagerFactory" />
-	</bean>
+	</bean>-->
 
 	<!--<bean id="druid-stat-interceptor"-->
 		  <!--class="com.alibaba.druid.support.spring.stat.DruidStatInterceptor">-->
@@ -66,6 +66,6 @@
 	<!--</aop:config>-->
 
 	<!-- Enables the Hibernate @Transactional programming model -->
-	<tx:annotation-driven transaction-manager="transactionManager" />
+	<!--<tx:annotation-driven transaction-manager="transactionManager" />-->
 
 </beans>

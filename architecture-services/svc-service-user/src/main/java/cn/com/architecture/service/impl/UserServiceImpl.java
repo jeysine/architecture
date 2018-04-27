@@ -1,34 +1,36 @@
 package cn.com.architecture.service.impl;
 
+import cn.com.architecture.dao.UserDao;
 import cn.com.architecture.entity.User;
-import cn.com.architecture.repo.UserRepository;
 import cn.com.architecture.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 
 @Service
 public class UserServiceImpl implements UserService {
 	@Autowired
-	private UserRepository userRepository;
+	private UserDao dao;
 
 	@Override
-	public User save(User entity) {
-		return userRepository.save(entity);
+	public void insert(User entity) {
+		dao.insert(entity);
 	}
 
 	@Override
 	public User findById(String id) {
-		return userRepository.findOne(id);
+		return dao.findById(id);
 	}
 
 	@Override
-	public void delete(String s) {
-		userRepository.delete(s);
+	public void delete(String id) {
+		dao.delete(id);
 	}
 
 	@Override
-	public Iterable<User> findAll() {
+	public List<User> findAll() {
 		return userRepository.findAll();
 	}
 
