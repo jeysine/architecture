@@ -1,4 +1,4 @@
-package utils.akka;
+package utils.akka.typedactor;
 
 /**
  * Created by li on 2017/12/16.

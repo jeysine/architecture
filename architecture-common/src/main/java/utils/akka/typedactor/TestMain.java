@@ -1,9 +1,8 @@
-package utils.akka;
+package utils.akka.typedactor;
 
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
-import java.util.concurrent.ThreadPoolExecutor;
 
 /**
  * Created by li on 2017/12/16.
@@ -48,7 +47,7 @@ public class TestMain {
 
         exe.shutdown();
 
-        AkkaContext.system().shutdown();
+        AkkaContext.system().terminate();//在老旧的版本里是shutdown
 
 
     }

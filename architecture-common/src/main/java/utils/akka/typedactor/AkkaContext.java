@@ -1,4 +1,4 @@
-package utils.akka;
+package utils.akka.typedactor;
 
 import akka.actor.*;
 import org.slf4j.LoggerFactory;
