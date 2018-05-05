@@ -585,6 +585,16 @@
                 <artifactId>akka-remote_${akka.scala}</artifactId>
                 <version>${akka.version}</version>
             </dependency>
+            <!--<dependency>-->
+                <!--<groupId>com.typesafe.akka</groupId>-->
+                <!--<artifactId>akka-transactor_${akka.scala}</artifactId>-->
+                <!--<version>${akka.version}</version>-->
+            <!--</dependency>-->
+            <dependency>
+                <groupId>com.typesafe.akka</groupId>
+                <artifactId>akka-agent_${akka.scala}</artifactId>
+                <version>${akka.version}</version>
+            </dependency>
 
         </dependencies>
     </dependencyManagement>
