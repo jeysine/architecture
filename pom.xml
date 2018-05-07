@@ -47,6 +47,7 @@
         <module>architecture-event</module>
         <module>architecture-login</module>
         <module>architecture-config</module>
+        <module>architecture-net</module>
     </modules>
     <dependencyManagement>
         <dependencies>
