@@ -1,6 +1,6 @@
 package cn.com.architecture.net;
 
-import org.jboss.netty.channel.ChannelHandlerContext;
+import io.netty.channel.ChannelHandlerContext;
 
 /**
  * IHandler

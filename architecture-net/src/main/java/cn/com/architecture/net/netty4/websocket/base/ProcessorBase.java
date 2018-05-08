@@ -1,8 +1,6 @@
 package cn.com.architecture.net.netty4.websocket.base;
 
-import com.linlongyx.core.framework.logic.IPlayerSession;
-import com.linlongyx.core.framework.protocol.RequestBase;
-import com.linlongyx.core.framework.protocol.ResponseBase;
+import cn.com.architecture.net.netty4.websocket.session.IPlayerSession;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -38,15 +36,15 @@ public abstract class ProcessorBase<REQ extends RequestBase, RESP extends Respon
             process(playerSession, (REQ) request);
         } catch (Exception e) {
             e.printStackTrace();
-            logger.error("消息处理出错，code:" + request.getEventId() + ", msg:" + request.toString());
-            logger.error(e.getMessage(),e);
+//            logger.error("消息处理出错，code:" + request.getEventId() + ", msg:" + request.toString());
+//            logger.error(e.getMessage(),e);
         }
     }
 
     protected void process(IPlayerSession playerSession, REQ request) throws Exception{
         short retCode = handleRequest(playerSession, request);
-        response.setRetCode(retCode);
-        playerSession.sendMessage(response);
+//        response.setRetCode(retCode);
+//        playerSession.sendMessage(response);
     }
 
     /**
@@ -63,8 +61,8 @@ public abstract class ProcessorBase<REQ extends RequestBase, RESP extends Respon
 
 
     public void handleException(IPlayerSession playerSession, short errorCode){
-        response.setRetCode(errorCode);
-        playerSession.sendMessage(response);
+//        response.setRetCode(errorCode);
+//        playerSession.sendMessage(response);
     }
 
     public void setEntrance(Entrance entrance) {

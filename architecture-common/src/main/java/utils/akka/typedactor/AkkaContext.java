@@ -6,12 +6,14 @@ import org.slf4j.LoggerFactory;
 import java.lang.reflect.Method;
 
 final public class AkkaContext {
-	public final static String SYSTEM_NAME ="world2";
-
-	private final static ActorSystem SYSTEM = ActorSystem.create(SYSTEM_NAME);
+	public final static String SYSTEM_NAME ="architeture";
 
 	public static ActorSystem system(){
-		return SYSTEM;
+		return inner.SYSTEM;
+	}
+
+	private static class inner{//延迟初始化
+		private final static ActorSystem SYSTEM = ActorSystem.create(SYSTEM_NAME);
 	}
 
 	/**
@@ -22,7 +24,7 @@ final public class AkkaContext {
 	public static void printActors(){
 		try{
 			Method m = ActorSystemImpl.class.getDeclaredMethod("printTree");
-			LoggerFactory.getLogger(AkkaContext.class).info((String) m.invoke(SYSTEM));
+			LoggerFactory.getLogger(AkkaContext.class).info((String) m.invoke(system()));
 		} catch (Exception e) {
 			LoggerFactory.getLogger(AkkaContext.class).error("!!!", e);
 		}
@@ -33,7 +35,7 @@ final public class AkkaContext {
 	 * @param o
 	 */
 	public static void stopTypedActor(Object o){
-		TypedActor.get(SYSTEM).stop(o);
+		TypedActor.get(system()).stop(o);
 	}
 
 	/**
@@ -45,7 +47,7 @@ final public class AkkaContext {
 	 */
 	public static <T> T createTypedActor(Class<T> interfaceCls, Class implementationCls) {
 
-		return TypedActor.get(SYSTEM).typedActorOf(new TypedProps<T>(interfaceCls, implementationCls));
+		return TypedActor.get(system()).typedActorOf(new TypedProps<T>(interfaceCls, implementationCls));
 
 	}
 
@@ -56,7 +58,7 @@ final public class AkkaContext {
 	 * @return
 	 */
 	public static ActorRef getTypedActorRef(Object typedActor) {
-		return TypedActor.get(SYSTEM).getActorRefFor(typedActor);
+		return TypedActor.get(system()).getActorRefFor(typedActor);
 	}
 
 	/**
@@ -68,6 +70,6 @@ final public class AkkaContext {
 	 * @return
 	 */
 	public static <T> T getRemoteTypedActor (Class<T> interfaceCls, ActorRef actorRef){
-		return TypedActor.get(SYSTEM).typedActorOf(new TypedProps<T>(interfaceCls), actorRef);
+		return TypedActor.get(system()).typedActorOf(new TypedProps<T>(interfaceCls), actorRef);
 	}
 }

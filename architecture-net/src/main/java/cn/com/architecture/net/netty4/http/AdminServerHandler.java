@@ -15,28 +15,17 @@
  */
 package cn.com.architecture.net.netty4.http;
 
-import io.netty.buffer.ByteBuf;
-import io.netty.buffer.Unpooled;
-import io.netty.channel.Channel;
-import io.netty.channel.ChannelFutureListener;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
-import io.netty.handler.codec.TooLongFrameException;
+
 import io.netty.handler.codec.http.*;
 
-import io.netty.util.CharsetUtil;
-import org.jboss.netty.channel.*;
+
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.HashMap;
-
-import static io.netty.handler.codec.http.HttpResponseStatus.BAD_REQUEST;
-import static io.netty.handler.codec.http.HttpResponseStatus.INTERNAL_SERVER_ERROR;
-import static io.netty.handler.codec.http.HttpResponseStatus.OK;
-import static io.netty.handler.codec.http.HttpVersion.HTTP_1_1;
-
 
 /**
  * @author javagg
@@ -62,59 +51,64 @@ public class AdminServerHandler extends SimpleChannelInboundHandler<FullHttpRequ
 		}
 	}
 	
+//	@Override
+//	public void messageReceived(ChannelHandlerContext ctx, FullHttpRequest request)
+//			throws Exception {
+//		String uri = request.uri();
+//		IAdminHandler iah = null;
+//		String sutf;
+//		int index = uri.indexOf('/', 1);
+//		if (index == -1) {
+//			sutf = uri.substring(1);
+//		} else {
+//			sutf = uri.substring(1, index);
+//		}
+//		iah = servlets.get(sutf);
+//		System.out.println("uri:"+uri);
+//		if (iah == null)
+//			throw new RuntimeException("admin handle not found : " + sutf);
+//		FullHttpResponse response = new DefaultFullHttpResponse(HTTP_1_1, OK);
+//		ByteBuf buffer= Unpooled.copiedBuffer(buf, CharsetUtil.UTF_8);
+//		response.content(buffer);
+//		iah.exec(request, response);
+//
+//		response.headers().set("Content-Type", "text/html; charset=UTF-8");
+//		response.headers().set("Content-Length", response.content().writerIndex());
+//		// Write the initial line and the header.
+//
+//		ctx.writeAndFlush(response).addListener(ChannelFutureListener.CLOSE);
+////		ch.disconnect();
+////		ch.close();
+//
+//	}
+//
+//	@Override
+//	public void exceptionCaught(ChannelHandlerContext ctx, ExceptionEvent e)
+//			throws Exception {
+//		Channel ch = e.getChannel();
+//		Throwable cause = e.getCause();
+//		if (cause instanceof TooLongFrameException) {
+//			sendError(ctx, BAD_REQUEST);
+//			return;
+//		}
+//
+//		cause.printStackTrace();
+//		if (ch.isConnected()) {
+//			sendError(ctx, INTERNAL_SERVER_ERROR);
+//		}
+//	}
+//
+//	private void sendError(ChannelHandlerContext ctx, HttpResponseStatus status) {
+//		FullHttpResponse response = new DefaultHttpResponse(HTTP_1_1, status);
+//		response.headers().set(CONTENT_TYPE, "text/plain; charset=UTF-8");
+//		response.content(ChannelBuffers.copiedBuffer("Failure: " + status.toString() + "\r\n", CharsetUtil.UTF_8));
+//
+//		// Close the connection as soon as the error message is sent.
+//		ctx.writeAndFlush(response).addListener(ChannelFutureListener.CLOSE);
+//	}
+
 	@Override
-	public void messageReceived(ChannelHandlerContext ctx, FullHttpRequest request)
-			throws Exception {
-		String uri = request.uri();
-		IAdminHandler iah = null;
-		String sutf;
-		int index = uri.indexOf('/', 1);
-		if (index == -1) {
-			sutf = uri.substring(1);
-		} else {
-			sutf = uri.substring(1, index);
-		}
-		iah = servlets.get(sutf);
-		System.out.println("uri:"+uri);
-		if (iah == null)
-			throw new RuntimeException("admin handle not found : " + sutf);
-		FullHttpResponse response = new DefaultFullHttpResponse(HTTP_1_1, OK);
-		ByteBuf buffer= Unpooled.copiedBuffer(buf, CharsetUtil.UTF_8);
-		response.content(buffer);
-		iah.exec(request, response);
+	protected void channelRead0(ChannelHandlerContext channelHandlerContext, FullHttpRequest fullHttpRequest) throws Exception {
 
-		response.headers().set("Content-Type", "text/html; charset=UTF-8");
-		response.headers().set("Content-Length", response.content().writerIndex());
-		// Write the initial line and the header.
-
-		ctx.writeAndFlush(response).addListener(ChannelFutureListener.CLOSE);
-//		ch.disconnect();
-//		ch.close();
-		
-	}
-
-	@Override
-	public void exceptionCaught(ChannelHandlerContext ctx, ExceptionEvent e)
-			throws Exception {
-		Channel ch = e.getChannel();
-		Throwable cause = e.getCause();
-		if (cause instanceof TooLongFrameException) {
-			sendError(ctx, BAD_REQUEST);
-			return;
-		}
-
-		cause.printStackTrace();
-		if (ch.isConnected()) {
-			sendError(ctx, INTERNAL_SERVER_ERROR);
-		}
-	}
-
-	private void sendError(ChannelHandlerContext ctx, HttpResponseStatus status) {
-		FullHttpResponse response = new DefaultHttpResponse(HTTP_1_1, status);
-		response.headers().set(CONTENT_TYPE, "text/plain; charset=UTF-8");
-		response.content(ChannelBuffers.copiedBuffer("Failure: " + status.toString() + "\r\n", CharsetUtil.UTF_8));
-
-		// Close the connection as soon as the error message is sent.
-		ctx.writeAndFlush(response).addListener(ChannelFutureListener.CLOSE);
 	}
 }

@@ -3,7 +3,7 @@ package utils.akka.untypedactor;
 import akka.actor.*;
 
 /**
- * Created by world3-007 on 2018/4/27.
+ * Created by lst on 2018/4/27.
  */
 public class HelloActor extends UntypedAbstractActor {
 

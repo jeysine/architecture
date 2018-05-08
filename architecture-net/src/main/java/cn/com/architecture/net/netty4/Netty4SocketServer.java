@@ -20,8 +20,7 @@ import java.util.concurrent.TimeUnit;
 
 /**
  * netty4启动
- *
- * @author Pan
+ * @author lst
  * 2015年11月12日
  */
 public final class Netty4SocketServer {

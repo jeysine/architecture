@@ -4,6 +4,7 @@ import cn.com.architecture.net.netty4.websocket.communication.NettyTCPMessageSen
 import cn.com.architecture.net.netty4.websocket.context.MsgConstant;
 import cn.com.architecture.net.netty4.websocket.processors.MsgDispatcher;
 import cn.com.architecture.net.netty4.websocket.protocol.RequestBase;
+import cn.com.architecture.net.netty4.websocket.session.IPlayerSession;
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.Unpooled;
 import io.netty.channel.ChannelHandlerContext;
@@ -30,7 +31,8 @@ public class WSServerHandler extends SimpleChannelInboundHandler<WebSocketFrame>
     private MsgDispatcher dispatcher;
 
     // 业务线程池
-    private static Executor executor = Fibers.createExecutorService();
+    private static Executor executor = null;
+    //private static Executor executor = Fibers.createExecutorService();
 
 
 
@@ -83,15 +85,15 @@ public class WSServerHandler extends SimpleChannelInboundHandler<WebSocketFrame>
             }
             request.reset();
             //todo: 重置 反系列化
-            if(codeType == CodeTypeConstant.BINARY){
-                request.unserial(in);
-            }else if(codeType == CodeTypeConstant.MSGPACK){
-                byte[] bytes = new byte[bodySize];
-                in.readBytes(bytes);
-                request = MsgpackUtil.readPack(bytes, request.getClass());
-            }else{
-                request.unserial(in);
-            }
+//            if(codeType == CodeTypeConstant.BINARY){
+//                request.unserial(in);
+//            }else if(codeType == CodeTypeConstant.MSGPACK){
+//                byte[] bytes = new byte[bodySize];
+//                in.readBytes(bytes);
+//                request = MsgpackUtil.readPack(bytes, request.getClass());
+//            }else{
+//                request.unserial(in);
+//            }
 //            System.out.println("request:"+ GsonUtil.toJson(request));
             return request;
         }else{
@@ -111,6 +113,7 @@ public class WSServerHandler extends SimpleChannelInboundHandler<WebSocketFrame>
 
 
     private void handleWebSocketFrame(ChannelHandlerContext ctx, WebSocketFrame frame) throws Exception {
+        IPlayerSession playerSession = null;
         if(frame instanceof BinaryWebSocketFrame){
             RequestBase request = decode(ctx, frame.content());
             if(null == request)

@@ -1,7 +1,7 @@
 package utils.akka;
 
 /**
- * Created by world3-007 on 2018/4/28.
+ * Created by lst on 2018/4/28.
  */
 public class AkkaConstant {
 

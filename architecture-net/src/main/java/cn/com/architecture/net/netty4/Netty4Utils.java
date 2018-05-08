@@ -5,9 +5,7 @@ import io.netty.channel.ChannelHandlerContext;
 import java.net.InetSocketAddress;
 
 /**
- * 
- *
- * @author Pan
+ * @author lst
  * 2015年11月10日
  */
 public class Netty4Utils {

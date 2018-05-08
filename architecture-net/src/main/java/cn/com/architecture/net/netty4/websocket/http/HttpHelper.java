@@ -2,6 +2,8 @@ package cn.com.architecture.net.netty4.websocket.http;
 
 
 
+import cn.com.architecture.net.netty4.websocket.context.AppContext;
+import cn.com.architecture.net.utils.MD5;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -36,38 +38,40 @@ public class HttpHelper {
     public static String makeSign(Map<String, List<String>> uriParams) {
         List<PostParameter> paramsArr = new ArrayList<>();
 
-        for (Map.Entry<String, List<String>> entry : uriParams.entrySet()) {
-            PostParameter param = new PostParameter(entry.getKey(), entry.getValue().get(0));
-            paramsArr.add(param);
-        }
+//        for (Map.Entry<String, List<String>> entry : uriParams.entrySet()) {
+//            PostParameter param = new PostParameter(entry.getKey(), entry.getValue().get(0));
+//            paramsArr.add(param);
+//        }
 
         return makeSign(paramsArr);
     }
 
     public static String makeSign(List<PostParameter> params) {
-        Collections.sort(params, Comparator.comparing(o -> (o.getName())));
-        StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.setLength(0);
-        for (PostParameter param : params) {
-            stringBuilder.append(param.getName()).append("=").append(param.getValue()).append("&");
-        }
-
-        return new MD5().toDigest(stringBuilder.append(AppContext.getSecretKey()).toString());
+//        Collections.sort(params, Comparator.comparing(o -> (o.getName())));
+//        StringBuilder stringBuilder = new StringBuilder();
+//        stringBuilder.setLength(0);
+//        for (PostParameter param : params) {
+//            stringBuilder.append(param.getName()).append("=").append(param.getValue()).append("&");
+//        }
+//
+//        return new MD5().toDigest(stringBuilder.append(AppContext.getSecretKey()).toString());
+        return null;
     }
 
     public static String buildUrl(Map<String, String> uriParams) {
-        List<PostParameter> paramsArr = new ArrayList<>();
-
-        for (Map.Entry<String, String> entry : uriParams.entrySet()) {
-            PostParameter param = new PostParameter(entry.getKey(), entry.getValue());
-            paramsArr.add(param);
-        }
-        Collections.sort(paramsArr, Comparator.comparing(o -> (o.getName())));
-        StringBuilder stringBuilder = new StringBuilder();
-        for (PostParameter param : paramsArr) {
-            stringBuilder.append(param.getName()).append("=").append(param.getValue()).append("&");
-        }
-        stringBuilder.append("signature").append("=").append(makeSign(paramsArr));
-        return stringBuilder.toString();
+//        List<PostParameter> paramsArr = new ArrayList<>();
+//
+//        for (Map.Entry<String, String> entry : uriParams.entrySet()) {
+//            PostParameter param = new PostParameter(entry.getKey(), entry.getValue());
+//            paramsArr.add(param);
+//        }
+//        Collections.sort(paramsArr, Comparator.comparing(o -> (o.getName())));
+//        StringBuilder stringBuilder = new StringBuilder();
+//        for (PostParameter param : paramsArr) {
+//            stringBuilder.append(param.getName()).append("=").append(param.getValue()).append("&");
+//        }
+//        stringBuilder.append("signature").append("=").append(makeSign(paramsArr));
+//        return stringBuilder.toString();
+        return null;
     }
 }

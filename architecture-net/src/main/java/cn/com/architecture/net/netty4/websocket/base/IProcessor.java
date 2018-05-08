@@ -1,7 +1,6 @@
 package cn.com.architecture.net.netty4.websocket.base;
 
-import com.linlongyx.core.framework.logic.IPlayerSession;
-import com.linlongyx.core.framework.protocol.RequestBase;
+import cn.com.architecture.net.netty4.websocket.session.IPlayerSession;
 
 /**
  * 标志接口，实现此处理器的processor不需要验证
