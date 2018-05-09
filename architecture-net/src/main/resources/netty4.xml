@@ -44,7 +44,7 @@
         <constructor-arg ref="webSocketServerInitializer"/>
     </bean>
 
-    <bean id="webSocketServerInitializer" class="com.linlongyx.h5.webgame.net.ws.WebSocketServerInitializer">
+    <bean id="webSocketServerInitializer" class="net.ws.WebSocketServerInitializer">
         <property name="businessGroup" ref="businessGroup" />
     </bean>
 

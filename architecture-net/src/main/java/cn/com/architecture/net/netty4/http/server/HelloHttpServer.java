@@ -1,4 +1,4 @@
-package cn.com.architecture.net.netty4.http;
+package cn.com.architecture.net.netty4.http.server;
 
 import com.sun.net.httpserver.HttpServer;
 import io.netty.bootstrap.ServerBootstrap;

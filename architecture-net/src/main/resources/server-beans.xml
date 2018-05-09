@@ -21,13 +21,13 @@
 
 
     <!-- Configure the three servers. By default tcp and udp runs at 18090 and flash at 843 -->
-    <bean id="serverManager" class="com.linlongyx.h5.webgame.server.ServerManagerImpl"/>
+    <bean id="serverManager" class="server.ServerManagerImpl"/>
     <!-- httpServer -->
-    <bean id="httpServer" class="com.linlongyx.core.framework.server.netty.NettyTCPServer" destroy-method="stopServer">
+    <bean id="httpServer" class="core.framework.server.netty.NettyTCPServer" destroy-method="stopServer">
         <constructor-arg ref="httpConfig"/>
         <constructor-arg ref="httpChannelInitializer"/>
     </bean>
-    <bean id="httpConfig" class="com.linlongyx.core.framework.server.netty.NettyConfig">
+    <bean id="httpConfig" class="core.framework.server.netty.NettyConfig">
         <property name="channelOptions" ref="tcpChannelOptions"/>
         <property name="bossGroup" ref="bossGroup"/>
         <property name="workerGroup" ref="workerGroup"/>
@@ -37,28 +37,28 @@
         <constructor-arg type="int" index="0" value="${businessThreadCount}"/>
     </bean>
 
-    <bean id="httpChannelInitializer"  class="com.linlongyx.h5.webgame.net.http.HttpChannelInitializer"/>
-    <bean id="httpSender" class="com.linlongyx.h5.webgame.quartz.HttpSender">
+    <bean id="httpChannelInitializer"  class="net.http.HttpChannelInitializer"/>
+    <bean id="httpSender" class="quartz.HttpSender">
         <constructor-arg value="${http.port}"/>
     </bean>
     <!-- wsServer -->
-    <bean id="wsServer" class="com.linlongyx.core.framework.server.netty.NettyTCPServer" destroy-method="stopServer">
+    <bean id="wsServer" class="core.framework.server.netty.NettyTCPServer" destroy-method="stopServer">
         <constructor-arg ref="wsConfig"/>
         <constructor-arg ref="webSocketServerInitializer"/>
     </bean>
 
-    <bean id="webSocketServerInitializer" class="com.linlongyx.h5.webgame.net.ws.WebSocketServerInitializer">
+    <bean id="webSocketServerInitializer" class="net.ws.WebSocketServerInitializer">
         <property name="businessGroup" ref="businessGroup" />
     </bean>
 
-    <bean id="wsConfig" class="com.linlongyx.core.framework.server.netty.NettyConfig">
+    <bean id="wsConfig" class="core.framework.server.netty.NettyConfig">
         <property name="channelOptions" ref="tcpChannelOptions"/>
         <property name="bossGroup" ref="bossGroup"/>
         <property name="workerGroup" ref="workerGroup"/>
         <property name="portNumber" value="${ws.port}"/>
     </bean>
     <!-- logClient
-    <bean id="logClient" class="com.linlongyx.h5.log.WebSocketClient" >
+    <bean id="logClient" class="h5.log.WebSocketClient" >
         <constructor-arg value="${serverId}"/>
         <constructor-arg value="${log.host}"/>
         <constructor-arg value="${log.port}"/>
@@ -90,11 +90,11 @@
         <constructor-arg index="1" ref="workerThreadFactory"/>
     </bean>
 
-    <bean id="bossThreadFactory" class="com.linlongyx.core.framework.concurrent.NamedThreadFactory">
+    <bean id="bossThreadFactory" class="core.framework.concurrent.NamedThreadFactory">
         <constructor-arg index="0" value="Server-Boss"/>
     </bean>
 
-    <bean id="workerThreadFactory" class="com.linlongyx.core.framework.concurrent.NamedThreadFactory">
+    <bean id="workerThreadFactory" class="core.framework.concurrent.NamedThreadFactory">
         <constructor-arg index="0" value="Server-Worker"/>
     </bean>
 </beans>

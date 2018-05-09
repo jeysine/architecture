@@ -82,15 +82,117 @@ public class ConcurrentHashSet<E> extends AbstractSet<E>
 
     public static void main(String args[]){
 
+        HashSet<String> set1 = new HashSet<>();
 
-        HashSet<Integer> set = new HashSet<>();
 
-        ConcurrentHashSet<Integer> set1 = new ConcurrentHashSet<>();
+        ConcurrentHashSet<String> set2 = new ConcurrentHashSet<>();
 
-        set1.add(1);
-        set1.add(2);
 
-        System.out.println(set1);
+        Thread t1 = new Thread(()->{
+            int i = 1;
+            while (true){
+                try{
+                    set1.remove(i+"");
+                    i++;
+                    //Thread.sleep(110);
+                }catch(Exception e){
+                    throw e;
+                }
+            }
+        });
+
+        Thread t2 = new Thread(()->{
+            while (true) {
+                try {
+                    int j = 0;
+                    for (String i : set1) {
+                        j += 1;
+                    }
+                    System.out.println("set1数量：" + j);
+                    //Thread.sleep(10);
+                } catch (Exception e) {
+                    throw e;
+                }
+            }
+        });
+
+        Thread t3 = new Thread(()->{
+            int i = 1;
+            while (true) {
+                try {
+                    set1.add(i+"");
+                    i++;
+                } catch (Exception e) {
+                    throw e;
+                }
+            }
+        });
+        
+        Thread t4 = new Thread(()->{
+            int i = 1;
+            while (true) {
+                try{
+                    set2.remove(i+"");
+                    i++;
+                    //Thread.sleep(110);
+                }catch(Exception e){
+                    throw e;
+                }
+            }
+        });
+
+        Thread t5 = new Thread(()->{
+            while (true) {
+                try {
+                    int j = 0;
+                    for (String i : set2) {
+                        j += 1;
+                    }
+                    System.out.println("set2数量：" + j);
+                    //Thread.sleep(10);
+                } catch (Exception e) {
+                    throw e;
+                }
+            }
+        });
+
+        Thread t6 = new Thread(()->{
+            int i = 1;
+            while (true) {
+                try {
+                    set2.add(i+"");
+                    i++;
+                } catch (Exception e) {
+                    throw e;
+                }
+            }
+        });
+
+//        t3.start();
+//        try{
+//            Thread.sleep(10);
+//        }catch (Exception e){
+//            e.printStackTrace();
+//        }
+//        t2.start();
+//        t1.start();
+
+        t6.start();
+        try{
+            Thread.sleep(10);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        t5.start();
+        t4.start();
+
+
+
+        while(true){
+
+
+
+        }
 
 
     }

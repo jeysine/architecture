@@ -1,4 +1,4 @@
-package cn.com.architecture.net.netty4.http;
+package cn.com.architecture.net.netty4.http.server;
 
 /**
  * Created by lst on 2018/5/8.
