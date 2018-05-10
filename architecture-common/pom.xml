@@ -112,6 +112,12 @@
             <artifactId>akka-remote_2.11</artifactId>
         </dependency>
 
+        <!-- https://mvnrepository.com/artifact/com.lmax/disruptor 轮回无锁队列-->
+        <dependency>
+            <groupId>com.lmax</groupId>
+            <artifactId>disruptor</artifactId>
+        </dependency>
+
     </dependencies>
 
 </project>
