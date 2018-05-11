@@ -22,7 +22,7 @@ public class PackCodec {
 	/**
 	 * 设置需要加密的协议号
 	 * @param cmds 协议号
-	 * @param encryptKey 加密的key
+	 * @param _encryptKey 加密的key
 	 */
 	public static void initEncrypt(int[] cmds,String _encryptKey){
 		encryptBox = BytesConfuse.create_box(_encryptKey);

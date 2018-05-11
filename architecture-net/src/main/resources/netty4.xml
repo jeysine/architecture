@@ -9,9 +9,6 @@
 
     <context:annotation-config/>
 
-
-    <!--<import resource="redis-beans.xml"/>-->
-
     <!-- The Spring application context -->
 
     <bean class="org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor"/>
@@ -44,7 +41,7 @@
         <constructor-arg ref="webSocketServerInitializer"/>
     </bean>
 
-    <bean id="webSocketServerInitializer" class="net.ws.WebSocketServerInitializer">
+    <bean id="webSocketServerInitializer" class="cn.com.architecture.net.netty4.websocket.ws.WebSocketServerInitializer">
         <property name="businessGroup" ref="businessGroup" />
     </bean>
 
@@ -87,11 +84,11 @@
         <constructor-arg index="1" ref="workerThreadFactory"/>
     </bean>
 
-    <bean id="bossThreadFactory" class="com.linlongyx.core.framework.concurrent.NamedThreadFactory">
+    <bean id="bossThreadFactory" class="cn.com.architecture.net.core.framework.concurrent.NamedThreadFactory">
         <constructor-arg index="0" value="Server-Boss"/>
     </bean>
 
-    <bean id="workerThreadFactory" class="com.linlongyx.core.framework.concurrent.NamedThreadFactory">
+    <bean id="workerThreadFactory" class="cn.com.architecture.net.core.framework.concurrent.NamedThreadFactory">
         <constructor-arg index="0" value="Server-Worker"/>
     </bean>
 </beans>

@@ -1,0 +1,26 @@
+syntax = "proto3"; 
+
+option java_package = "cn.com.architecture.net.proto";
+option java_outer_classname = "CommonMsg";
+
+message ClientInfo { //客户端信息
+	required int32 edition = 4; //版本号,每次发布版本记得和服务器同步,一般自增1
+	optional int32 terminalType = 5;//终端操作系统类型:客户端定义,区分安卓,ios等
+	optional string terminalInfo = 6; //终端信息描述
+	optional string operatingSystem = 12; // 操作系统名称
+}
+
+message S2CCommontMsg { //通用结果server回复数据包定义,S->C cmd = COMMON_RESULT
+	required int32 cmdCode = 1 [default = -1]; //操作的协议号
+	optional int32 result = 2 [default = -1]; //结果值, 0=成功 其他=各种失败
+	optional string resultInfo = 3; //result=各种失败时,返回对应错误提示
+	optional int32 type = 4[default = 1]; //错误提示类型1 ：普通错误类型，2：浮框
+}
+
+message C2SHeartBeatMeg {//客户端发上来的心跳协议,返回通用协议, cmd = COMMON_HEART_BEAT
+	//不用上行
+}
+
+message C2SEmptyMessage {//用于通用的空数据消息上行
+}
+
