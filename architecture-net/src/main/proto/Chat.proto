@@ -4,18 +4,18 @@ option java_package = "cn.com.architecture.net.proto";
 option java_outer_classname = "ChatMsg";
 
 message ChatMsgInfo{  
-	required int64 sendPlayerId = 1; //发送者ID
-	required int32 msgTextType = 2; //消息文本类型
-	required string sendMsgName = 3; //发送者名字
-	required int32 chatType =4;//消息广播类型
-	optional string textMsgContent = 7; //文本消息
-	optional string voiceUrl= 8; //语音消息
-	optional int32 times = 9; //录音时长
-	optional string time = 11; //format = "MM-dd HH:mm"
-	optional int64 receiveId = 12; //接受者ID
-	optional int64 sendTime = 15;//发送的时间，客户端用来判断
-	optional int32 icon = 16; //发送者头像
-	optional bool isRead = 17[default = true]; //是否已读
+	int64 sendPlayerId = 1; //发送者ID
+	int32 msgTextType = 2; //消息文本类型
+	string sendMsgName = 3; //发送者名字
+	int32 chatType =4;//消息广播类型
+	string textMsgContent = 7; //文本消息
+	string voiceUrl= 8; //语音消息
+	int32 times = 9; //录音时长
+	string time = 11; //format = "MM-dd HH:mm"
+	int64 receiveId = 12; //接受者ID
+	int64 sendTime = 15;//发送的时间，客户端用来判断
+	int32 icon = 16; //发送者头像
+	bool isRead = 17[default = true]; //是否已读
 }
 
 message C2SHasUnreadChat { // cmd = HAS_UNREAD_CHAT = 12553; //是否有未读内容
@@ -23,7 +23,7 @@ message C2SHasUnreadChat { // cmd = HAS_UNREAD_CHAT = 12553; //是否有未读�
 }
 
 message S2CHasUnreadChat { 
-	required bool hasUnreadChat = 1; //是否拥有未读聊天
+	bool hasUnreadChat = 1; //是否拥有未读聊天
 }
 
 message C2SIntoChatModule { // cmd = INTO_CHAT_MODULE = 12554; //进入聊天模块
@@ -35,12 +35,12 @@ message UserInfo{
 }
 
 message S2CIntoChatModule {
-	repeated UserInfo friendBases = 1; //好友列表
+	UserInfo friendBases = 1; //好友列表
 }
 
 message C2SGetFriendChat { // cmd = GET_FRIEND_CHAT = 12555; //获取好友聊天信息
-	optional int64 friendId = 1; //好友ID
-	optional bool isFirst = 2; //是否是第一次拿聊天信息，第一次需要拿历史信息
+	int64 friendId = 1; //好友ID
+	bool isFirst = 2; //是否是第一次拿聊天信息，第一次需要拿历史信息
 }
 
 message S2CGetFriendChat {
@@ -48,9 +48,9 @@ message S2CGetFriendChat {
 }
 
 message C2STextChat { //文本聊天:cmd=CHAT_TEXT_CHAT = 12550  
-	required string msgContent = 1;//消息内容
-	required int32 chatType = 2;//聊天频道 1:世界频道，2：势力频道，3：队伍频道，3：私聊
-	optional int64 privatePlayerId = 4 [default = -1];//私聊玩家ID（用于私聊）
+	string msgContent = 1;//消息内容
+	int32 chatType = 2;//聊天频道 1:世界频道，2：势力频道，3：队伍频道，3：私聊
+	int64 privatePlayerId = 4 [default = -1];//私聊玩家ID（用于私聊）
 }
 
 message S2CTextChat { 
@@ -58,11 +58,11 @@ message S2CTextChat {
 }
 
 message C2SVoiceChat { //语音聊天:cmd=CHAT_VOICE_CHAT = 12551  
-	required string url = 1; //语音保存地址
-	required int32 times = 2; //录音时长(秒）
-	required int32 chatType = 3;//聊天频道
-	optional string msgContent = 4;//消息内容
-	optional int64 privatePlayerId = 5;//私聊玩家ID（用于私聊）
+	string url = 1; //语音保存地址
+	int32 times = 2; //录音时长(秒）
+	int32 chatType = 3;//聊天频道
+	string msgContent = 4;//消息内容
+	int64 privatePlayerId = 5;//私聊玩家ID（用于私聊）
 }
 
 message S2CVoiceChat { 
@@ -82,8 +82,8 @@ message S2CLeaveChat {
 }
 
 message StatusBase {
-	optional int64 playerId = 1;
-	optional bool isLogin = 2;
+	int64 playerId = 1;
+	bool isLogin = 2;
 }
 
 message C2SRefreshChatPlayerStatus{ //刷新聊天好友状态：cmd = REFRESH_CHAT_PLAYER_STATUS = 12557; //刷新聊天好友状态

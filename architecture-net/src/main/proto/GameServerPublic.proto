@@ -5,57 +5,57 @@ option java_outer_classname = "GameServerPublicMsg";
 import "Common.proto";
 
 message C2SCheckLogin { //游戏服登陆校验，cmd=USER_CHECK_LOGIN = 3001
-	required ClientInfo clientInfo = 1; //客户端信息
-	required int64 userId = 2; // 账号id,登录服返回的参数
-	required string sessionId = 3; //sessionId,登录服返回的参数
+	ClientInfo clientInfo = 1; //客户端信息
+	int64 userId = 2; // 账号id,登录服返回的参数
+	string sessionId = 3; //sessionId,登录服返回的参数
 	
 	//以下areaId和areaCode,只需要其中一个有效即可
-	optional int32 areaId = 4; //登入的分区id,用于合区后分区列表多个分区指向同一个真实服务器
-	optional string areaCode = 5; //登入的分区代号,用于台湾平台的sdk,对应我们这边的分区名称,测试可以直接传我们的分区名称
+	int32 areaId = 4; //登入的分区id,用于合区后分区列表多个分区指向同一个真实服务器
+	string areaCode = 5; //登入的分区代号,用于台湾平台的sdk,对应我们这边的分区名称,测试可以直接传我们的分区名称
 }
 
 message S2CCheckLogin { //游戏服登陆校验，cmd=USER_CHECK_LOGIN = 3001
-	required int32 loginRs = 1; //登录结果:0=成功,1=需要激活码,2=需要输入图片验证码,3=客户端需要强制更新才能进入游戏
-	optional bytes safePhotoDatas = 2; //如果loginRs=2,下发对应的图片检验码
-	optional int32 gamesetting = 3; //游戏各种开关配置	
-	required int32 faction = 5;//推荐势力
-	optional int64 serverTime = 6;//服务器当前时间:已转换时区,客户端直接转换成可视形式展示
+	int32 loginRs = 1; //登录结果:0=成功,1=需要激活码,2=需要输入图片验证码,3=客户端需要强制更新才能进入游戏
+	bytes safePhotoDatas = 2; //如果loginRs=2,下发对应的图片检验码
+	int32 gamesetting = 3; //游戏各种开关配置	
+	int32 faction = 5;//推荐势力
+	int64 serverTime = 6;//服务器当前时间:已转换时区,客户端直接转换成可视形式展示
 }
 
 message C2SChangeLoginSafePhoto { //刷新登录验证图片，cmd=USER_CHANGE_SAFE_PHOTO = 3005,返回S2CChangeLoginSafePhoto
-	required int64 userId = 1; // 账号id
+	int64 userId = 1; // 账号id
 }
 
 message S2CChangeLoginSafePhoto { //刷新登录验证图片，cmd=USER_CHANGE_SAFE_PHOTO = 3005
-	required bytes safePhotoDatas = 1; // 验证码图片数据
+	bytes safePhotoDatas = 1; // 验证码图片数据
 }
 
 message C2SInputLoginSafePhoto { //输入登录验证图片码，cmd=USER_INPUT_SAFE_PHOTO = 3006,返回S2CInputLoginSafePhoto
-	required ClientInfo clientInfo = 1; //客户端信息
-	required int64 userId = 2; //账号id
-	required string safeCode = 3; //图片验证码
+	ClientInfo clientInfo = 1; //客户端信息
+	int64 userId = 2; //账号id
+	string safeCode = 3; //图片验证码
 }
 
 message S2CInputLoginSafePhoto { //输入登录验证图片码，cmd=USER_INPUT_SAFE_PHOTO = 3006
-	required int32 rs = 1; //校验结果:0=成功,1=失败,需要重新输入
-	optional string errInfo = 2; //rs=1时,失败的原因
-	optional bytes safePhotoDatas = 3; //失败时刷新图片
+	int32 rs = 1; //校验结果:0=成功,1=失败,需要重新输入
+	string errInfo = 2; //rs=1时,失败的原因
+	bytes safePhotoDatas = 3; //失败时刷新图片
 }
 
 message C2SNetCheck { //USER_NET_CHECK = 3011;//客户端测试网络连通用，返回S2CNetCheck
-	required string testInfo = 1; //测试代码
+	string testInfo = 1; //测试代码
 }
 
 message S2CNetCheck { //USER_NET_CHECK = 3011;//客户端测试网络连通用
-	required string testInfo = 1; //测试代码
+	string testInfo = 1; //测试代码
 }
 
 message C2STestCode { // 作弊指令:方便测试用  cmd=USER_COMMON_TEST_CODE = 3012,返回通用协议,刷新相关修改另外推送
-	required string code = 1;//作弊指令,多个参数的话用=号隔开,如:additem=1001=1
+	string code = 1;//作弊指令,多个参数的话用=号隔开,如:additem=1001=1
 }
 
 message C2SLogDebug { //USER_CLIENT_DEBUG_INFO = 3014;//客户端调试信息,服务器统一输出到文件,供客户端查阅
-	required string debugText = 1; //debug信息
+	string debugText = 1; //debug信息
 }
 
 message S2CKictOut {//推送被顶号提示，KICT_OUT=3016
