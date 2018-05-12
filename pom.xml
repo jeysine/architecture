@@ -21,6 +21,12 @@
         <spring.boot.version>1.3.3.RELEASE</spring.boot.version>
         <akka.scala>2.11</akka.scala>
         <akka.version>2.5.12</akka.version>
+        <akka.scala>2.11</akka.scala>
+        <akka.version>2.5.12</akka.version>
+        <okhttp.version>3.8.1</okhttp.version>
+        <log4j2.version>2.9.1</log4j2.version>
+        <disruptor.version>3.4.2</disruptor.version>
+        <dom4j.version>1.6.1</dom4j.version>
     </properties>
     <build>
         <plugins>
@@ -597,11 +603,24 @@
                 <version>${akka.version}</version>
             </dependency>
 
-            <!-- https://mvnrepository.com/artifact/com.lmax/disruptor 轮回无锁队列-->
+
+            <dependency>
+                <groupId>com.squareup.okhttp3</groupId>
+                <artifactId>okhttp</artifactId>
+                <version>${okhttp.version}</version>
+            </dependency>
+
+
             <dependency>
                 <groupId>com.lmax</groupId>
                 <artifactId>disruptor</artifactId>
-                <version>3.4.2</version>
+                <version>${disruptor.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>dom4j</groupId>
+                <artifactId>dom4j</artifactId>
+                <version>${dom4j.version}</version>
             </dependency>
 
         </dependencies>
