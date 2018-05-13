@@ -8,14 +8,14 @@ message ChatMsgInfo{
 	int32 msgTextType = 2; //消息文本类型
 	string sendMsgName = 3; //发送者名字
 	int32 chatType =4;//消息广播类型
-	string textMsgContent = 7; //文本消息
-	string voiceUrl= 8; //语音消息
-	int32 times = 9; //录音时长
-	string time = 11; //format = "MM-dd HH:mm"
-	int64 receiveId = 12; //接受者ID
-	int64 sendTime = 15;//发送的时间，客户端用来判断
-	int32 icon = 16; //发送者头像
-	bool isRead = 17[default = true]; //是否已读
+	string textMsgContent = 5; //文本消息
+	string voiceUrl= 6; //语音消息
+	int32 times = 7; //录音时长
+	string time = 8; //format = "MM-dd HH:mm"
+	int64 receiveId = 9; //接受者ID
+	int64 sendTime = 10;//发送的时间，客户端用来判断
+	int32 icon = 11; //发送者头像
+	bool isRead = 12; //是否已读
 }
 
 message C2SHasUnreadChat { // cmd = HAS_UNREAD_CHAT = 12553; //是否有未读内容
@@ -50,7 +50,7 @@ message S2CGetFriendChat {
 message C2STextChat { //文本聊天:cmd=CHAT_TEXT_CHAT = 12550  
 	string msgContent = 1;//消息内容
 	int32 chatType = 2;//聊天频道 1:世界频道，2：势力频道，3：队伍频道，3：私聊
-	int64 privatePlayerId = 4 [default = -1];//私聊玩家ID（用于私聊）
+	int64 privatePlayerId = 3;//私聊玩家ID（用于私聊）
 }
 
 message S2CTextChat { 

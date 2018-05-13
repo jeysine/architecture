@@ -1,4 +1,4 @@
-package cn.com.architecture.net.netty4;
+package cn.com.architecture.net.netty4.common;
 
 import io.netty.channel.ChannelDuplexHandler;
 import io.netty.channel.ChannelHandlerContext;

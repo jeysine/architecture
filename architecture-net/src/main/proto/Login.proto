@@ -18,7 +18,7 @@ message AreaInfo {//分区信息
 
 message ActorInfo{
 	int64 userId = 1;			//id
-	string name = 2[default = ""];         //玩家名
+	string name = 2;         //玩家名
 }
 
 message C2SLoginServerCheck { // 登录服校验,游戏启动后的第一条协议，cmd=LOGIN_SERVER_CHECK = 2001,返回 S2CLoginServerCheck
@@ -28,12 +28,12 @@ message C2SLoginServerCheck { // 登录服校验,游戏启动后的第一条协�
 message S2CLoginServerCheck { //登录服校验,游戏启动后的第一条协议，cmd=LOGIN_SERVER_CHECK = 2001
 	int32 areaCount = 1; 	//服务器总数量
 	AreaInfo area = 2;			//默认分区
-	bool isIosInExamine = 3[default = false]; // Ios是否处于评审状态
+	bool isIosInExamine = 3; // Ios是否处于评审状态
 	string resUrl = 4; 		// 资源下载地址
 	string cdnUrl = 5; 			// 下载资源的cdn url
 	int32 updateType = 6; // 更新类型,0=无更新,1=强制更新,2=自愿更新
 	string clientDownloadUrl = 7; 	// 客户端下载地址
-	string updateInfo = 8 [default = ""]; 	//更新描述:当有版本更新时赋值
+	string updateInfo = 8; 	//更新描述:当有版本更新时赋值
 	string iosInExamineServerUrl = 9; 		//如果客户端对应的版本处于评审状态,返回评审服对应的登录服地址(评审服是一套完整的独立服务器)
 	string goodInfo = 10;		//公司默认联系方式,其他渠道的客户端则显示对应公司的描述(可能为空)
 }
@@ -51,7 +51,7 @@ message S2CLoginSdk { //登陆:cmd=LOGIN_SERVER_LOGIN = 2003
 	int32 loginType = 1; //验证方式:0=直接输入账号密码(测试模式),1=sdk登录
 	int64 userId = 2; //登录成功后返回游戏对应的账号id
 	string sessionId = 3; //登入游戏时验证用
-	bool isNeedTestCode = 4[default = false]; //是否需要激活码登录游戏
+	bool isNeedTestCode = 4; //是否需要激活码登录游戏
 	int32 resVersion = 5; //最新资源版本号
 	repeated int32 encryptCmds = 6;	//需要加密的协议号
 	string encryptKey = 7; //加密协议用的key
@@ -62,7 +62,7 @@ message C2SAreaList { //分区列表，cmd=LOGIN_SERVER_AREA_LIST = 2002,返回S
 	int32 startIndex = 2;		//起始id,按规则排序好的服务器列表的起始位置,>=
 	int32 endIndex = 3;		//结束id,<=
 	int32 extraCode = 4;	//0=平常的服务器列表,1=获取指定id的服务器状态,此时startIndex代表服务器id
-	bool isShowTestArea = 5[default = false]; //是否显示未开放的测试分区:开服前测试用,只控制显示,是否能进入测试分区还是由账号类型决定
+	bool isShowTestArea = 5; //是否显示未开放的测试分区:开服前测试用,只控制显示,是否能进入测试分区还是由账号类型决定
 }
 
 message S2CAreaList { //分区列表，cmd=LOGIN_SERVER_AREA_LIST = 2002

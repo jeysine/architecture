@@ -1,4 +1,4 @@
-package cn.com.architecture.net.netty4;
+package cn.com.architecture.net.netty4.tcp.handler;
 
 import cn.com.architecture.net.IHandlerNetty4;
 import io.netty.buffer.ByteBuf;
@@ -10,8 +10,8 @@ import io.netty.channel.SimpleChannelInboundHandler;
 /**
  * 
  *
- * @author Pan
- * 2015年11月10日
+ * @author lst
+ * 2018年5月13日
  */
 @Sharable
 public final class Netty4SocketHandler extends SimpleChannelInboundHandler<Object> {

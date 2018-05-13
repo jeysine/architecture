@@ -1,4 +1,4 @@
-package cn.com.architecture.net.netty4;
+package cn.com.architecture.net.netty4.common;
 
 import io.netty.channel.ChannelHandlerContext;
 
@@ -6,7 +6,7 @@ import java.net.InetSocketAddress;
 
 /**
  * @author lst
- * 2015年11月10日
+ * 2018年5月13日
  */
 public class Netty4Utils {
 

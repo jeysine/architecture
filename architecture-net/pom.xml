@@ -9,22 +9,13 @@
     <packaging>jar</packaging>
 
     <properties>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <slf4j.version>1.7.22</slf4j.version>
-        <spring.version>4.0.9.RELEASE</spring.version>
-        <spring.security.version>3.2.8.RELEASE</spring.security.version>
-        <spring.security.oauth.version>2.0.8.RELEASE</spring.security.oauth.version>
-        <spring.boot.version>1.5.7.RELEASE</spring.boot.version>
-        <querydsl.version>3.7.4</querydsl.version>
-        <fasterxml.jackson.version>2.8.1</fasterxml.jackson.version>
-        <druid.version>1.1.2</druid.version>
-        <spring.boot.version>1.3.3.RELEASE</spring.boot.version>
-        <akka.scala>2.11</akka.scala>
-        <akka.version>2.5.12</akka.version>
+        <grpc.version>1.11.0</grpc.version>
+        <groovy.version>3.0.0-alpha-2</groovy.version>
+        <netty4.version>4.1.21.Final</netty4.version>
+        <quartz.version>2.3.0</quartz.version>
+
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-        <java.version>1.8</java.version>
-        <log4j2.version>2.11.0</log4j2.version>
     </properties>
 
     <name>architecture-net</name>
@@ -63,14 +54,14 @@
         <dependency>
             <groupId>io.netty</groupId>
             <artifactId>netty-all</artifactId>
-            <version>4.1.21.Final</version>
+            <version>${netty4.version}</version>
         </dependency>
 
         <!-- https://mvnrepository.com/artifact/org.quartz-scheduler/quartz -->
         <dependency>
             <groupId>org.quartz-scheduler</groupId>
             <artifactId>quartz</artifactId>
-            <version>2.3.0</version>
+            <version>${quartz.version}</version>
         </dependency>
 
 
@@ -78,19 +69,29 @@
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-context-support</artifactId>
-            <version>4.3.0.RELEASE</version>
         </dependency>
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-core</artifactId>
-            <version>4.3.0.RELEASE</version>
         </dependency>
 
         <!-- https://mvnrepository.com/artifact/io.grpc/grpc-protobuf -->
         <dependency>
             <groupId>io.grpc</groupId>
             <artifactId>grpc-protobuf</artifactId>
-            <version>1.11.0</version>
+            <version>${grpc.version}</version>
+        </dependency>
+
+        <!-- https://mvnrepository.com/artifact/org.codehaus.groovy/groovy-all -->
+        <dependency>
+            <groupId>org.codehaus.groovy</groupId>
+            <artifactId>groovy-all</artifactId>
+            <version>${groovy.version}</version>
+            <type>pom</type>
+        </dependency>
+        <dependency>
+            <groupId>cn.architecture</groupId>
+            <artifactId>architecture-common</artifactId>
         </dependency>
 
     </dependencies>

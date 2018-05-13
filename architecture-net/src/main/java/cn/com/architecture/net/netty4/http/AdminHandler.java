@@ -5,7 +5,6 @@
  **/
 package cn.com.architecture.net.netty4.http;
 
-import cn.com.architecture.net.netty4.Netty4SocketServer;
 import io.netty.handler.codec.http.FullHttpRequest;
 import io.netty.handler.codec.http.FullHttpResponse;
 import org.slf4j.Logger;
@@ -20,7 +19,7 @@ public class AdminHandler implements IAdminHandler {
 
 	@Override
 	public void exec(FullHttpRequest request, FullHttpResponse response) {
-		if (request.getUri().endsWith("stop")) {//请求关服
+		if (request.uri().endsWith("stop")) {//请求关服
 			System.out.println("服务器已经停止");
 		} else if (request.getUri().endsWith("thread")) {
 			Map<Thread, StackTraceElement[]> maps = Thread.getAllStackTraces();
