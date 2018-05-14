@@ -1,9 +1,6 @@
 package cn.com.architecture.net.netty4.common.channel;
 
 import io.netty.channel.ChannelHandlerContext;
-import net.good321.frame.akka.AkkaContext;
-import net.good321.game.actor.INetActor;
-import net.good321.game.actor.impl.NetActor;
 
 /**
  * 玩家连接描述对象,可以是远程网关也可以是游戏服本身有网关功能
