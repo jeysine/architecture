@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>userList</title>
+    <link rel="stylesheet" th:href="@{/css/bootstrap.css}"></link>
+</head>
+<body class="container">
+<br/>
+<h1>用户物品列表</h1>
+<br/><br/>
+<div class="with:80%">
+    <table class="table table-hover">
+        <thead>
+        <tr>
+            <th>#</th>
+            <th>User Name</th>
+            <th>Password</th>
+            <th>Email</th>
+            <th>Edit</th>
+            <th>Delete</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr  th:each="user : ${users}">
+            <th scope="row" th:text="${user.id}">1</th>
+            <td th:text="${user.name}">斐儿可</td>
+            <td th:text="${user.password}">密码</td>
+            <td th:text="${user.email}">http</td>
+            <td><a th:href="@{/user/toEdit(id=${user.id})}">edit</a></td>
+            <td><a th:href="@{/user/delete(id=${user.id})}">delete</a></td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+<div class="form-group">
+    <div class="col-sm-2 control-label" th:if="${session.user}==null">
+        <a href="/user/toAdd" th:href="@{/user/toAdd}" class="btn btn-info">register</a>
+    </div>
+    <div class="col-sm-2 control-label" th:if="${session.user}==null">
+        <a href="/user/toLogin" th:href="@{/user/toLogin}" class="btn btn-info">login</a>
+    </div>
+    <div class="col-sm-2 control-label" th:if="${session.user}!=null">
+        <a href="/item/toAdd" th:href="@{/item/toAdd}" class="btn btn-info">addItem</a>
+    </div>
+
+</div>
+
+</body>
+</html>

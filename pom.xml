@@ -51,6 +51,7 @@
         <module>architecture-event</module>
         <module>architecture-login</module>
         <module>architecture-config</module>
+        <module>architecture-shop</module>
     </modules>
     <dependencyManagement>
         <dependencies>

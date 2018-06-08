@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>itemList</title>
+    <link rel="stylesheet" th:href="@{/css/bootstrap.css}"></link>
+</head>
+<body class="container">
+<br/>
+<h1>商品列表</h1>
+<br/><br/>
+<div class="with:80%">
+    <table class="table table-hover">
+        <thead>
+        <tr>
+            <th>#</th>
+            <th>Item Name</th>
+            <th>Url</th>
+            <th>Edit</th>
+            <th>Delete</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr  th:each="item : ${items}">
+            <th scope="row" th:text="${item.id}">1</th>
+            <td th:text="${item.name}">斐儿可</td>
+            <td th:text="${item.url}">http</td>
+            <td><a th:href="@{/item/toEdit(id=${item.id})}">edit</a></td>
+            <td><a th:href="@{/item/delete(id=${item.id})}">delete</a></td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+<div class="form-group">
+    <div class="col-sm-2 control-label">
+        <a href="/toAdd" th:href="@{/item/toAdd}" class="btn btn-info">add</a>
+    </div>
+</div>
+
+</body>
+</html>

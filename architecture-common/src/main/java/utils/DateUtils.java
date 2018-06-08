@@ -90,4 +90,10 @@ public class DateUtils {
         System.out.println(LocalDateTime.parse(LocalDateTime.now().toString(),DateTimeFormatter.ISO_LOCAL_TIME));
         //System.out.println(DateUtils.stringToDate("2016-02-14T18:32:04.150Z"));
     }
+
+    public static long getCurrentTime() {
+        return System.currentTimeMillis();
+    }
+
+
 }
