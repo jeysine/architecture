@@ -33,12 +33,6 @@ CREATE TABLE `hibernate_sequence` (
 -- Dumping data for table `hibernate_sequence`
 --
 
-LOCK TABLES `hibernate_sequence` WRITE;
-/*!40000 ALTER TABLE `hibernate_sequence` DISABLE KEYS */;
-INSERT INTO `hibernate_sequence` VALUES (14),(14);
-/*!40000 ALTER TABLE `hibernate_sequence` ENABLE KEYS */;
-UNLOCK TABLES;
-
 --
 -- Table structure for table `item`
 --
@@ -54,6 +48,7 @@ CREATE TABLE `item` (
   `name` varchar(255) NOT NULL,
   `url` varchar(255) NOT NULL,
   `push_time` bigint(20) NOT NULL,
+  `status` int(11) NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `UK_lcsp6a1tpwb8tfywqhrsm2uvg` (`name`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -62,39 +57,6 @@ CREATE TABLE `item` (
 --
 -- Dumping data for table `item`
 --
-
-LOCK TABLES `item` WRITE;
-/*!40000 ALTER TABLE `item` DISABLE KEYS */;
-INSERT INTO `item` VALUES (12,0,0,0,'东芝 TR200系列 240GB SATA3 固态硬盘','https://item.jd.com/5724596.html',0),(13,0,0,0,'老茶树龙井','https://detail.tmall.com/item.htm?id=41810451622&_u=t2dmg8j26111',1528468931280);
-/*!40000 ALTER TABLE `item` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `item_user`
---
-
-DROP TABLE IF EXISTS `item_user`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `item_user` (
-  `item_id` bigint(20) NOT NULL,
-  `user_id` bigint(20) NOT NULL,
-  PRIMARY KEY (`item_id`,`user_id`),
-  KEY `FKp12cn9qkc249dwn9cw1p3i127` (`user_id`),
-  CONSTRAINT `FKifmvp6c49o60le5vvdhcd1f0y` FOREIGN KEY (`item_id`) REFERENCES `item` (`id`),
-  CONSTRAINT `FKp12cn9qkc249dwn9cw1p3i127` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `item_user`
---
-
-LOCK TABLES `item_user` WRITE;
-/*!40000 ALTER TABLE `item_user` DISABLE KEYS */;
-INSERT INTO `item_user` VALUES (12,3),(13,3);
-/*!40000 ALTER TABLE `item_user` ENABLE KEYS */;
-UNLOCK TABLES;
 
 --
 -- Table structure for table `user`
@@ -118,11 +80,27 @@ CREATE TABLE `user` (
 -- Dumping data for table `user`
 --
 
-LOCK TABLES `user` WRITE;
-/*!40000 ALTER TABLE `user` DISABLE KEYS */;
-INSERT INTO `user` VALUES (1,18,'111111','lst',''),(2,18,'e81291f30243f70946b4fdeeb131ed26','lst1','lloo0331oo@126.com'),(3,18,'6db3aabc3ca5f673ac4e2b8221c539d3','lloo0331oo','531541630@qq.com');
-/*!40000 ALTER TABLE `user` ENABLE KEYS */;
-UNLOCK TABLES;
+--
+-- Table structure for table `user_item`
+--
+
+DROP TABLE IF EXISTS `user_item`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `user_item` (
+  `user_id` bigint(20) NOT NULL,
+  `item_id` bigint(20) NOT NULL,
+  PRIMARY KEY (`user_id`,`item_id`),
+  KEY `FKpnf7ma2ql912dg92xna4y89ix` (`item_id`),
+  CONSTRAINT `FKpgamngac3kq2ye6cg611lfrfm` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`),
+  CONSTRAINT `FKpnf7ma2ql912dg92xna4y89ix` FOREIGN KEY (`item_id`) REFERENCES `item` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `user_item`
+--
+
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
@@ -133,4 +111,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2018-06-08 22:49:45
+-- Dump completed on 2018-06-09 17:43:25
