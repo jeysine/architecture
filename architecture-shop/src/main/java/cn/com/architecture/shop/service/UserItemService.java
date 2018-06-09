@@ -14,5 +14,7 @@ public interface UserItemService {
 
     public void update(Item item,User user);
 
+    public void delete(long itemId,User user);
+
 
 }

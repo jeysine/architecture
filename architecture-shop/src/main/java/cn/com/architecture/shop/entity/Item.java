@@ -23,11 +23,11 @@ public class Item {
     private int minPrice = 0;
     @Column(nullable = false)
     private long pushTime = 0L;//上次推送的时间
+    @Column(nullable = false)
+    private int status = 0;//状态;0正常,1删除
 
-    @ManyToMany(cascade = CascadeType.MERGE,fetch = FetchType.EAGER)
-    @JoinTable(name = "ITEM_USER", joinColumns = {
-            @JoinColumn(name = "ITEM_ID", referencedColumnName = "ID")}, inverseJoinColumns = {
-            @JoinColumn(name = "USER_ID", referencedColumnName = "ID")})
+
+    @ManyToMany(mappedBy = "items",cascade = CascadeType.ALL,fetch = FetchType.EAGER)
     private Set<User> users = new HashSet<>();
 
 
@@ -94,5 +94,13 @@ public class Item {
 
     public long getPushTime() {
         return pushTime;
+    }
+
+    public void setStatus(int status) {
+        this.status = status;
+    }
+
+    public int getStatus() {
+        return status;
     }
 }

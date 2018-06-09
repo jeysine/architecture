@@ -7,16 +7,20 @@ import java.util.List;
 
 public interface ItemService {
 
-    public List<Item> getItemList();
+    public List<Item> getAllItemList();
+
+    public List<Item> getNormalItemList();
 
     public Item findItemById(long id);
 
-    public void save(Item user);
+    public void save(Item item);
 
-    public void edit(Item user);
+    public void edit(Item item);
 
     public void delete(long id);
 
-    //public Item findItemByUserId(long id);
+    public void delete(Item item);
+
+    public Item findItemByUrl(String url);
 
 }

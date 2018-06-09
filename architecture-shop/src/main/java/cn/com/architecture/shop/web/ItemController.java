@@ -33,7 +33,7 @@ public class ItemController extends BaseController{
 
     @RequestMapping("/list")
     public String list(Model model) {
-        List<Item> items=itemService.getItemList();
+        List<Item> items=itemService.getNormalItemList();
         model.addAttribute("items", items);
         return "item/list";
     }
@@ -53,11 +53,23 @@ public class ItemController extends BaseController{
         }
 
         item.setPushTime(DateUtils.getCurrentTime());
-        userItemService.save(item,user);
 
-        getUser().getItems().add(item);
+        Item dbItem = itemService.findItemByUrl(item.getUrl());
 
-        return "redirect:/item/list";
+        try{
+            if(dbItem==null){
+                userItemService.save(item,user);
+            }else{
+                dbItem.setStatus(0);
+                userItemService.update(dbItem,user);
+            }
+            //getUser().getItems().add(item);
+        }catch (Exception e){
+            logger.error("订阅物品失败,",e);
+        }
+
+
+        return "redirect:/user/list";
     }
 
     @RequestMapping("/toEdit")
@@ -70,12 +82,22 @@ public class ItemController extends BaseController{
     @RequestMapping("/edit")
     public String edit(Item item) {
         itemService.edit(item);
-        return "redirect:/item/list";
+        return "redirect:/user/list";
     }
 
     @RequestMapping("/delete")
     public String delete(Long id) {
         itemService.delete(id);
         return "redirect:/item/list";
+    }
+
+    @RequestMapping("/userDelete")
+    public String userDelete(Long id) {
+        try{
+            userItemService.delete(id,getUser());
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return "redirect:/user/list";
     }
 }

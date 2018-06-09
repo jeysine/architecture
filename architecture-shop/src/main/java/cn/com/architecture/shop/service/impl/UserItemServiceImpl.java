@@ -26,13 +26,29 @@ public class UserItemServiceImpl implements UserItemService{
     @Override
     public void save(Item item, User user) {
 
-        item.getUsers().add(user);
         itemService.save(item);
+        user.getItems().add(item);
+        userService.save(user);
 
     }
 
     @Override
     public void update(Item item, User user) {
+
+        user.getItems().add(item);
+        userService.save(user);
+
+    }
+
+    @Override
+    public void delete(long itemId, User user) {
+        user.getItems().removeIf((i)->i.getId()==itemId);
+        userService.save(user);
+    }
+
+    public void delete(Item item, User user) {
+        user.getItems().removeIf((i)->i.getId()==item.getId());
+        userService.save(user);
 
     }
 }

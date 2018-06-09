@@ -11,5 +11,9 @@ public interface ItemRepository extends JpaRepository<Item, Long> {
 
     Item findById(long id);
 
+    Item findByUrl(String url);
+
+    List<Item> findAllByStatusEquals(int status);
+
     //Long deleteById(Long id);
 }

@@ -18,7 +18,17 @@ public class User {
     @Column
     private String email;
 
-    @ManyToMany(mappedBy = "users",cascade = CascadeType.MERGE,fetch = FetchType.EAGER)
+    //@ManyToMany(mappedBy = "users",cascade = CascadeType.MERGE,fetch = FetchType.EAGER)
+
+//    @ManyToMany(cascade = CascadeType.MERGE,fetch = FetchType.EAGER)
+//    @JoinTable(name = "ITEM_USER", joinColumns = {
+//            @JoinColumn(name = "ITEM_ID", referencedColumnName = "ID")}, inverseJoinColumns = {
+//            @JoinColumn(name = "USER_ID", referencedColumnName = "ID")})
+
+    @ManyToMany(cascade = CascadeType.MERGE,fetch = FetchType.EAGER)
+    @JoinTable(name = "USER_ITEM", joinColumns = {
+            @JoinColumn(name = "USER_ID", referencedColumnName = "ID")}, inverseJoinColumns = {
+            @JoinColumn(name = "ITEM_ID", referencedColumnName = "ID")})
     private Set<Item> items = new HashSet<>();
 
     public long getId() {

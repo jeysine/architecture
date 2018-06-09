@@ -22,12 +22,12 @@
         </tr>
         </thead>
         <tbody>
-        <tr  th:each="item : ${items}">
-            <th scope="row" th:text="${item.id}">1</th>
-            <td th:text="${item.name}">斐儿可</td>
-            <td th:text="${item.url}">http</td>
-            <td><a th:href="@{/item/toEdit(id=${item.id})}">edit</a></td>
-            <td><a th:href="@{/item/delete(id=${item.id})}">delete</a></td>
+        <tr  th:each="item : ${items}" th:if="${item.status==0}">
+                <th scope="row" th:text="${item.id}">1</th>
+                <td th:text="${item.name}">斐儿可</td>
+                <td th:text="${item.url}">http</td>
+                <!--<td><a th:href="@{/item/toEdit(id=${item.id})}">edit</a></td>-->
+                <td><a th:href="@{/item/userDelete(id=${item.id})}">delete</a></td>
         </tr>
         </tbody>
     </table>

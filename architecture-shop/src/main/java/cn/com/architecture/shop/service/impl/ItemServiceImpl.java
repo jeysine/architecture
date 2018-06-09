@@ -16,8 +16,13 @@ public class ItemServiceImpl implements ItemService {
     private ItemRepository itemRepository;
 
     @Override
-    public List<Item> getItemList() {
+    public List<Item> getAllItemList() {
         return itemRepository.findAll();
+    }
+
+    @Override
+    public List<Item> getNormalItemList() {
+        return itemRepository.findAllByStatusEquals(0);
     }
 
     @Override
@@ -38,5 +43,17 @@ public class ItemServiceImpl implements ItemService {
     @Override
     public void delete(long id) {
         itemRepository.deleteById(id);
+    }
+
+    @Override
+    public void delete(Item item) {//标记状态为删除
+        item.setStatus(1);
+        itemRepository.save(item);
+    }
+
+
+    @Override
+    public Item findItemByUrl(String url) {
+        return itemRepository.findByUrl(url);
     }
 }
