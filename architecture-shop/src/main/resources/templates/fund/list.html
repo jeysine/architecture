@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>fundList</title>
+    <script th:src="@{/js/jquery.js}"></script>
+    <script th:src="@{/js/jquery.jsonp.js}"></script>
+    <link rel="stylesheet" th:href="@{/css/bootstrap.css}">
+</head>
+<body class="container">
+<br/>
+<h1>商品列表</h1>
+<br/><br/>
+<div class="with:80%">
+    <table class="table table-hover">
+        <thead>
+        <tr>
+            <th>#</th>
+            <th>Fund Name</th>
+            <th>Url</th>
+            <th>Edit</th>
+            <th>Delete</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr  th:each="fund : ${funds}">
+            <th scope="row" th:text="${fund.id}">1</th>
+            <td th:text="${fund.name}">斐儿可</td>
+            <td th:text="${fund.url}">http</td>
+            <!--<td><a th:href="@{/fund/toEdit(id=${fund.id})}">edit</a></td>-->
+            <td><a th:href="@{/fund/delete(id=${fund.id})}">delete</a></td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+<div class="form-group">
+    <div class="col-sm-2 control-label">
+        <a href="/toAdd" th:href="@{/fund/toAdd}" class="btn btn-info">add</a>
+    </div>
+</div>
+
+</body>
+</html>

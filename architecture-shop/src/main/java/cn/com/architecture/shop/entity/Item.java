@@ -1,5 +1,7 @@
 package cn.com.architecture.shop.entity;
 
+import cn.com.architecture.shop.config.Const;
+
 import javax.persistence.*;
 import java.util.HashSet;
 import java.util.List;
@@ -24,7 +26,7 @@ public class Item {
     @Column(nullable = false)
     private long pushTime = 0L;//上次推送的时间
     @Column(nullable = false)
-    private int status = 0;//状态;0正常,1删除
+    private int status = Const.DataStatus.NORMAL;//状态;0正常,1删除
 
 
     @ManyToMany(mappedBy = "items",cascade = CascadeType.ALL,fetch = FetchType.EAGER)

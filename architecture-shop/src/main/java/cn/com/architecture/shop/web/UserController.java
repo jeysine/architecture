@@ -42,6 +42,9 @@ public class UserController extends BaseController{
         if(user!=null){
             model.addAttribute("items", user.getItems());
         }
+        if(user!=null){
+            model.addAttribute("funds", user.getFunds());
+        }
 
 
         return "user/list";

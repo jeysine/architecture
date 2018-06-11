@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>item</title>
+    <script th:src="@{/js/jquery.js}"></script>
+    <script th:src="@{/js/jquery.jsonp.js}"></script>
+    <link rel="stylesheet" th:href="@{/css/bootstrap.css}">
+</head>
+<body class="container">
+
+<br/>
+<h1>添加基金</h1>
+<br/><br/>
+<!--<div class="with:80%">-->
+    <!--<form class="form-horizontal"   th:action="@{/item/add}"  method="post">-->
+        <!--<div class="form-group">-->
+            <!--<label for="name" class="col-sm-2 control-label">name</label>-->
+            <!--<div class="col-sm-10">-->
+                <!--<input type="text" class="form-control" name="name"  id="name" placeholder="name"/>-->
+            <!--</div>-->
+        <!--</div>-->
+        <!--<div class="form-group">-->
+            <!--<label for="url" class="col-sm-2 control-label" >url</label>-->
+            <!--<div class="col-sm-10">-->
+                <!--<input type="url" class="form-control" name="url" id="url" placeholder="url"/>-->
+            <!--</div>-->
+        <!--</div>-->
+        <!--<div class="form-group">-->
+            <!--<div class="col-sm-offset-2 col-sm-10">-->
+                <!--<input type="submit" value="Submit" class="btn btn-info" />-->
+                <!--&nbsp; &nbsp; &nbsp;-->
+                <!--<input type="reset" value="Reset" class="btn btn-info" />-->
+            <!--</div>-->
+        <!--</div>-->
+    <!--</form>-->
+<!--</div>-->
+
+<div class="with:80%">
+
+    <form class="form-horizontal" action="">
+
+        <div class="form-group">
+            <label for="key" class="col-sm-2 control-label">基金名称</label>
+            <div class="col-sm-10">
+                <input type="text" class="form-control" name="name"  id="key" placeholder="基金名称" value=""/>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-sm-offset-2 col-sm-10">
+                <!--<input type="submit" value="Submit" class="btn btn-info" />-->
+                <!--&nbsp; &nbsp; &nbsp;-->
+                <!--<input type="reset" value="Reset" class="btn btn-info" />-->
+
+                <input type="button" id="btn" class="btn btn-info" value="查询">
+            </div>
+        </div>
+
+    </form>
+
+</div>
+
+<div class="with:80%">
+    <table class="table table-hover" id="dataTable">
+        <thead>
+            <tr>
+                <td>基金编号</td>
+                <td>基金名称</td>
+                <td>单位净值</td>
+                <td>基金经理</td>
+                <td>上次更新时间</td>
+                <td>操作</td>
+                <td>净值预估</td>
+            </tr>
+        </thead>
+    </table>
+</div>
+
+
+<script>
+
+    var url = "http://fundsuggest.eastmoney.com/FundSearch/api/FundSearchAPI.ashx?callback=?&m=1&_=1492878112565";
+
+    var table = $('#dataTable');
+
+    var tBody = $('<tbody></tbody>');
+
+    var code = "0";
+
+    $('#btn').click(function () {
+        var value = $('#key').val();
+        if(value!=undefined && value!=null && value!=""){
+
+            var url1 = url+"&key="+value;
+
+            $.getJSON(url1, function (data) {
+
+                console.log("---success---->" + data);
+
+                if (data == null) {
+                    return;
+                }
+
+                try {
+
+                    if(data.ErrCode==0){
+
+                        var datas = data.Datas;
+
+                        for(var j = 0;j<datas.length;j++){
+
+                            var curData = datas[j];
+
+                            var baseInfo = curData.FundBaseInfo;
+
+
+                            var code = curData.CODE;
+                            var name = curData.NAME;
+
+                            var jz = '';
+                            var jjjl = '';
+                            var lastTime = '';
+
+                            if(baseInfo!=null){
+                                var jz = baseInfo.DWJZ;
+                                var jjjl = baseInfo.JJJL;
+                                var lastTime = baseInfo.FSRQ;
+                            }
+
+                            var td1 = $('<td scope="row"></td>').append(code);
+                            var td2 = $('<td></td>').append(name);
+                            var td3 = $('<td></td>').append(jz);
+                            var td4 = $('<td></td>').append(jjjl);
+                            var td5 = $('<td></td>').append(lastTime);
+
+                            var href1 = $('<a href="/fund/add?id='+code+'&name='+name+'&dwjz='+jz+'&jl='+'">加入自选</a>');
+
+                            //var href1 = $('<a href="/fund/add?fundId='+code+'&code='+code+'&name='+name+'&jz='+jz+'&jjjl='+jjjl+'&lastTime='+lastTime+'">加入自选</a>');
+
+                            var td6 = $('<td></td>').append(href1);
+
+                            var tr = $('<tr id="'+code+'"></tr>').append(td1).append(td2).append(td3).append(td4).append(td5).append(td6);
+
+                            var ygjz = $.getJSON(createInfoUrl(code), jsonpgz);
+
+                            tBody.append(tr);
+
+                        }
+
+                        table.append(tBody);
+
+                        console.log("child");
+
+                    }
+
+
+                } catch (e) {
+                    console.log("---catchException---->" + e.message);
+                }
+
+            });
+
+
+        }
+
+
+    });
+
+    function createInfoUrl(code) {
+        var timestamp = Date.parse(new Date());
+        return "http://fundgz.1234567.com.cn/js/"+code+".js?rt="+timestamp+"&callBack=?";
+        //return "http://fund.eastmoney.com/"+code+".html?spm=search";
+    }
+
+    function dealInfoResult(data) {
+        return  data.substr(data.index('(')+1,data.length-2);
+    }
+
+
+    function jsonpgz(jsonData) {
+        if(jsonData!=undefined){
+            var td7 = $('<td></td>').append(jsonData.gszzl);
+            $('#'+jsonData.fundcode).append(td7);
+        }
+    }
+
+
+</script>
+
+</body>
+</html>

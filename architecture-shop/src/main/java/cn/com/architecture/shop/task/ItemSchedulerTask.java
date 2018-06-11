@@ -49,7 +49,7 @@ public class ItemSchedulerTask {
     private static String TIME_EVERY_FIVE_MINUTE = "0 */5 * * * ?";//每五分钟
 
     //每小时
-    @Scheduled(cron="0 */5 * * * ?")
+    @Scheduled(cron="0 0 * * * ?")
     private void process(){
 
 
@@ -61,9 +61,9 @@ public class ItemSchedulerTask {
 
         for (Item i:itemList){
 
-//            if(DateUtils.isSameDay(i.getPushTime(),time,0)){//当天只推送一次
-//                continue;
-//            }
+            if(DateUtils.isSameDay(i.getPushTime(),time,0)){//当天只推送一次
+                continue;
+            }
 
 
             String url = AppConstant.baseUrl;
@@ -116,19 +116,19 @@ public class ItemSchedulerTask {
 
                         String mail = u.getEmail();
                         if(StringUtils.isNotBlank(mail)){
-                           // mailService.sendSimpleMail(u.getEmail(),"商品详情",result);
+                            mailService.sendSimpleMail(u.getEmail(),"商品详情",result);
                         }else{
                             logger.info("id为:"+u.getId()+",name为: "+u.getUserName()+" 没有填邮箱");
                         }
 
                     }
 
-                    logger.info("当天价格符合预期价格,推送通知");
+                    logger.info(itemName+"当天价格符合预期价格,推送通知");
 
                 }
 
             }catch (Exception e){
-                logger.error("刷新价格异常",e);
+                logger.error("刷新价格异常,物品是: "+itemName+"  链接是:  "+itemUrl+"   ",e);
             }
 
             i.setPushTime(time);//设置时间

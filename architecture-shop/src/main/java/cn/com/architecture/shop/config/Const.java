@@ -24,6 +24,11 @@ public class Const {
 	public static String LAST_REFERER = "LAST_REFERER";
 
 	public static int COOKIE_TIMEOUT= 30*24*60*60;
-	
+
+
+	public static class DataStatus{
+		public final static int NORMAL = 0;
+		public final static int DELETE = 1;
+	}
 	
 }

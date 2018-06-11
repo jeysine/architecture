@@ -3,7 +3,9 @@
 <head>
     <meta charset="UTF-8"/>
     <title>userList</title>
-    <link rel="stylesheet" th:href="@{/css/bootstrap.css}"></link>
+    <script th:src="@{/js/jquery.js}"></script>
+    <script th:src="@{/js/jquery.jsonp.js}"></script>
+    <link rel="stylesheet" th:href="@{/css/bootstrap.css}">
 </head>
 <body class="container">
 <br/>
@@ -14,10 +16,10 @@
         <thead>
         <tr>
             <th>#</th>
-            <th>User Name</th>
-            <th>Password</th>
-            <th>Email</th>
-            <th>Edit</th>
+            <th>物品名称</th>
+            <th>链接地址</th>
+            <!--<th>Email</th>-->
+            <!--<th>Edit</th>-->
             <th>Delete</th>
         </tr>
         </thead>
@@ -25,25 +27,152 @@
         <tr  th:each="item : ${items}" th:if="${item.status==0}">
                 <th scope="row" th:text="${item.id}">1</th>
                 <td th:text="${item.name}">斐儿可</td>
-                <td th:text="${item.url}">http</td>
+                <td th:text="${item.url}"><a th:href="${item.url}"></a>http</td>
                 <!--<td><a th:href="@{/item/toEdit(id=${item.id})}">edit</a></td>-->
-                <td><a th:href="@{/item/userDelete(id=${item.id})}">delete</a></td>
+                <td><a th:href="@{/item/userDelete(id=${item.id})}">删除</a></td>
         </tr>
         </tbody>
     </table>
 </div>
+
+<h1>用户基金列表</h1>
+<br/><br/>
+<div class="with:80%">
+    <table class="table table-hover">
+        <thead>
+        <tr>
+            <th>基金编号</th>
+            <th>基金名称</th>
+            <th>基金地址</th>
+            <!--<th>自选数量</th>-->
+            <!--<th>额外</th>-->
+            <th>单位净值</th>
+            <!--<th>基金经理</th>-->
+            <!--<th>上次更新时间</th>-->
+            <th>净值预估</th>
+
+            <!--<th>#</th>-->
+            <!--<th>基金名称</th>-->
+            <!--<th>链接地址</th>-->
+            <!--<th>Email</th>-->
+            <!--<th>Edit</th>-->
+            <th>删除</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr  th:each="fund : ${funds}" th:if="${fund.status==0}">
+
+            <th scope="row" th:text="${fund.id}">1</th>
+            <td th:text="${fund.name}">斐儿可</td>
+            <td th:text="${fund.url}"><a th:href="${fund.url}"></a>http</td>
+
+            <!--<td th:text="${fund.number}">自选数量</td>-->
+            <!--<td th:text="${fund.ext}">额外</td>-->
+            <!--<td th:text="${fund.dwjz}">基金经理</td>-->
+            <td th:text="${fund.jl}">净值预估</td>
+            <!--<td th:text="${fund.lastTime}">上次更新时间</td>-->
+            <td th:id="${fund.id}"></td>
+
+            <!--<th scope="row" th:text="${fund.id}">1</th>-->
+            <!--<td><a th:href="@{/item/toEdit(id=${item.id})}">edit</a></td>-->
+            <td><a th:href="@{/fund/userDelete(id=${fund.id})}">删除</a></td>
+
+            <input type="hidden" class="code" name="code" th:value="${fund.id}">
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+
 <div class="form-group">
     <div class="col-sm-2 control-label" th:if="${session.user}==null">
-        <a href="/user/toAdd" th:href="@{/user/toAdd}" class="btn btn-info">register</a>
+        <a href="/user/toAdd" th:href="@{/user/toAdd}" class="btn btn-info">注册</a>
     </div>
     <div class="col-sm-2 control-label" th:if="${session.user}==null">
-        <a href="/user/toLogin" th:href="@{/user/toLogin}" class="btn btn-info">login</a>
+        <a href="/user/toLogin" th:href="@{/user/toLogin}" class="btn btn-info">登录</a>
     </div>
     <div class="col-sm-2 control-label" th:if="${session.user}!=null">
-        <a href="/item/toAdd" th:href="@{/item/toAdd}" class="btn btn-info">addItem</a>
+        <a href="/item/toAdd" th:href="@{/item/toAdd}" class="btn btn-info">添加物品</a>
+    </div>
+    <div class="col-sm-2 control-label" th:if="${session.user}!=null">
+        <a href="/fund/toAdd" th:href="@{/fund/toAdd}" class="btn btn-info">添加基金</a>
+    </div>
+
+    <div class="col-sm-2 control-label" th:if="${session.user}!=null">
+        <input id="refresh" type="button" class="btn btn-info" value="刷新">
+    </div>
+
+    <div class="col-sm-2 control-label" th:if="${session.user}!=null">
+        <input id="stop" type="button" class="btn btn-info" value="停止刷新">
     </div>
 
 </div>
+
+
+<script>
+
+    var timer;
+
+    $('#stop').click(function () {
+        clearInterval(timer);
+    })
+
+    $('#refresh').click(function () {
+        timer = setInterval(watchJz,60 * 1000);
+        watchJz();
+    })
+
+    function createInfoUrl(code) {
+        var timestamp = Date.parse(new Date());
+        return "http://fundgz.1234567.com.cn/js/"+code+".js?rt="+timestamp+"&callBack=?";
+        //return "http://fund.eastmoney.com/"+code+".html?spm=search";
+    }
+
+    function dealInfoResult(data) {
+        return  data.substr(data.index('(')+1,data.length-2);
+    }
+
+
+    function jsonpgz(jsonData) {
+        if(jsonData!=undefined){
+
+            var a = jsonData.gszzl;
+
+            var html = $('<a></a>');
+            if(a.length<1){
+                a='0';
+            }else if(a>0){
+                html.css("color","red");
+            }else{
+                html.css("color","green");
+            }
+
+            html.append(a);
+
+            $('#'+jsonData.fundcode).html(html);
+
+            console.log("------->1");
+        }
+    }
+
+    function watchJz() {
+
+        var codeList = $('.code');
+
+        for(var i = 0;i<codeList.length;i++){
+
+            var code = codeList[i].value;
+
+            $.getJSON(createInfoUrl(code), jsonpgz);
+
+        }
+    }
+
+    $.ready(function () {
+        watchJz();
+    })
+
+</script>
 
 </body>
 </html>

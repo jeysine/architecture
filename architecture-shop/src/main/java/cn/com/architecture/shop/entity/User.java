@@ -6,6 +6,7 @@ import java.util.Set;
 
 @Entity
 public class User {
+
     @Id
     @GeneratedValue
     private long id;
@@ -30,6 +31,12 @@ public class User {
             @JoinColumn(name = "USER_ID", referencedColumnName = "ID")}, inverseJoinColumns = {
             @JoinColumn(name = "ITEM_ID", referencedColumnName = "ID")})
     private Set<Item> items = new HashSet<>();
+
+    @ManyToMany(cascade = CascadeType.MERGE,fetch = FetchType.EAGER)
+    @JoinTable(name = "USER_FUND", joinColumns = {
+            @JoinColumn(name = "USER_ID", referencedColumnName = "ID")}, inverseJoinColumns = {
+            @JoinColumn(name = "FUND_ID", referencedColumnName = "ID")})
+    private Set<Fund> funds = new HashSet<>();
 
     public long getId() {
         return id;
@@ -82,5 +89,13 @@ public class User {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public Set<Fund> getFunds() {
+        return funds;
+    }
+
+    public void setFunds(Set<Fund> funds) {
+        this.funds = funds;
     }
 }

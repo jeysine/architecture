@@ -1,5 +1,6 @@
 package cn.com.architecture.shop.service.impl;
 
+import cn.com.architecture.shop.config.Const;
 import cn.com.architecture.shop.entity.Item;
 import cn.com.architecture.shop.repository.ItemRepository;
 import cn.com.architecture.shop.service.ItemService;
@@ -22,7 +23,7 @@ public class ItemServiceImpl implements ItemService {
 
     @Override
     public List<Item> getNormalItemList() {
-        return itemRepository.findAllByStatusEquals(0);
+        return itemRepository.findAllByStatusEquals(Const.DataStatus.NORMAL);
     }
 
     @Override
